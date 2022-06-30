@@ -1,40 +1,22 @@
-import { IonButton, IonContent, IonHeader, IonImg, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonIcon } from '@ionic/react';
-import {logoGoogle, logoFacebook, logoApple} from 'ionicons/icons'
+import { IonButton, IonContent, IonImg, IonInput, IonLabel, IonPage } from '@ionic/react';
+import './Login.css'
 
 
 const Login = () => {
     return(
         <IonPage>
-          <IonHeader>
-        <IonToolbar>
-          <IonTitle>Login</IonTitle>
-        </IonToolbar>
-          </IonHeader>
-          <IonContent fullscreen>
-            <IonImg src='assets/images/login-img.jpg'/>
-            <IonLabel >Login</IonLabel>
-            <IonItem>
-            <IonInput  placeholder="Email ID"></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonInput  placeholder="Password"></IonInput>
-          </IonItem>
-          <IonItem  lines='none' routerLink="/home">
-          <IonButton>Login</IonButton>
-          </IonItem>
-          
-          <IonItem lines='none' className='ion-text-center'>
-          <IonLabel>Or, Login with</IonLabel>
-          </IonItem>
-          <IonItem lines='none' >
-          <IonIcon size='large' icon={logoGoogle} />
-          <IonIcon size='large' icon={logoFacebook} />
-          <IonIcon size='large' icon={logoApple} />
-          </IonItem>
-          <IonItem lines='none' className='ion-text-center'>
-          <IonLabel>Don't have an account?</IonLabel>
-          <IonButton routerLink="/signup">Signup</IonButton>
-          </IonItem>
+          <IonContent fullscreen className='login-page'>
+          <IonImg className="logo" src="assets/images/logo.png" />
+          <IonLabel className="logo-text">Konnect.</IonLabel>
+          <IonLabel className="welcome-text">Welcome Back.</IonLabel>
+          <IonInput className='lp-email-input' placeholder='Email ID'></IonInput>
+          <IonInput className='lp-password-input' placeholder='Password'></IonInput>
+          <IonLabel className="forgot-text">Forgot Password?</IonLabel>
+          <IonButton className='lp-login-btn' shape="round" color="light" routerLink="/home"><IonLabel className='lp-login-btn-text ion-text-capitalize'>Login</IonLabel></IonButton>
+          <IonLabel className="account-text">Dont have an account?</IonLabel>
+          <IonButton className="lp-signup-btn" fill='clear' color="dark" routerLink="/signup" >
+          <IonLabel className='lp-signup-btn-text ion-text-capitalize'>Signup</IonLabel>
+          </IonButton>
           </IonContent>
         </IonPage>
     )

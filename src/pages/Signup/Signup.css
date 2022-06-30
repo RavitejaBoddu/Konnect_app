@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+.signup-page {
+    --background: url('../../../public/assets/images/login-background.png') no-repeat center;
+    background-size: cover;
+}
+
+.logo {
+    position: absolute;
+    top: 45px;
+}
+
+.logo-text {
+    position: absolute;
+    left: 88px;
+    top: 80px;
+
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 50px;
+    /* identical to box height */
+
+    display: flex;
+    align-items: center;
+
+    color: #FFFFFF;
+}
+
+.hello-text {
+    position: absolute;
+    width: 72px;
+    height: 63px;
+    left: 230px;
+    top: 228px;
+    
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 30px;
+    
+    color: #FFFFFF;
+    
+
+}
+.sp-name-input{
+    position: absolute;
+width: 270px;
+height: 40px;
+left: 45px;
+top: 348px;
+
+background: #EFEFEF;
+opacity: 0.9;
+box-shadow: -7px 6px 15px rgba(0, 0, 0, 0.25);
+border-radius: 10px;
+}
+
+.sp-email-input {
+    position: absolute;
+    width: 270px;
+    height: 40px;
+    left: 45px;
+    top: 414px;
+    background: #EFEFEF;
+    opacity: 0.9;
+    box-shadow: -7px 6px 15px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+.sp-password-input {
+    position: absolute;
+    width: 270px;
+    height: 40px;
+    left: 45px;
+    top: 480px;
+
+    background: #EFEFEF;
+    opacity: 0.9;
+    box-shadow: -7px 6px 15px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+.sp-signup-btn {
+    position: absolute;
+    left: 46px;
+    top: 580px;
+    border-radius: 12px;
+}
+
+.sp-signup-btn-text {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 19px;
+
+    color: #333333;
+}
+
+.account-text {
+    position: absolute;
+    left: 198px;
+    top: 704px;
+
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+
+    color: #FFFFFF;
+
+}
+
+.sp-login-btn {
+    position: absolute;
+    width: 85px;
+    height: 30px;
+    left: 245px;
+    top: 729px;
+}
+
+.sp-login-btn-text {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 30px;
+
+    color: #FFFFFF;
+}
