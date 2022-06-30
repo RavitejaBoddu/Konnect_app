@@ -3,6 +3,10 @@ import './Login.css'
 
 
 const Login = () => {
+  const tabBar = document.getElementById('tab-bar');
+  if (tabBar !== null) {
+    tabBar.style.display = 'none';
+  }
     return(
         <IonPage>
           <IonContent fullscreen className='login-page'>

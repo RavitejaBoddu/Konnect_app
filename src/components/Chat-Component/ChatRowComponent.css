@@ -1,0 +1,67 @@
+.chat-row{
+    height: 80px;
+    display: flex;
+}
+.chat-img-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex:2;
+}
+.chat-img{
+    width: 50px;
+height: 52.27px;
+border-radius: 200px;
+}
+.chat-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    flex: 4;
+}
+.chat-text-name{
+    font-family: 'Roboto';
+font-style: normal;
+font-weight: 700;
+font-size: 15px;
+line-height: 20px;
+display: flex;
+align-items: center;
+
+color: #000000;
+}
+.chat-text-msg{
+    font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 14px;
+display: flex;
+align-items: center;
+
+color: #606460;
+}
+.chat-info{
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    gap: 10px;
+}
+
+.chat-info-time{
+    font-family: 'Roboto';
+font-style: normal;
+font-weight: 300;
+font-size: 14px;
+line-height: 16px;
+display: flex;
+align-items: center;
+margin-top: 10px;
+color: #606460;
+}
+.chat-info-img{
+    width: 20px;
+height: 20px;
+margin-left: 27px;
+}
