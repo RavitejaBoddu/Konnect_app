@@ -11,14 +11,14 @@ import {
 import { useState } from "react";
 import { UserAuth } from "../../context/AuthContext";
 import "./Signup.css";
-import { toastController } from "@ionic/core";
+import { toastController, alertController } from "@ionic/core";
 
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { createUser } = UserAuth();
+  const { createUser, logout } = UserAuth();
 
   let router = useIonRouter();
 
@@ -34,7 +34,16 @@ const Signup = () => {
     await toast.present();
   };
 
-  const handleSignup = async (e) => {
+  const handleAlert = async(msg)=> {
+    const alert = await alertController.create({
+      message: msg,
+      buttons: ['Ok'],
+    });
+
+    await alert.present();
+  }
+
+  const handleSignup = async () => {
     var atposition = email.indexOf("@");
     var dotposition = email.lastIndexOf(".");
     try {
@@ -60,13 +69,16 @@ const Signup = () => {
       } else {
         try {
           await createUser(email, password);
-          router.push("/home");
+          logout();
+          router.push("/login");
         } catch (e) {
-          alert(e.message);
+          const msg = e.message;
+          handleAlert(msg);
         }
       }
     } catch (e) {
-      alert(e.message);
+      const msg = e.message;
+          handleAlert(msg);
     }
   };
 

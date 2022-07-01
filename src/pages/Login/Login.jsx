@@ -1,6 +1,7 @@
 import { IonButton, IonCard, IonContent, IonImg, IonInput, IonLabel, IonPage, useIonRouter } from '@ionic/react';
 import { useState } from 'react';
 import { UserAuth } from '../../context/AuthContext';
+import { toastController, alertController } from '@ionic/core';
 import './Login.css'
 
 
@@ -16,31 +17,56 @@ const Login = () => {
   const { login } = UserAuth();
 
   let router = useIonRouter();
+    const handleAlert = async(msg)=> {
+      const alert = await alertController.create({
+        message: msg,
+        buttons: ['Ok'],
+      });
+
+      await alert.present();
+    }
+
+  const handleToast = async (msg) => {
+    const toast = await toastController.create({
+      color: "light",
+      position: "top",
+      duration: 2000,
+      message: msg,
+      translucent: false,
+      showCloseButton: true,
+    });
+    await toast.present();
+  };
 
   const handleLogin = async () => {
     var atposition = email.indexOf("@");
     var dotposition = email.lastIndexOf(".");
     try {
       if (email == null || email === "") {
-        alert("Please enter the email");
+        const msg = "Please enter your email";
+        handleToast(msg);
       } else if (password == null || password === "") {
-        alert("please enter the password");
+        const msg = "Please enter your password";
+        handleToast(msg);
       } else if (
         atposition < 1 ||
         dotposition < atposition + 2 ||
         dotposition + 2 >= email.length
       ) {
-        alert("Please enter a valid email address");
+        const msg = "Please enter a valid email address";
+        handleToast(msg);
       } else {
         try {
           await login(email, password);
           router.push("/home");
         } catch (e) {
-          alert(e.message);
+          const msg = e.message;
+          handleAlert(msg);
         }
       }
     } catch (e) {
-      alert(e.message);
+      const msg = e.message;
+      handleAlert(msg);
     }
   };
 
