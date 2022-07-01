@@ -33,7 +33,7 @@
     width: 106px;
     height: 63px;
     left: 209px;
-    top: 257px;
+    top: 240px;
 
     font-family: 'Quicksand';
     font-style: normal;
@@ -46,25 +46,23 @@
 
 }
 
-.lp-email-input {
-    position: absolute;
-    width: 270px;
-    height: 40px;
-    left: 45px;
-    top: 380px;
-    background: #EFEFEF;
-    opacity: 0.9;
-    box-shadow: -7px 6px 15px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
+.lp-input-container{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    --background:transparent;
+    top: 340px;
+    box-shadow: none; 
+    -webkit-box-shadow: none;
+    padding: 1rem;
 }
 
-.lp-password-input {
-    position: absolute;
+.lp-input {
     width: 270px;
     height: 40px;
-    left: 45px;
-    top: 450px;
-
+ 
     background: #EFEFEF;
     opacity: 0.9;
     box-shadow: -7px 6px 15px rgba(0, 0, 0, 0.25);
@@ -73,8 +71,8 @@
 
 .forgot-text {
     position: absolute;
-    left: 65px;
-    top: 512px;
+    left: 50px;
+    top: 495px;
 
     font-family: 'Roboto';
     font-style: normal;
@@ -89,7 +87,7 @@
 .lp-login-btn {
     position: absolute;
     left: 46px;
-    top: 580px;
+    top: 560px;
     border-radius: 12px;
 }
 

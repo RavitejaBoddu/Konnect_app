@@ -1,61 +1,66 @@
+import {
+  IonIcon,
+  IonLabel,
+  IonRouterOutlet,
+  IonTabBar,
+  IonTabButton,
+  IonTabs,
+} from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
+import { people, apps, chatbubbles, settings } from "ionicons/icons";
+import { Redirect, Route } from "react-router-dom";
 
-import { IonContent, IonHeader, IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, IonTitle, IonToolbar } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import { people, apps, chatbubbles, settings } from 'ionicons/icons';
-import { Redirect, Route } from 'react-router-dom';
-
-import Chats from '../Chats/Chats';
-import Groups from '../Groups/Groups';
-import Friends from '../Friends/Friends';
-import Settings from '../Settings/Settings';
-import Login from '../Login/Login';
-
+import Chats from "../Chats/Chats";
+import Groups from "../Groups/Groups";
+import Friends from "../Friends/Friends";
+import Settings from "../Settings/Settings";
+import Login from "../Login/Login";
 
 const Home = () => {
-    return (
-      <IonReactRouter>
-         <IonTabs>
-         <IonRouterOutlet>
-         <Route exact path="/chats">
-            <Chats />
-          </Route>
-          <Route exact path="/groups">
-            <Groups />
-          </Route>
-          <Route path="/friends">
-            <Friends />
-          </Route>
-          <Route path="/settings">
-            <Settings />
-          </Route>
+  return (
+    <IonReactRouter>
+      <IonTabs>
+        <IonRouterOutlet>
+        <Route path="/home/chats">
+              <Chats />
+            </Route>
+            <Route path="/home/groups">
+              <Groups />
+            </Route>
+            <Route path="/home/friends">
+              <Friends />
+            </Route>
+            <Route path="/home/settings">
+              <Settings />
+            </Route>
           <Route exact path="/home">
-            <Redirect to="/chats" />
+            <Redirect to="/home/chats" />
           </Route>
           <Route path="/login">
             <Login />
           </Route>
-          </IonRouterOutlet>
-      <IonTabBar slot="bottom" id='tab-bar'>
-      <IonTabButton tab="chats" href="/chats">
-      <IonIcon icon={chatbubbles} />
-        <IonLabel>Chats</IonLabel>
-      </IonTabButton>
-      <IonTabButton tab="groups" href="/groups">
-        <IonIcon icon={apps} />
-        <IonLabel>Groups</IonLabel>
-      </IonTabButton>
-      <IonTabButton tab="friends" href="/friends">
-        <IonIcon icon={people} />
-        <IonLabel>Friends</IonLabel>
-      </IonTabButton>
-      <IonTabButton tab="settings" href="/settings">
-        <IonIcon icon={settings} />
-        <IonLabel>Settings</IonLabel>
-      </IonTabButton>
-    </IonTabBar>
-  </IonTabs>
- </IonReactRouter>
-      );
-}
+        </IonRouterOutlet>
+        <IonTabBar slot="bottom">
+          <IonTabButton tab="chats" href="/home/chats">
+            <IonIcon icon={chatbubbles} />
+            <IonLabel>Chats</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="groups" href="/home/groups">
+            <IonIcon icon={apps} />
+            <IonLabel>Groups</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="friends" href="/home/friends">
+            <IonIcon icon={people} />
+            <IonLabel>Friends</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="settings" href="/home/settings">
+            <IonIcon icon={settings} />
+            <IonLabel>Settings</IonLabel>
+          </IonTabButton>
+        </IonTabBar>
+      </IonTabs>
+    </IonReactRouter>
+  );
+};
 
-export default Home
+export default Home;

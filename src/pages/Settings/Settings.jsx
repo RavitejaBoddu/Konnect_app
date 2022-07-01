@@ -1,8 +1,23 @@
-import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
 import ExploreContainer from '../../components/ExploreContainer';
+import { UserAuth } from '../../context/AuthContext';
 import './Settings.css';
 
 const Settings = () => {
+
+  const { logout } = UserAuth();
+  let router = useIonRouter();
+
+  const handleLogout = () => {
+    logout();
+    try{
+      logout();
+      router.push('/login')
+    }catch(error){
+      alert(error.message)
+    }
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -17,7 +32,7 @@ const Settings = () => {
           </IonToolbar>
         </IonHeader>
         <ExploreContainer name="Settings page" />
-        <IonButton routerLink="/login">Logout</IonButton>
+        <IonButton onClick={(e)=>handleLogout()}>Logout</IonButton>
       </IonContent>
     </IonPage>
   );
