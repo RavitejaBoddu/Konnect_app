@@ -15,24 +15,34 @@ import Groups from "../Groups/Groups";
 import Friends from "../Friends/Friends";
 import Settings from "../Settings/Settings";
 import Login from "../Login/Login";
+import ProtectedRoute from "../../ProtectedRoute/ProtectedRoute";
 
 const Home = () => {
   return (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-        <Route path="/home/chats">
+          <Route path="/home/chats">
+            <ProtectedRoute>
               <Chats />
-            </Route>
-            <Route path="/home/groups">
+            </ProtectedRoute>
+          </Route>
+          <Route path="/home/groups">
+            <ProtectedRoute>
               <Groups />
-            </Route>
-            <Route path="/home/friends">
+            </ProtectedRoute>
+          </Route>
+          <Route path="/home/friends">
+            <ProtectedRoute>
               <Friends />
-            </Route>
-            <Route path="/home/settings">
+            </ProtectedRoute>
+            <Friends />
+          </Route>
+          <Route path="/home/settings">
+            <ProtectedRoute>
               <Settings />
-            </Route>
+            </ProtectedRoute>
+          </Route>
           <Route exact path="/home">
             <Redirect to="/home/chats" />
           </Route>

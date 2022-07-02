@@ -1,0 +1,133 @@
+.lp-sp-page {
+  --background: url("../../public/assets/images/login.png") no-repeat center
+    center fixed;
+  height: 100%;
+  background-size: 100% 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-position: center;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../public/assets/images/login.png', sizingMethod='scale');
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../public/assets/images/login.png', sizingMethod='scale')";
+}
+
+.lp-sp-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100vh;
+  font-family: "Quicksand";
+  font-style: normal;
+  color: #ffffff;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0 1rem;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 50px;
+}
+
+.logo-text {
+  margin-left: -1rem;
+}
+
+.lp-sp-heading-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0 3rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.lp-sp-heading {
+  width: 106px;
+  height: 63px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 2rem;
+  gap: 2rem;
+}
+
+.input {
+  color: #333333;
+  background: #efefef;
+  box-shadow: -7px 6px 15px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  font-size: 17px;
+}
+
+ion-input {
+  text-indent: 10px;
+}
+
+.input input {
+  height: 40px;
+}
+
+.forgot-txt-container {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  --background: transparent;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 16px;
+  color: #ffffff;
+  margin: -1rem 0;
+}
+
+.lp-sp-btn-container {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0 2rem;
+  margin-top: -2rem;
+}
+
+.lp-sp-btn-text {
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 19px;
+  color: #333333;
+}
+
+.lp-sp-switch-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  margin: 0 2rem;
+}
+
+.lp-sp-account-text {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.lp-sp-switch-btn {
+  width: 90px;
+  height: 35px;
+}
+
+.lp-sp-switch-btn-text {
+  font-family: "Quicksand";
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 30px;
+  text-decoration: underline;
+  color: #ffffff;
+}

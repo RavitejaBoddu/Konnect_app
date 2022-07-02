@@ -1,24 +1,50 @@
-import { IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import { ellipsisVertical } from 'ionicons/icons';
-import ExploreContainer from '../../components/ExploreContainer';
-import './Groups.css';
+import {
+  IonCard,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonImg,
+  IonLabel,
+  IonPage,
+  IonSearchbar,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/react";
+import { ellipsisVertical } from "ionicons/icons";
+import "./Groups.css";
+import chatsData from "../../chatData";
+import ChatRowComponent from "../../components/Chat-Component/ChatRowComponent";
+const groupsData = chatsData.data.groups;
 
 const Groups = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Groups</IonTitle>
-          <IonIcon icon={ellipsisVertical} slot="end"></IonIcon>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Groups</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Groups page" />
+      <IonContent fullscreen className="chats-page">
+        <IonCard className="chats-header" lines="none">
+          <IonLabel className="chats-heading">Groups</IonLabel>
+          <IonImg src="assets/images/profile.png" className="profile-pic" />
+          <IonIcon
+            icon={ellipsisVertical}
+            className="chats-vertical-dots"
+            size="large"
+          />
+        </IonCard>
+        <div className="searchbar-container">
+          <IonSearchbar animated className="chats-searchbar"></IonSearchbar>
+        </div>
+        <div className="chats-container">
+          {groupsData.map((chat) => {
+            return (
+              <ChatRowComponent
+                key={chat.id}
+                name={chat.name}
+                image={chat.image}
+                msg={chat.msg}
+                time={chat.time}
+              />
+            );
+          })}
+        </div>
       </IonContent>
     </IonPage>
   );

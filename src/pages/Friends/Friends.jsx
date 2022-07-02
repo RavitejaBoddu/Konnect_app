@@ -1,24 +1,48 @@
-import { IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import { ellipsisVertical } from 'ionicons/icons';
-import ExploreContainer from '../../components/ExploreContainer';
-import './Friends.css';
+import {
+  IonCard,
+  IonContent,
+  IonIcon,
+  IonImg,
+  IonLabel,
+  IonPage,
+  IonSearchbar,
+} from "@ionic/react";
+import { ellipsisVertical } from "ionicons/icons";
+import { useState } from "react";
+import chatData from "../../chatData";
+import ChatRowComponent from "../../components/Chat-Component/ChatRowComponent";
+import "./Friends.css";
 
 const Friends = () => {
+  const contactData = chatData.data.chats;
+  const [isContactPage, setIsContactPage] = useState(true);
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Friends</IonTitle>
-          <IonIcon icon={ellipsisVertical} slot="end"></IonIcon>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Friends</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Friends page" />
+      <IonContent fullscreen className="chats-page">
+        <IonCard className="chats-header" lines="none">
+          <IonLabel className="chats-heading">Friends</IonLabel>
+          <IonImg src="assets/images/profile.png" className="profile-pic" />
+          <IonIcon
+            icon={ellipsisVertical}
+            className="chats-vertical-dots"
+            size="large"
+          />
+        </IonCard>
+        <div className="searchbar-container">
+          <IonSearchbar animated className="chats-searchbar"></IonSearchbar>
+        </div>
+        <div className="chats-container">
+          {contactData.map((chat) => {
+            return (
+              <ChatRowComponent
+                key={chat.id}
+                name={chat.name}
+                image={chat.image}
+                isContactPage={isContactPage}
+              />
+            );
+          })}
+        </div>
       </IonContent>
     </IonPage>
   );

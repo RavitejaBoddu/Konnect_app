@@ -1,16 +1,17 @@
 import {
   IonButton,
-  IonCard,
   IonContent,
+  IonGrid,
   IonImg,
   IonInput,
   IonLabel,
   IonPage,
+  IonRow,
   useIonRouter,
 } from "@ionic/react";
 import { useState } from "react";
 import { UserAuth } from "../../context/AuthContext";
-import "./Signup.css";
+import "../../theme/Login_Signup.css";
 import { toastController, alertController } from "@ionic/core";
 
 const Signup = () => {
@@ -24,7 +25,7 @@ const Signup = () => {
 
   const handleToast = async (msg) => {
     const toast = await toastController.create({
-      color: "light",
+      color: "dark3",
       position: "top",
       duration: 2000,
       message: msg,
@@ -34,14 +35,14 @@ const Signup = () => {
     await toast.present();
   };
 
-  const handleAlert = async(msg)=> {
+  const handleAlert = async (msg) => {
     const alert = await alertController.create({
       message: msg,
-      buttons: ['Ok'],
+      buttons: ["Ok"],
     });
 
     await alert.present();
-  }
+  };
 
   const handleSignup = async () => {
     var atposition = email.indexOf("@");
@@ -78,62 +79,72 @@ const Signup = () => {
       }
     } catch (e) {
       const msg = e.message;
-          handleAlert(msg);
+      handleAlert(msg);
     }
   };
 
   return (
     <IonPage>
-      <IonContent fullscreen className="signup-page">
-        <IonCard className="logo-container">
-          <IonImg className="sp-logo" src="assets/images/logo.png" />
-          <IonLabel className="sp-logo-text">Konnect.</IonLabel>
-        </IonCard>
-        <IonLabel className="hello-text">Hello there.</IonLabel>
-        <IonCard className="sp-input-container">
-          <IonInput
-            className="sp-input"
-            type="text"
-            placeholder="Name"
-            onIonChange={(e) => setName(e.detail.value)}
-            required
-          ></IonInput>
-          <IonInput
-            className="sp-input"
-            type="text"
-            placeholder="Email ID"
-            onIonChange={(e) => setEmail(e.detail.value)}
-            required
-          ></IonInput>
-          <IonInput
-            className="sp-input"
-            type="password"
-            placeholder="Password"
-            onIonChange={(e) => setPassword(e.detail.value)}
-            required
-          ></IonInput>
-        </IonCard>
-        <IonButton
-          className="sp-signup-btn"
-          shape="round"
-          color="light"
-          onClick={(e) => handleSignup()}
-        >
-          <IonLabel className="sp-signup-btn-text ion-text-capitalize">
-            Signup
-          </IonLabel>
-        </IonButton>
-        <IonLabel className="account-text">Already have an account?</IonLabel>
-        <IonButton
-          className="sp-login-btn"
-          fill="clear"
-          color="dark"
-          routerLink="/login"
-        >
-          <IonLabel className="sp-login-btn-text ion-text-capitalize">
-            Login
-          </IonLabel>
-        </IonButton>
+      <IonContent fullscreen className="lp-sp-page">
+        <IonGrid className="lp-sp-content">
+          <IonRow className="logo-container">
+            <IonImg className="logo" src="assets/images/logo.png" />
+            <IonLabel className="logo-text">Konnect.</IonLabel>
+          </IonRow>
+          <IonRow className="lp-sp-heading-container">
+            <IonLabel className="lp-sp-heading">Hello there.</IonLabel>
+          </IonRow>
+          <IonRow className="input-container">
+            <IonInput
+              className="input"
+              type="text"
+              placeholder="Name"
+              onIonChange={(e) => setName(e.detail.value)}
+              required
+            ></IonInput>
+            <IonInput
+              className="input"
+              type="text"
+              placeholder="Email ID"
+              onIonChange={(e) => setEmail(e.detail.value)}
+              required
+            />
+            <IonInput
+              className="input"
+              type="password"
+              placeholder="Password"
+              onIonChange={(e) => setPassword(e.detail.value)}
+              required
+            />
+          </IonRow>
+          <IonRow className="lp-sp-btn-container">
+            <IonButton
+              className="lp-sp-btn"
+              shape="round"
+              color="light"
+              onClick={(e) => handleSignup()}
+            >
+              <IonLabel className="lp-sp-btn-text ion-text-capitalize">
+                Signup
+              </IonLabel>
+            </IonButton>
+          </IonRow>
+          <IonRow class="lp-sp-switch-container">
+            <IonLabel className="account-text">
+              Already have an account?
+            </IonLabel>
+            <IonButton
+              className="lp-sp-switch-btn"
+              fill="clear"
+              color="dark"
+              routerLink="/login"
+            >
+              <IonLabel className="lp-sp-switch-btn-text ion-text-capitalize">
+                Login
+              </IonLabel>
+            </IonButton>
+          </IonRow>
+        </IonGrid>
       </IonContent>
     </IonPage>
   );

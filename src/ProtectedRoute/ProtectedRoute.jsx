@@ -1,13 +1,13 @@
-import { Redirect } from 'react-router-dom'
-import { UserAuth } from '../context/AuthContext'
+import { Redirect } from "react-router";
+import { UserAuth } from "../context/AuthContext";
 
-const ProtectedRoute = ({children}) => {
+const ProtectedRoute = ({ children }) => {
+  const { user } = UserAuth();
 
-    const {user} = UserAuth();
-    if(!user){
-        return <Redirect to='/' />
-    }
+  if (!user) {
+    return <Redirect to="/" />;
+  }
   return children;
-}
+};
 
-export default ProtectedRoute
+export default ProtectedRoute;
