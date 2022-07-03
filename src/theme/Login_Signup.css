@@ -92,7 +92,9 @@ ion-input {
 
 .lp-sp-btn-container {
   display: flex;
-  justify-content: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 0 2rem;
   margin-top: -2rem;
 }
@@ -130,4 +132,12 @@ ion-input {
   line-height: 30px;
   text-decoration: underline;
   color: #ffffff;
+}
+
+.alternate-logins{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  margin-top: 2rem;
 }

@@ -7,8 +7,10 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   FacebookAuthProvider,
+  sendEmailVerification,
 } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db} from "../firebase";
+import {doc, setDoc} from "firebase/firestore"
 
 const UserContext = createContext();
 
@@ -16,9 +18,14 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(true);
 
-  const createUser = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  const createUser = ( email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password)
   };
+
+  const verify = (auth) => {
+    sendEmailVerification(auth.currentUser);
+
+  }
 
   const login = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
@@ -56,6 +63,7 @@ export const AuthContextProvider = ({ children }) => {
         setLoggedIn,
         googleSignIn,
         facebookSignIn,
+        verify
       }}
     >
       {children}

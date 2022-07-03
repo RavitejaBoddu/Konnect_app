@@ -13,13 +13,15 @@ import { useState } from "react";
 import { UserAuth } from "../../context/AuthContext";
 import "../../theme/Login_Signup.css";
 import { toastController, alertController } from "@ionic/core";
+import { auth } from "../../firebase";
+import { sendEmailVerification } from "firebase/auth";
 
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { createUser, logout } = UserAuth();
+  const { createUser, logout, } = UserAuth();
 
   let router = useIonRouter();
 
@@ -70,12 +72,17 @@ const Signup = () => {
       } else {
         try {
           await createUser(email, password);
+          sendEmailVerification(auth.currentUser).then(()=>{
+            const msg = "A verification link has been sent to your email, please complete the verification and login."
+            handleAlert(msg);
+          });
           logout();
           router.push("/login");
         } catch (e) {
           const msg = e.message;
           handleAlert(msg);
         }
+        
       }
     } catch (e) {
       const msg = e.message;

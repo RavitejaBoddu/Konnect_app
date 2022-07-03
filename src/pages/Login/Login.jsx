@@ -1,7 +1,9 @@
 import {
   IonButton,
+  IonCol,
   IonContent,
   IonGrid,
+  IonIcon,
   IonImg,
   IonInput,
   IonItem,
@@ -13,13 +15,15 @@ import {
 import { useState } from "react";
 import { UserAuth } from "../../context/AuthContext";
 import { toastController, alertController } from "@ionic/core";
+import { logoGoogle, logoFacebook, logOut } from "ionicons/icons";
 import "../../theme/Login_Signup.css";
+import { auth } from "../../firebase";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login } = UserAuth();
+  const { login, logout } = UserAuth();
 
   let router = useIonRouter();
   const handleAlert = async (msg) => {
@@ -44,7 +48,7 @@ const Login = () => {
     await toast.present();
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
     var atposition = email.indexOf("@");
     var dotposition = email.lastIndexOf(".");
     try {
@@ -64,7 +68,14 @@ const Login = () => {
       } else {
         try {
           await login(email, password);
-          router.push("/home");
+          if(auth.currentUser.emailVerified){
+            router.push("/home");
+          }
+          else{
+            const msg = "Please complete the verification and try to login."
+            handleAlert(msg)
+            logout()
+          }
         } catch (e) {
           const msg = JSON.stringify(e.message);
           console.log(msg);
@@ -122,6 +133,7 @@ const Login = () => {
             </IonItem>
           </IonRow>
           <IonRow className="lp-sp-btn-container">
+            <IonCol>
             <IonButton
               className="lp-sp-btn"
               shape="round"
@@ -132,6 +144,12 @@ const Login = () => {
                 Login
               </IonLabel>
             </IonButton>
+           </IonCol>
+            <IonLabel>or</IonLabel>
+            <IonCol className="alternate-logins">
+            <IonIcon icon={logoGoogle} color="light" size="large"/>
+            <IonIcon icon={logoFacebook} color="light" size="large"/>
+            </IonCol>
           </IonRow>
           <IonRow class="lp-sp-switch-container">
             <IonLabel className="lp-account-text">
