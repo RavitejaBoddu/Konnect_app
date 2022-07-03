@@ -23,7 +23,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login, logout } = UserAuth();
+  const { login, logout, googleSignIn, facebookSignIn } = UserAuth();
 
   let router = useIonRouter();
   const handleAlert = async (msg) => {
@@ -101,6 +101,22 @@ const Login = () => {
       handleAlert(msg);
     }
   };
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleSignIn();
+      router.push("/home");
+    } catch (error) {
+      handleAlert(error.message);
+    }
+  };
+  const handleFacebookSignIn = async () => {
+    try {
+      await facebookSignIn();
+      router.push("/home");
+    } catch (error) {
+      handleAlert(error.message);
+    }
+  };
 
   return (
     <IonPage>
@@ -133,7 +149,7 @@ const Login = () => {
             </IonItem>
           </IonRow>
           <IonRow className="lp-sp-btn-container">
-            <IonCol>
+            <IonCol size="auto">
             <IonButton
               className="lp-sp-btn"
               shape="round"
@@ -145,10 +161,10 @@ const Login = () => {
               </IonLabel>
             </IonButton>
            </IonCol>
-            <IonLabel>or</IonLabel>
+            <IonLabel style={{marginTop: "5px"}}>(or)</IonLabel>
             <IonCol className="alternate-logins">
-            <IonIcon icon={logoGoogle} color="light" size="large"/>
-            <IonIcon icon={logoFacebook} color="light" size="large"/>
+            <IonIcon icon={logoGoogle} color="light" size="large" onClick={(e)=>{handleGoogleSignIn()}}/>
+            <IonIcon icon={logoFacebook} color="light" size="large" onClick={(e)=>{handleFacebookSignIn()}} />
             </IonCol>
           </IonRow>
           <IonRow class="lp-sp-switch-container">

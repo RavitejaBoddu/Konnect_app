@@ -1,0 +1,108 @@
+.profile-page{
+    --background:#3C4368;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-heading{
+    flex: 10;
+  font-family: "Quicksand";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 43px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  height: auto;
+}
+.profile-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    position: relative;
+    margin-top: 10rem;
+    height: 550px;
+    gap: 7px;
+}
+
+.pro-pic-container{
+    position: absolute;
+    top: -29%;
+    width:200px;
+    height: 200px;
+    margin: 2rem 1rem;
+    border-radius: 100px;
+    --background: transparent;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:3rem;
+    margin-bottom: 1rem;
+}
+
+.flex-row{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 360px;
+    height: 60px;
+}
+
+.col1{
+    display: flex;
+    flex-direction: column;
+    flex: 4;
+    justify-content: center;
+    align-items:flex-start;
+    padding-left: 20px;
+    margin-left: 20px;
+    gap: 5px;
+}
+.col2{
+    display: flex;
+    flex:1;
+    justify-content: center;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.flex-row-label{
+    font-family: 'Quicksand';
+font-weight: 600;
+font-size: 20px;
+line-height: 21px;
+color: #000000;
+}
+.flex-row-value{
+    display: flex;
+    justify-content: center;
+    align-items:flex-start;
+    gap: 7px;
+    font-family: 'Roboto';
+font-style: italic;
+font-weight: 400;
+font-size: 16px;
+line-height: 16px;
+color: #606460;
+}
+
+.Profile-name{
+    font-family: 'Quicksand';
+font-weight: 700;
+font-size: 24px;
+color: #000000;
+}
+

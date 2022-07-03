@@ -16,6 +16,7 @@ import Friends from "../Friends/Friends";
 import Settings from "../Settings/Settings";
 import Login from "../Login/Login";
 import ProtectedRoute from "../../ProtectedRoute/ProtectedRoute";
+import Profile from "../Profile/Profile";
 
 const Home = () => {
   return (
@@ -43,6 +44,11 @@ const Home = () => {
               <Settings />
             </ProtectedRoute>
           </Route>
+          <Route path="/home/profile">
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            </Route>
           <Route exact path="/home">
             <Redirect to="/home/chats" />
           </Route>

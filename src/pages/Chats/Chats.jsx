@@ -1,15 +1,12 @@
 import {
   IonCard,
   IonContent,
-  IonHeader,
   IonIcon,
   IonImg,
-  IonItem,
   IonLabel,
   IonPage,
   IonSearchbar,
-  IonTitle,
-  IonToolbar,
+  useIonRouter,
 } from "@ionic/react";
 import "./Chats.css";
 import { ellipsisVertical } from "ionicons/icons";
@@ -18,12 +15,18 @@ import ChatRowComponent from "../../components/Chat-Component/ChatRowComponent";
 const chatData = chatsData.data.chats;
 
 const Chats = () => {
+  
+  let router = useIonRouter();
+
+  const goToProfile = () => {
+     router.push("/home/profile")
+  }
   return (
     <IonPage>
       <IonContent fullscreen className="chats-page">
         <IonCard className="chats-header" lines="none">
           <IonLabel className="chats-heading">Konnect.</IonLabel>
-          <IonImg src="assets/images/profile.png" className="profile-pic" />
+          <IonImg src="assets/images/profile.png" className="profile-pic" onClick={(e)=>{goToProfile()}}/>
           <IonIcon
             icon={ellipsisVertical}
             className="chats-vertical-dots"

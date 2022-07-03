@@ -24,7 +24,13 @@ export const AuthContextProvider = ({ children }) => {
 
   const verify = (auth) => {
     sendEmailVerification(auth.currentUser);
+  }
 
+  const addData = async(auth, name, email) => {
+    await setDoc(doc(db, "users", auth.currentUser.uid), {
+      name : name,
+      email : email
+    });
   }
 
   const login = (email, password) => {
@@ -63,7 +69,8 @@ export const AuthContextProvider = ({ children }) => {
         setLoggedIn,
         googleSignIn,
         facebookSignIn,
-        verify
+        verify,
+        addData
       }}
     >
       {children}
