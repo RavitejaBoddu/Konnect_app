@@ -29,13 +29,13 @@
     border-top-right-radius: 40px;
     position: relative;
     margin-top: 10rem;
-    height: 550px;
+    height:70vh;
     gap: 7px;
 }
 
 .pro-pic-container{
     position: absolute;
-    top: -29%;
+    top: -22%;
     width:200px;
     height: 200px;
     margin: 2rem 1rem;
@@ -49,8 +49,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top:3rem;
     margin-bottom: 1rem;
+}
+
+.edit-icon{
+    height: 30px;
+    width: 30px;
 }
 
 .flex-row{
@@ -102,7 +106,12 @@ color: #606460;
 .Profile-name{
     font-family: 'Quicksand';
 font-weight: 700;
-font-size: 24px;
+font-size: 20px;
 color: #000000;
+width: 150px;
+}
+
+.Profile-container{
+    width: 150px;
 }
 

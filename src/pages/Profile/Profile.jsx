@@ -11,9 +11,12 @@ import {
   useIonRouter,
 } from "@ionic/react";
 import { qrCodeOutline, arrowBackOutline, chevronForward, atOutline, callOutline, lockClosedOutline, calendarNumberOutline, informationCircleOutline } from "ionicons/icons";
+import { UserAuth } from "../../context/AuthContext";
 import "./Profile.css";
 
 const Profile = () => {
+
+  const { user } = UserAuth();
 
     let router = useIonRouter();
 
@@ -28,7 +31,7 @@ const Profile = () => {
             icon={arrowBackOutline}
             className="chats-vertical-dots"
             size="large"
-            color="light"
+            color="white"
             onClick={(e)=>{handleBack()}}
           />
           <IonLabel className="profile-heading">My Profile</IonLabel>
@@ -36,7 +39,7 @@ const Profile = () => {
             icon={qrCodeOutline}
             className="chats-vertical-dots"
             size="large"
-            color="light"
+            color="white"
           />
         </IonCard>
         <IonGrid className="profile-details">
@@ -44,19 +47,19 @@ const Profile = () => {
           <IonImg src="assets/images/profile-pic.png" />
         </IonCard>
         <IonRow className="row">
-            <IonCol>
+            <IonCol className="Profile-container">
                 <IonLabel className="Profile-name">
-                    Cj_Barry
+                    {user.displayName}
                 </IonLabel>
             </IonCol>
-            <IonCol>
-                <IonImg src="assets/icon/Edit.svg" />
+            <IonCol >
+                <IonImg src="assets/icon/Edit.svg"  className="edit-icon"/>
             </IonCol>
           </IonRow >
           <IonRow className="flex-row"> 
             <IonCol className="col1">
                 <IonLabel className="flex-row-label">Email Address</IonLabel>
-                <IonLabel className="flex-row-value"><IonIcon icon={atOutline} />cj_barry@gmail.com</IonLabel>
+                <IonLabel className="flex-row-value"><IonIcon icon={atOutline} />{user.email}</IonLabel>
             </IonCol>
             <IonCol className="col2">
                 <IonIcon icon={chevronForward} size="large" color="medium"/>

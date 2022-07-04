@@ -59,7 +59,6 @@
   justify-content: space-between;
   align-items: center;
   margin: 0 2rem;
-  gap: 2rem;
 }
 
 .input {
@@ -68,6 +67,7 @@
   box-shadow: -7px 6px 15px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   font-size: 17px;
+  margin-bottom: 1.5rem;
 }
 
 ion-input {
@@ -85,7 +85,6 @@ ion-input {
   --background: transparent;
   font-weight: 300;
   font-size: 14px;
-  /* line-height: 18px; */
   letter-spacing: 0.5px;
   color: #ffffff;
   margin: -1rem 0;
@@ -99,12 +98,14 @@ ion-input {
   margin: 0 2rem;
   margin-top: -2rem;
 }
+.lp-sp-btn{
+color: #333333;}
 
 .lp-sp-btn-text {
   font-weight: 600;
   font-size: 15px;
   line-height: 19px;
-  color: #333333;
+  color: #000000;
 }
 
 .lp-sp-switch-container {
@@ -113,7 +114,6 @@ ion-input {
   justify-content: center;
   align-items: flex-end;
   margin: -1rem 2rem;
-  /* margin-top: -1rem; */
 }
 
 .lp-sp-account-text {
@@ -140,6 +140,7 @@ ion-input {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
   margin-top: 2rem;
+  gap: 2rem;
 }
+

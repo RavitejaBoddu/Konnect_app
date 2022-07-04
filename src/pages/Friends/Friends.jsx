@@ -6,6 +6,7 @@ import {
   IonLabel,
   IonPage,
   IonSearchbar,
+  useIonRouter,
 } from "@ionic/react";
 import { ellipsisVertical } from "ionicons/icons";
 import { useState } from "react";
@@ -15,13 +16,19 @@ import "./Friends.css";
 
 const Friends = () => {
   const contactData = chatData.data.chats;
-  const [isContactPage, setIsContactPage] = useState(true);
+  const [isContactPage] = useState(true);
+
+  let router = useIonRouter();
+
+  const goToProfile = () => {
+    router.push("/home/profile")
+ }
   return (
     <IonPage>
-      <IonContent fullscreen className="chats-page">
+      <IonContent fullscreen className="friends-page">
         <IonCard className="chats-header" lines="none">
           <IonLabel className="chats-heading">Friends</IonLabel>
-          <IonImg src="assets/images/profile.png" className="profile-pic" />
+          <IonImg src="assets/images/profile.png" className="profile-pic" onClick={(e)=>{goToProfile()}}/>
           <IonIcon
             icon={ellipsisVertical}
             className="chats-vertical-dots"

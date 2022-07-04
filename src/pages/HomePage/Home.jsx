@@ -56,7 +56,7 @@ const Home = () => {
             <Login />
           </Route>
         </IonRouterOutlet>
-        <IonTabBar slot="bottom">
+        <IonTabBar slot="bottom" color="white-smoke">
           <IonTabButton tab="chats" href="/home/chats">
             <IonIcon icon={chatbubbles} />
             <IonLabel>Chats</IonLabel>

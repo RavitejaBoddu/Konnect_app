@@ -85,6 +85,9 @@ const Signup = () => {
             handleAlert(msg);
           });
           logout();
+          setName("")
+          setEmail("")
+          setPassword("")
           router.push("/login");
         } catch (e) {
           const msg = e.message;
@@ -114,6 +117,7 @@ const Signup = () => {
               className="input"
               type="text"
               placeholder="Name"
+              value={name}
               onIonChange={(e) => setName(e.detail.value)}
               required
             ></IonInput>
@@ -121,6 +125,7 @@ const Signup = () => {
               className="input"
               type="text"
               placeholder="Email ID"
+              value={email}
               onIonChange={(e) => setEmail(e.detail.value)}
               required
             />
@@ -128,6 +133,7 @@ const Signup = () => {
               className="input"
               type="password"
               placeholder="Password"
+              value={password}
               onIonChange={(e) => setPassword(e.detail.value)}
               required
             />
@@ -136,7 +142,7 @@ const Signup = () => {
             <IonButton
               className="lp-sp-btn"
               shape="round"
-              color="light"
+              color="white-smoke"
               onClick={(e) => handleSignup()}
             >
               <IonLabel className="lp-sp-btn-text ion-text-capitalize">

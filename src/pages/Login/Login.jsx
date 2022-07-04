@@ -15,7 +15,7 @@ import {
 import { useState } from "react";
 import { UserAuth } from "../../context/AuthContext";
 import { toastController, alertController } from "@ionic/core";
-import { logoGoogle, logoFacebook, logOut } from "ionicons/icons";
+import { logoGoogle, logoFacebook } from "ionicons/icons";
 import "../../theme/Login_Signup.css";
 import { auth } from "../../firebase";
 
@@ -76,6 +76,8 @@ const Login = () => {
             handleAlert(msg)
             logout()
           }
+          setEmail("")
+          setPassword("")
         } catch (e) {
           const msg = JSON.stringify(e.message);
           console.log(msg);
@@ -134,6 +136,7 @@ const Login = () => {
               className="input"
               type="text"
               placeholder="Email ID"
+              value={email}
               onIonChange={(e) => setEmail(e.detail.value)}
               required
             />
@@ -141,6 +144,7 @@ const Login = () => {
               className="input"
               type="password"
               placeholder="Password"
+              value={password}
               onIonChange={(e) => setPassword(e.detail.value)}
               required
             />
@@ -153,7 +157,7 @@ const Login = () => {
             <IonButton
               className="lp-sp-btn"
               shape="round"
-              color="light"
+              color="white-smoke"
               onClick={(e) => handleLogin()}
             >
               <IonLabel className="lp-sp-btn-text ion-text-capitalize">
@@ -161,11 +165,12 @@ const Login = () => {
               </IonLabel>
             </IonButton>
            </IonCol>
-            <IonLabel style={{marginTop: "5px"}}>(or)</IonLabel>
+            {/* <IonLabel style={{marginTop: "15px"}}>(or)</IonLabel>
             <IonCol className="alternate-logins">
-            <IonIcon icon={logoGoogle} color="light" size="large" onClick={(e)=>{handleGoogleSignIn()}}/>
-            <IonIcon icon={logoFacebook} color="light" size="large" onClick={(e)=>{handleFacebookSignIn()}} />
-            </IonCol>
+              <IonButton fill="outline" color="light" shape="round" className="alternate-icon" onClick={(e)=>{handleGoogleSignIn()}}><IonIcon icon={logoGoogle} color="light"  /></IonButton>
+              <IonButton fill="outline" color="light" shape="round" className="alternate-icon" onClick={(e)=>{handleFacebookSignIn()}} ><IonIcon icon={logoFacebook} color="light" /></IonButton>
+            
+            </IonCol> */}
           </IonRow>
           <IonRow class="lp-sp-switch-container">
             <IonLabel className="lp-account-text">

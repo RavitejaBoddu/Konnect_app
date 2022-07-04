@@ -5,10 +5,8 @@
   align-items: center;
   font-family: "Quicksand";
   font-size: 18px;
-  gap: 1.5rem;
   font-weight: 700;
-  margin: 0 2rem;
-  margin-bottom: 3rem;
+  margin:1.5rem;
   color: #454545;
 }
 
@@ -21,14 +19,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0.8rem 0;
 }
 .three-items {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0.8rem 0;
+}
+.setting-col{
+  margin: 0.8rem 0;
 }
 
 .setting-heading {
   color: #2457c5;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
+  
 }

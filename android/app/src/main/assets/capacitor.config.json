@@ -1,0 +1,6 @@
+{
+	"appId": "com.konnect_ptg.app",
+	"appName": "Konnect",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}

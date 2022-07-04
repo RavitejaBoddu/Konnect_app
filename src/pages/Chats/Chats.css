@@ -43,18 +43,15 @@
 }
 
 .chats-searchbar {
-  --background: #f5fdff;
+  --background: #fefefe;
   box-shadow: none;
   -webkit-box-shadow: none;
-  width: 300px;
   height: 35px;
   --border-radius: 10px;
-  margin-top: 12px;
+  margin:1rem 1rem;
 }
 
 .chats-container {
   margin-top: 0.8rem;
 }
 
-.chat-info {
-}
