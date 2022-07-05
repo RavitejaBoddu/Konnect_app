@@ -17,6 +17,7 @@ import Settings from "../Settings/Settings";
 import Login from "../Login/Login";
 import ProtectedRoute from "../../ProtectedRoute/ProtectedRoute";
 import Profile from "../Profile/Profile";
+import ChatComponent from "../ChatComponent/ChatComponent";
 
 const Home = () => {
   return (
@@ -54,6 +55,11 @@ const Home = () => {
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/chat/:id">
+            <ProtectedRoute>
+              <ChatComponent />
+            </ProtectedRoute>
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom" color="white">

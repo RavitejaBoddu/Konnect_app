@@ -47,6 +47,7 @@ const Chats = () => {
             return (
               <ChatRowComponent
                 key={chat.id}
+                id={chat.id}
                 name={chat.name}
                 image={chat.image}
                 msg={chat.msg}

@@ -41,6 +41,7 @@ import Signup from "./pages/Signup/Signup";
 import { AuthContextProvider } from "./context/AuthContext";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import Profile from "./pages/Profile/Profile";
+import ChatComponent from "./pages/ChatComponent/ChatComponent";
 
 setupIonicReact();
 
@@ -87,6 +88,11 @@ const App = () => (
                 <Profile />
               </ProtectedRoute>
             </Route>
+            <Route path="/chat/:id">
+            <ProtectedRoute>
+              <ChatComponent />
+            </ProtectedRoute>
+          </Route>
             <Route exact path="/">
               <Redirect to="/login" />
             </Route>
