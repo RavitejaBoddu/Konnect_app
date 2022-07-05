@@ -8,8 +8,8 @@ import {
   signInWithPopup,
   FacebookAuthProvider,
 } from "firebase/auth";
-import { auth, db} from "../firebase";
-import {doc, setDoc} from "firebase/firestore"
+import { auth, db } from "../firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 const UserContext = createContext();
 
@@ -17,16 +17,16 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(true);
 
-  const createUser = ( email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password)
+  const createUser = (email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const addData = async(auth, name, email) => {
+  const addData = async (auth, name, email) => {
     await setDoc(doc(db, "users", auth.currentUser.uid), {
-      name : name,
-      email : email
+      name: name,
+      email: email,
     });
-  }
+  };
 
   const login = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
@@ -64,7 +64,7 @@ export const AuthContextProvider = ({ children }) => {
         setLoggedIn,
         googleSignIn,
         facebookSignIn,
-        addData
+        addData,
       }}
     >
       {children}

@@ -1,6 +1,7 @@
 import {
   IonCard,
   IonContent,
+  IonGrid,
   IonIcon,
   IonImg,
   IonLabel,
@@ -15,18 +16,23 @@ import ChatRowComponent from "../../components/Chat-Component/ChatRowComponent";
 const chatData = chatsData.data.chats;
 
 const Chats = () => {
-  
   let router = useIonRouter();
 
   const goToProfile = () => {
-     router.push("/home/profile")
-  }
+    router.push("/home/profile");
+  };
   return (
     <IonPage>
       <IonContent fullscreen className="chats-page">
         <IonCard className="chats-header" lines="none">
           <IonLabel className="chats-heading">Konnect.</IonLabel>
-          <IonImg src="assets/images/profile.png" className="profile-pic" onClick={(e)=>{goToProfile()}}/>
+          <IonImg
+            src="assets/images/profile.png"
+            className="profile-pic"
+            onClick={(e) => {
+              goToProfile();
+            }}
+          />
           <IonIcon
             icon={ellipsisVertical}
             className="chats-vertical-dots"
@@ -36,7 +42,7 @@ const Chats = () => {
         <div className="searchbar-container">
           <IonSearchbar animated className="chats-searchbar"></IonSearchbar>
         </div>
-        <div className="chats-container">
+        <IonGrid className="chats-container">
           {chatData.map((chat) => {
             return (
               <ChatRowComponent
@@ -48,7 +54,7 @@ const Chats = () => {
               />
             );
           })}
-        </div>
+        </IonGrid>
       </IonContent>
     </IonPage>
   );

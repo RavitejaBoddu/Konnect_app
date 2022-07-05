@@ -66,14 +66,24 @@ const Settings = () => {
           </IonRow>
           <IonRow className="settings-row">
             <IonCol className="setting-heading">About</IonCol>
-            <IonCol className="setting-col"><IonLabel>Content Policy</IonLabel></IonCol>
-            <IonCol className="setting-col"><IonLabel>Privacy policy</IonLabel></IonCol>
-            <IonCol className="setting-col"><IonLabel>User Agreement</IonLabel></IonCol>
+            <IonCol className="setting-col">
+              <IonLabel>Content Policy</IonLabel>
+            </IonCol>
+            <IonCol className="setting-col">
+              <IonLabel>Privacy policy</IonLabel>
+            </IonCol>
+            <IonCol className="setting-col">
+              <IonLabel>User Agreement</IonLabel>
+            </IonCol>
           </IonRow>
           <IonRow className="settings-row">
             <IonCol className="setting-heading">Support</IonCol>
-            <IonCol className="setting-col"><IonLabel>Help FAQ</IonLabel></IonCol>
-            <IonCol className="setting-col"><IonLabel>Report a Bug</IonLabel></IonCol>
+            <IonCol className="setting-col">
+              <IonLabel>Help FAQ</IonLabel>
+            </IonCol>
+            <IonCol className="setting-col">
+              <IonLabel>Report a Bug</IonLabel>
+            </IonCol>
           </IonRow>
           <IonRow className="logout-btn">
             <IonButton

@@ -6,7 +6,7 @@
   font-family: "Quicksand";
   font-size: 18px;
   font-weight: 700;
-  margin:1.5rem;
+  margin: 1.5rem;
   color: #454545;
 }
 
@@ -15,24 +15,27 @@
   width: 100%;
   justify-content: center;
 }
+
 .two-items {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0.8rem 0;
 }
+
 .three-items {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0.8rem 0;
 }
-.setting-col{
+
+.setting-col {
   margin: 0.8rem 0;
 }
 
 .setting-heading {
   color: #2457c5;
   margin-bottom: 1rem;
-  
+
 }

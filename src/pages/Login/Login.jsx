@@ -3,49 +3,53 @@ import {
   IonCol,
   IonContent,
   IonGrid,
-  IonIcon,
   IonImg,
   IonInput,
   IonItem,
   IonLabel,
   IonPage,
   IonRow,
+  useIonAlert,
   useIonRouter,
+  useIonToast,
 } from "@ionic/react";
 import { useState } from "react";
 import { UserAuth } from "../../context/AuthContext";
-import { toastController, alertController } from "@ionic/core";
-import { logoGoogle, logoFacebook } from "ionicons/icons";
+import { logoGoogle, logoFacebook, alertOutline } from "ionicons/icons";
 import "../../theme/Login_Signup.css";
 import { auth } from "../../firebase";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [present] = useIonToast();
+  const [presentAlert] = useIonAlert();
 
   const { login, logout, googleSignIn, facebookSignIn } = UserAuth();
 
   let router = useIonRouter();
-  const handleAlert = async (msg) => {
-    const alert = await alertController.create({
-      header: "Oh no!",
+  const handleAlert = (msg) => {
+    presentAlert({
+      header: "Alert",
       message: msg,
-      buttons: ["Ok"],
+      buttons: ["OK"],
+      backdropDismiss: true,
+      translucent: true,
+      animated: true,
+      cssClass: "lp-sp-alert",
     });
-
-    await alert.present();
   };
 
-  const handleToast = async (msg) => {
-    const toast = await toastController.create({
-      color: "dark3",
-      position: "top",
-      duration: 2000,
+  const handleToast = (msg) => {
+    present({
       message: msg,
-      translucent: false,
-      showCloseButton: true,
+      position: "top",
+      animated: true,
+      duration: 2000,
+      color: "dark3",
+      mode: "ios",
+      icon: alertOutline,
     });
-    await toast.present();
   };
 
   const handleLogin = async (e) => {
@@ -68,16 +72,15 @@ const Login = () => {
       } else {
         try {
           await login(email, password);
-          if(auth.currentUser.emailVerified){
+          if (auth.currentUser.emailVerified) {
             router.push("/home");
+          } else {
+            const msg = "Please complete the verification and try to login.";
+            handleAlert(msg);
+            logout();
           }
-          else{
-            const msg = "Please complete the verification and try to login."
-            handleAlert(msg)
-            logout()
-          }
-          setEmail("")
-          setPassword("")
+          setEmail("");
+          setPassword("");
         } catch (e) {
           const msg = JSON.stringify(e.message);
           console.log(msg);
@@ -154,17 +157,17 @@ const Login = () => {
           </IonRow>
           <IonRow className="lp-sp-btn-container">
             <IonCol size="auto">
-            <IonButton
-              className="lp-sp-btn"
-              shape="round"
-              color="white-smoke"
-              onClick={(e) => handleLogin()}
-            >
-              <IonLabel className="lp-sp-btn-text ion-text-capitalize">
-                Login
-              </IonLabel>
-            </IonButton>
-           </IonCol>
+              <IonButton
+                className="lp-sp-btn"
+                shape="round"
+                color="white-smoke"
+                onClick={(e) => handleLogin()}
+              >
+                <IonLabel className="lp-sp-btn-text ion-text-capitalize">
+                  Login
+                </IonLabel>
+              </IonButton>
+            </IonCol>
             {/* <IonLabel style={{marginTop: "15px"}}>(or)</IonLabel>
             <IonCol className="alternate-logins">
               <IonButton fill="outline" color="light" shape="round" className="alternate-icon" onClick={(e)=>{handleGoogleSignIn()}}><IonIcon icon={logoGoogle} color="light"  /></IonButton>

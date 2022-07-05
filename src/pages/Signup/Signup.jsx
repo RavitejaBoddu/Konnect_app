@@ -7,43 +7,50 @@ import {
   IonLabel,
   IonPage,
   IonRow,
+  useIonAlert,
   useIonRouter,
+  useIonToast,
 } from "@ionic/react";
 import { useState } from "react";
 import { UserAuth } from "../../context/AuthContext";
 import "../../theme/Login_Signup.css";
-import { toastController, alertController } from "@ionic/core";
 import { auth } from "../../firebase";
 import { sendEmailVerification, updateProfile } from "firebase/auth";
+import { alertOutline } from "ionicons/icons";
 
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [present] = useIonToast();
+  const [presentAlert] = useIonAlert();
 
   const { createUser, logout, addData } = UserAuth();
 
   let router = useIonRouter();
 
   const handleToast = async (msg) => {
-    const toast = await toastController.create({
-      color: "dark3",
-      position: "top",
-      duration: 2000,
+    present({
       message: msg,
-      translucent: false,
-      showCloseButton: true,
+      position: "top",
+      animated: true,
+      duration: 2000,
+      color: "dark3",
+      mode: "ios",
+      icon: alertOutline,
     });
-    await toast.present();
   };
 
   const handleAlert = async (msg) => {
-    const alert = await alertController.create({
+    presentAlert({
+      header: "Alert",
       message: msg,
-      buttons: ["Ok"],
+      buttons: ["OK"],
+      backdropDismiss: true,
+      translucent: true,
+      animated: true,
+      cssClass: "lp-sp-alert",
     });
-
-    await alert.present();
   };
 
   const handleSignup = async () => {
@@ -73,27 +80,29 @@ const Signup = () => {
         try {
           await createUser(email, password);
           await updateProfile(auth.currentUser, {
-            displayName: name
-          }).then(()=>{
-            console.log(auth.currentUser.displayName)
-          }).catch((error)=>{
-            handleAlert(error.message);
-          });
+            displayName: name,
+          })
+            .then(() => {
+              console.log(auth.currentUser.displayName);
+            })
+            .catch((error) => {
+              handleAlert(error.message);
+            });
           await addData(auth, name, email);
-          sendEmailVerification(auth.currentUser).then(()=>{
-            const msg = "A verification link has been sent to your email, please complete the verification and login."
+          sendEmailVerification(auth.currentUser).then(() => {
+            const msg =
+              "A verification link has been sent to your email, please complete the verification and login.";
             handleAlert(msg);
           });
           logout();
-          setName("")
-          setEmail("")
-          setPassword("")
+          setName("");
+          setEmail("");
+          setPassword("");
           router.push("/login");
         } catch (e) {
           const msg = e.message;
           handleAlert(msg);
         }
-        
       }
     } catch (e) {
       const msg = e.message;

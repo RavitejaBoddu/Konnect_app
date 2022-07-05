@@ -48,10 +48,9 @@
   -webkit-box-shadow: none;
   height: 35px;
   --border-radius: 10px;
-  margin:1rem 1rem;
+  margin: 1rem 1rem;
 }
 
 .chats-container {
   margin-top: 0.8rem;
 }
-

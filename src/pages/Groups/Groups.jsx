@@ -15,18 +15,23 @@ import ChatRowComponent from "../../components/Chat-Component/ChatRowComponent";
 const groupsData = chatsData.data.groups;
 
 const Groups = () => {
-
   let router = useIonRouter();
 
   const goToProfile = () => {
-    router.push("/home/profile")
- }
+    router.push("/home/profile");
+  };
   return (
     <IonPage>
       <IonContent fullscreen className="groups-page">
         <IonCard className="chats-header" lines="none">
           <IonLabel className="chats-heading">Groups</IonLabel>
-          <IonImg src="assets/images/profile.png" className="profile-pic" onClick={(e)=>{goToProfile()}} />
+          <IonImg
+            src="assets/images/profile.png"
+            className="profile-pic"
+            onClick={(e) => {
+              goToProfile();
+            }}
+          />
           <IonIcon
             icon={ellipsisVertical}
             className="chats-vertical-dots"

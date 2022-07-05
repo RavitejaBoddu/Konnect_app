@@ -2,13 +2,7 @@
   --background: url("../../public/assets/images/login.png") no-repeat center
     center fixed;
   height: 100%;
-  background-size: 100% 100%;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-position: center;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../public/assets/images/login.png', sizingMethod='scale');
-  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../public/assets/images/login.png', sizingMethod='scale')";
+  padding: 5%;
 }
 
 .lp-sp-content {
@@ -98,8 +92,10 @@ ion-input {
   margin: 0 2rem;
   margin-top: -2rem;
 }
-.lp-sp-btn{
-color: #333333;}
+
+.lp-sp-btn {
+  color: #333333;
+}
 
 .lp-sp-btn-text {
   font-weight: 600;
@@ -136,7 +132,7 @@ color: #333333;}
   color: #ffffff;
 }
 
-.alternate-logins{
+.alternate-logins {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -144,3 +140,8 @@ color: #333333;}
   gap: 2rem;
 }
 
+.lp-sp-alert {
+  --backdrop-opacity: 0.4;
+  --background: #eefafe;
+  border-radius: 30px;
+}

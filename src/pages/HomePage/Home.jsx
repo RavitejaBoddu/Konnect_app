@@ -45,10 +45,10 @@ const Home = () => {
             </ProtectedRoute>
           </Route>
           <Route path="/home/profile">
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            </Route>
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          </Route>
           <Route exact path="/home">
             <Redirect to="/home/chats" />
           </Route>
@@ -56,7 +56,7 @@ const Home = () => {
             <Login />
           </Route>
         </IonRouterOutlet>
-        <IonTabBar slot="bottom" color="white-smoke">
+        <IonTabBar slot="bottom" color="white">
           <IonTabButton tab="chats" href="/home/chats">
             <IonIcon icon={chatbubbles} />
             <IonLabel>Chats</IonLabel>

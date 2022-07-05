@@ -1,14 +1,14 @@
-.profile-page{
-    --background:#3C4368;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+.profile-page {
+  --background: #3c4368;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.profile-heading{
-    flex: 10;
+.profile-heading {
+  flex: 10;
   font-family: "Quicksand";
   font-style: normal;
   font-weight: 600;
@@ -19,99 +19,100 @@
   color: #fff;
   height: auto;
 }
-.profile-details{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: #fff;
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
-    position: relative;
-    margin-top: 10rem;
-    height:70vh;
-    gap: 7px;
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  gap: 7px;
 }
 
-.pro-pic-container{
-    position: absolute;
-    top: -22%;
-    width:200px;
-    height: 200px;
-    margin: 2rem 1rem;
-    border-radius: 100px;
-    --background: transparent;
-    box-shadow: none;
-    -webkit-box-shadow: none;
+.pro-pic-container {
+  --background: transparent;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  margin: 3rem 3rem;
+  width: auto;
+  height: auto;
+  border-radius: 20px;
 }
 
-.row{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1rem;
+.pro-pic {
+  max-width: 100%;
+  height: auto;
 }
 
-.edit-icon{
-    height: 30px;
-    width: 30px;
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5rem 1rem;
 }
 
-.flex-row{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 360px;
-    height: 60px;
+.edit-icon {
+  display: flex;
+  height: 20px;
+  width: 20px;
+  margin-left: 1rem;
 }
 
-.col1{
-    display: flex;
-    flex-direction: column;
-    flex: 4;
-    justify-content: center;
-    align-items:flex-start;
-    padding-left: 20px;
-    margin-left: 20px;
-    gap: 5px;
-}
-.col2{
-    display: flex;
-    flex:1;
-    justify-content: center;
-    align-items: center;
-    padding-right: 20px;
+.flex-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 300px;
+  height: 60px;
+  background: rgba(218, 233, 244, 0.5);
+  border-radius: 20px;
+  margin-bottom: 5px;
 }
 
-.flex-row-label{
-    font-family: 'Quicksand';
-font-weight: 600;
-font-size: 20px;
-line-height: 21px;
-color: #000000;
-}
-.flex-row-value{
-    display: flex;
-    justify-content: center;
-    align-items:flex-start;
-    gap: 7px;
-    font-family: 'Roboto';
-font-style: italic;
-font-weight: 400;
-font-size: 16px;
-line-height: 16px;
-color: #606460;
+.col1 {
+  display: flex;
+  flex-direction: column;
+  flex: 4;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 20px;
+  margin-left: 20px;
+  gap: 5px;
 }
 
-.Profile-name{
-    font-family: 'Quicksand';
-font-weight: 700;
-font-size: 20px;
-color: #000000;
-width: 150px;
+.col2 {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 }
 
-.Profile-container{
-    width: 150px;
+.flex-row-label {
+  font-family: "Quicksand";
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 21px;
+  color: #000000;
 }
 
+.flex-row-value {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 7px;
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 400;
+  font-size: 14px;
+  color: #606460;
+}
+
+.Profile-name {
+  font-family: "Quicksand";
+  font-weight: 700;
+  font-size: 20px;
+  color: #000000;
+  width: 150px;
+}
