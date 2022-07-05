@@ -1,15 +1,19 @@
 import {
+  IonButton,
   IonCard,
   IonCol,
   IonContent,
   IonGrid,
   IonIcon,
   IonImg,
+  IonInput,
   IonLabel,
   IonPage,
   IonRow,
+  useIonAlert,
   useIonRouter,
 } from "@ionic/react";
+import { updateProfile } from "firebase/auth";
 import {
   qrCodeOutline,
   arrowBackOutline,
@@ -19,13 +23,63 @@ import {
   calendarNumberOutline,
   informationCircleOutline,
 } from "ionicons/icons";
+import { useState } from "react";
 import { UserAuth } from "../../context/AuthContext";
+import { auth, db } from "../../firebase";
+import { doc, updateDoc } from "firebase/firestore";
+import { closeCircleOutline, checkmarkCircleOutline } from "ionicons/icons";
 import "./Profile.css";
 
 const Profile = () => {
   const { user } = UserAuth();
+  const user_id = user.uid;
+  const [uname, setUname] = useState(user.displayName);
+  const [isUpdate, setIsUpdate] = useState(false);
 
   let router = useIonRouter();
+  const [presentAlert] = useIonAlert();
+
+  const handleAlert = async (msg) => {
+    presentAlert({
+      header: "Alert",
+      message: msg,
+      buttons: ["OK"],
+      backdropDismiss: true,
+      translucent: true,
+      animated: true,
+      cssClass: "lp-sp-alert",
+    });
+  };
+  const handleUpdate = async () => {
+    const userRef = doc(db, "users", user_id);
+
+    try {
+      await updateProfile(auth.currentUser, {
+        displayName: uname,
+      })
+        .then(() => {
+          console.log(auth.currentUser.displayName);
+        })
+        .catch((error) => {
+          handleAlert(error.message);
+        });
+
+      await updateDoc(userRef, {
+        name: uname,
+      });
+
+      setIsUpdate(false);
+    } catch (error) {
+      handleAlert(error.message);
+    }
+  };
+
+  const toggleUpdate = () => {
+    setIsUpdate(true);
+  };
+  const cancelUpdate = () => {
+    setIsUpdate(false);
+  };
 
   const handleBack = () => {
     router.push("/home/chats");
@@ -55,10 +109,43 @@ const Profile = () => {
           <IonImg src="assets/images/propic.jpg" />
         </IonCard>
         <IonGrid className="profile-details">
-          <IonRow className="row">
-            <IonLabel className="Profile-name">{user.displayName}</IonLabel>
-            <IonImg src="assets/icon/Edit.svg" className="edit-icon" />
-          </IonRow>
+          {isUpdate ? (
+            <IonRow className="update-row">
+              <IonInput
+                className="update-input"
+                type="text"
+                placeholder="Enter Name"
+                value={uname}
+                onIonChange={(e) => setUname(e.detail.value)}
+                required
+              ></IonInput>
+              <IonIcon
+              className="update-icon"
+                icon={checkmarkCircleOutline}
+                size="large"
+                onClick={(e) => {
+                  handleUpdate();
+                }}
+              />
+              <IonIcon
+              className="update-icon"
+                icon={closeCircleOutline}
+                size="large"
+                onClick={(e) => {
+                  cancelUpdate();
+                }}
+              />
+            </IonRow>
+          ) : (
+            <IonRow className="row">
+              <IonLabel className="Profile-name">{user.displayName}</IonLabel>
+              <IonImg
+                src="assets/icon/Edit.svg"
+                className="edit-icon"
+                onClick={(e) => toggleUpdate()}
+              />
+            </IonRow>
+          )}
           <IonRow className="flex-row">
             <IonCol className="col1">
               <IonLabel className="flex-row-label">Email Address</IonLabel>
