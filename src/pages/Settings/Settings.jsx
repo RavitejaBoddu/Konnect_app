@@ -9,7 +9,9 @@ import {
   IonLabel,
   IonPage,
   IonRow,
+  useIonAlert,
   useIonRouter,
+  useIonToast,
 } from "@ionic/react";
 import { UserAuth } from "../../context/AuthContext";
 import "./Settings.css";
@@ -18,11 +20,26 @@ import { caretForward, toggle } from "ionicons/icons";
 const Settings = () => {
   const { logout } = UserAuth();
   let router = useIonRouter();
+  const [presentAlert] = useIonAlert();
+  const [present] = useIonToast();
+
+  const handleToast = (msg) => {
+    present({
+      message: msg,
+      position: "top",
+      animated: true,
+      duration: 2000,
+      color: "dark3",
+      mode: "ios",
+    });
+  };
 
   const handleLogout = () => {
     logout();
     try {
+      const msg = "You have Logged out successfully";
       logout();
+      handleToast(msg)
       router.push("/login");
     } catch (error) {
       alert(error.message);

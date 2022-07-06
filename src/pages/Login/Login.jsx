@@ -15,7 +15,7 @@ import {
 } from "@ionic/react";
 import { useState } from "react";
 import { UserAuth } from "../../context/AuthContext";
-import { logoGoogle, logoFacebook, alertOutline } from "ionicons/icons";
+// import { logoGoogle, logoFacebook, alertOutline } from "ionicons/icons";
 import "../../theme/Login_Signup.css";
 import { auth } from "../../firebase";
 
@@ -48,7 +48,6 @@ const Login = () => {
       duration: 2000,
       color: "dark3",
       mode: "ios",
-      icon: alertOutline,
     });
   };
 
@@ -73,6 +72,8 @@ const Login = () => {
         try {
           await login(email, password);
           if (auth.currentUser.emailVerified) {
+            const msg = "You have Logged in successfully";
+            handleToast(msg);
             router.push("/home");
           } else {
             const msg = "Please complete the verification and try to login.";
