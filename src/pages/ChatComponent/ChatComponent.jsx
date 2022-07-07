@@ -7,22 +7,21 @@ import {
     IonLabel,
     IonPage,
     IonRow,
-    IonToolbar
+    useIonRouter,
   } from "@ionic/react";
   import { arrowBackOutline, ellipsisVertical } from "ionicons/icons";
-import { useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import './ChatComponent.css'  
 import chatsData from "../../chatData";
 
-const ChatComponent = ({ match }) => {
+const ChatComponent = () => {
   const data = chatsData.data.chats;
 
   const { id } = useParams();
-  let history = useHistory();
+  let router = useIonRouter();
 
   const goBack = () => {
-    history.goBack();
+    router.push("/home");
   }
 
   let userData= new Object();
