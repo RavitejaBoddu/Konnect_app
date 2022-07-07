@@ -74,6 +74,8 @@ const Login = () => {
           if (auth.currentUser.emailVerified) {
             const msg = "You have Logged in successfully";
             handleToast(msg);
+            setEmail("");
+            setPassword("");  
             router.push("/home");
           } else {
             const msg = "Please complete the verification and try to login.";

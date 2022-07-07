@@ -20,7 +20,6 @@ import { caretForward, toggle } from "ionicons/icons";
 const Settings = () => {
   const { logout } = UserAuth();
   let router = useIonRouter();
-  const [presentAlert] = useIonAlert();
   const [present] = useIonToast();
 
   const handleToast = (msg) => {

@@ -37,7 +37,6 @@ const Signup = () => {
       duration: 2000,
       color: "dark3",
       mode: "ios",
-      icon: alertOutline,
     });
   };
 
@@ -91,7 +90,7 @@ const Signup = () => {
           await addData(auth, name, email);
           sendEmailVerification(auth.currentUser).then(() => {
             const msg =
-              "A verification link has been sent to your email, please complete the verification and login.";
+              "A verification link has been sent to your email(If not found please check in spam), please complete the verification and login. ";
             handleAlert(msg);
           });
           logout();

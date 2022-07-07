@@ -114,6 +114,7 @@ const Profile = () => {
               <IonInput
                 className="update-input"
                 type="text"
+                color="dark3"
                 placeholder="Enter Name"
                 value={uname}
                 onIonChange={(e) => setUname(e.detail.value)}
@@ -123,6 +124,7 @@ const Profile = () => {
               className="update-icon"
                 icon={checkmarkCircleOutline}
                 size="large"
+                color="dark3"
                 onClick={(e) => {
                   handleUpdate();
                 }}
@@ -131,6 +133,7 @@ const Profile = () => {
               className="update-icon"
                 icon={closeCircleOutline}
                 size="large"
+                color="dark3"
                 onClick={(e) => {
                   cancelUpdate();
                 }}
