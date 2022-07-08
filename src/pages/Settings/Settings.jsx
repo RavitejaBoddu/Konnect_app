@@ -13,12 +13,14 @@ import {
   useIonRouter,
   useIonToast,
 } from "@ionic/react";
+
 import { UserAuth } from "../../context/AuthContext";
 import "./Settings.css";
 import { caretForward, toggle } from "ionicons/icons";
+import { auth } from "../../firebase";
 
 const Settings = () => {
-  const { logout } = UserAuth();
+  const { logout, updateStatus } = UserAuth();
   let router = useIonRouter();
   const [present] = useIonToast();
 
@@ -33,15 +35,15 @@ const Settings = () => {
     });
   };
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async() => {
     try {
       const msg = "You have Logged out successfully";
+      await updateStatus(auth, false);
       logout();
       handleToast(msg)
       router.push("/login");
     } catch (error) {
-      alert(error.message);
+      handleToast(error.message);
     }
   };
 

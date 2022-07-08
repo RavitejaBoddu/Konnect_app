@@ -25,7 +25,7 @@ const Login = () => {
   const [present] = useIonToast();
   const [presentAlert] = useIonAlert();
 
-  const { login, logout, googleSignIn, facebookSignIn } = UserAuth();
+  const { login, logout, googleSignIn, facebookSignIn, updateStatus } = UserAuth();
 
   let router = useIonRouter();
   const handleAlert = (msg) => {
@@ -72,6 +72,7 @@ const Login = () => {
         try {
           await login(email, password);
           if (auth.currentUser.emailVerified) {
+            await updateStatus(auth, true);
             const msg = "You have Logged in successfully";
             handleToast(msg);
             setEmail("");
@@ -86,11 +87,10 @@ const Login = () => {
           setPassword("");
         } catch (e) {
           const msg = JSON.stringify(e.message);
-          console.log(msg);
           try {
             if (msg.includes("user-not-found")) {
               handleAlert(
-                "User not found with the entered email address, Please enter correct email address."
+                "User not found, please enter correct email address / If already signed up complete the verification process."
               );
             } else if (msg.includes("wrong-password")) {
               handleAlert(
@@ -100,7 +100,7 @@ const Login = () => {
               handleAlert(msg);
             }
           } catch (e) {
-            console.log(e.message);
+            handleAlert(e.message);
           }
         }
       }

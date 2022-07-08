@@ -12,6 +12,7 @@ import {
   IonRow,
   useIonAlert,
   useIonRouter,
+  useIonToast,
 } from "@ionic/react";
 import { updateProfile } from "firebase/auth";
 import {
@@ -38,6 +39,19 @@ const Profile = () => {
 
   let router = useIonRouter();
   const [presentAlert] = useIonAlert();
+
+  const [present] = useIonToast();
+
+  const handleToast = (msg) => {
+    present({
+      message: msg,
+      position: "top",
+      animated: true,
+      duration: 2000,
+      color: "dark3",
+      mode: "ios",
+    });
+  };
 
   const handleAlert = async (msg) => {
     presentAlert({
@@ -67,6 +81,7 @@ const Profile = () => {
       await updateDoc(userRef, {
         name: uname,
       });
+      handleToast("Name has been Successfully Updated!")
 
       setIsUpdate(false);
     } catch (error) {
