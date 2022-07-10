@@ -40,12 +40,14 @@ import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import { AuthContextProvider } from "./context/AuthContext";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
-import Profile from "./pages/Profile/Profile";
 import ChatComponent from "./pages/ChatComponent/ChatComponent";
+
 
 setupIonicReact();
 
-const App = () => (
+const App = () => {
+
+  return(
   <>
     <AuthContextProvider>
       <IonApp>
@@ -62,37 +64,6 @@ const App = () => (
                 <Home />
               </ProtectedRoute>
             </Route>
-            <Route path="/home/chats">
-            <ProtectedRoute>
-              <Chats />
-            </ProtectedRoute>
-          </Route>
-          <Route path="/home/groups">
-            <ProtectedRoute>
-              <Groups />
-            </ProtectedRoute>
-          </Route>
-          <Route path="/home/friends">
-            <ProtectedRoute>
-              <Friends />
-            </ProtectedRoute>
-            <Friends />
-          </Route>
-          <Route path="/home/settings">
-            <ProtectedRoute>
-              <Settings />
-            </ProtectedRoute>
-          </Route>
-            <Route path="/home/profile">
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            </Route>
-            <Route path="/chat/:id">
-            <ProtectedRoute>
-              <ChatComponent />
-            </ProtectedRoute>
-          </Route>
             <Route exact path="/">
               <Redirect to="/login" />
             </Route>
@@ -102,5 +73,7 @@ const App = () => (
     </AuthContextProvider>
   </>
 );
+
+}
 
 export default App;

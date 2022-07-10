@@ -2,17 +2,18 @@ import {
   IonCard,
   IonContent,
   IonGrid,
+  IonHeader,
   IonIcon,
   IonImg,
   IonLabel,
   IonPage,
   IonSearchbar,
+  IonToolbar,
   useIonRouter,
+  useIonViewWillEnter,
 } from "@ionic/react";
 import "./Chats.css";
 import { ellipsisVertical } from "ionicons/icons";
-import chatsData from "../../chatData";
-import ChatRowComponent from "../../components/Chat-Component/ChatRowComponent";
 import { UserAuth } from "../../context/AuthContext";
 import { useEffect } from "react";
 import {collection, query, where, onSnapshot } from "firebase/firestore";
@@ -22,35 +23,46 @@ import UserChat from "../../components/UserChat/UserChat";
 const Chats = () => {
   let router = useIonRouter();
 
-  const { userList, setUserList} = UserAuth();
+  const { userList, setUserList, user} = UserAuth();
 
-  console.log(userList);
+ const currentId = user.uid;
+
 
   useEffect(()=> {
     const userRef = collection(db, 'users')
     //creating query object
-    const q = query(userRef, where('uid', 'not-in', [auth.currentUser.uid]))
+    const q = query(userRef, where('uid', 'not-in', [currentId]))
 
     //executing query
-    const unsub = onSnapshot(q, querySnapshot => {
+    onSnapshot(q, querySnapshot => {
       let users = [];
       querySnapshot.forEach(doc => {
         users.push(doc.data())
       });
       setUserList(users);
+      console.log(users)
   })
-  return () => {
-    unsub();
-  };
 }, []);
 
+const showTabs = () => {
+  const tabsEl = document.querySelector('ion-tab-bar');
+  if (tabsEl) {
+    tabsEl.hidden = false;
+  }
+}
+
+useIonViewWillEnter(() => showTabs());
+ 
   const goToProfile = () => {
     router.push("/home/profile");
   };
+
+
   return (
     <IonPage>
-      <IonContent fullscreen className="chats-page">
-        <IonCard className="chats-header" lines="none">
+      <IonHeader>
+      <IonToolbar>
+      <IonCard className="chats-header" lines="none">
           <IonLabel className="chats-heading">Konnect.</IonLabel>
           <IonImg
             src="assets/images/profile.png"
@@ -65,6 +77,9 @@ const Chats = () => {
             size="large"
           />
         </IonCard>
+      </IonToolbar>
+      </IonHeader>
+      <IonContent fullscreen className="chats-page">
         <div className="searchbar-container">
           <IonSearchbar animated className="chats-searchbar"></IonSearchbar>
         </div>
@@ -75,7 +90,7 @@ const Chats = () => {
                 key={user.uid}
                 id={user.uid}
                 name={user.name}
-                isOnline={user.isOnline}
+                user1= {currentId}
               />
             );
           })}
