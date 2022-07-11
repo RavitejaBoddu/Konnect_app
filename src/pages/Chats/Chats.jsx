@@ -40,7 +40,6 @@ const Chats = () => {
         users.push(doc.data())
       });
       setUserList(users);
-      console.log(users)
   })
 }, []);
 

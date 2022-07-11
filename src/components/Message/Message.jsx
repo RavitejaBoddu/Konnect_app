@@ -1,6 +1,6 @@
 import { IonItem, IonLabel, IonRow } from "@ionic/react";
 import "./Message.css";
-import Moment from "react-moment";
+// import Moment from "react-moment";
 import { useEffect, useRef } from "react";
 
 const Message = (props) => {
