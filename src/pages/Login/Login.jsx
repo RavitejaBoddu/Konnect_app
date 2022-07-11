@@ -7,9 +7,11 @@ import {
   IonInput,
   IonItem,
   IonLabel,
+  IonLoading,
   IonPage,
   IonRow,
   useIonAlert,
+  useIonLoading,
   useIonRouter,
   useIonToast,
 } from "@ionic/react";
@@ -24,6 +26,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [present] = useIonToast();
   const [presentAlert] = useIonAlert();
+  const [showLoading, setShowLoading] = useState(false);
 
   const { login, logout, googleSignIn, facebookSignIn } = UserAuth();
 
@@ -70,12 +73,15 @@ const Login = () => {
         handleToast(msg);
       } else {
         try {
+          setShowLoading(true);
           await login(email, password);
+          // await login(email, password);
+          setShowLoading(false);
           if (auth.currentUser.emailVerified) {
             const msg = "You have Logged in successfully";
             handleToast(msg);
             setEmail("");
-            setPassword("");  
+            setPassword("");
             router.push("/home");
           } else {
             const msg = "Please complete the verification and try to login.";
@@ -85,28 +91,38 @@ const Login = () => {
           setEmail("");
           setPassword("");
         } catch (e) {
+          setShowLoading(false);
           const msg = JSON.stringify(e.message);
-          console.log(msg);
           try {
             if (msg.includes("user-not-found")) {
               handleAlert(
                 "User not found with the entered email address, Please enter correct email address."
               );
+              setPassword("");
             } else if (msg.includes("wrong-password")) {
               handleAlert(
                 "Wrong password entered, Please enter the correct password"
               );
+              setPassword("");
             } else {
               handleAlert(msg);
+              setEmail("");
+              setPassword("");
             }
           } catch (e) {
-            console.log(e.message);
+            setShowLoading(false);
+            handleAlert(e.message);
+            setEmail("");
+            setPassword("");
           }
         }
       }
     } catch (e) {
+      setShowLoading(false);
       const msg = e.message;
       handleAlert(msg);
+      setEmail("");
+      setPassword("");
     }
   };
   const handleGoogleSignIn = async () => {
@@ -171,6 +187,15 @@ const Login = () => {
                 </IonLabel>
               </IonButton>
             </IonCol>
+            <IonLoading
+              cssClass="lp-sp-spinner"
+              isOpen={showLoading}
+              message={"logging in..."}
+              duration={5000}
+              spinner={"circular"}
+              animated={true}
+              keyboardClose={true}
+            />
             {/* <IonLabel style={{marginTop: "15px"}}>(or)</IonLabel>
             <IonCol className="alternate-logins">
               <IonButton fill="outline" color="light" shape="round" className="alternate-icon" onClick={(e)=>{handleGoogleSignIn()}}><IonIcon icon={logoGoogle} color="light"  /></IonButton>
@@ -187,6 +212,10 @@ const Login = () => {
               fill="clear"
               color="dark"
               routerLink="/signup"
+              onClick={() => {
+                setEmail("");
+                setPassword("");
+              }}
             >
               <IonLabel className="lp-sp-switch-btn-text ion-text-capitalize">
                 Signup

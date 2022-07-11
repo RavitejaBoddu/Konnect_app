@@ -5,22 +5,24 @@ import {
   IonContent,
   IonGrid,
   IonIcon,
-  IonImg,
   IonLabel,
+  IonLoading,
   IonPage,
   IonRow,
-  useIonAlert,
   useIonRouter,
   useIonToast,
 } from "@ionic/react";
 import { UserAuth } from "../../context/AuthContext";
 import "./Settings.css";
 import { caretForward, toggle } from "ionicons/icons";
+import { useState } from "react";
 
 const Settings = () => {
   const { logout } = UserAuth();
   let router = useIonRouter();
   const [present] = useIonToast();
+  const [showLoading, setShowLoading] = useState(false);
+
 
   const handleToast = (msg) => {
     present({
@@ -34,6 +36,7 @@ const Settings = () => {
   };
 
   const handleLogout = () => {
+    setShowLoading(true);
     logout();
     try {
       const msg = "You have Logged out successfully";
@@ -109,6 +112,15 @@ const Settings = () => {
             >
               Logout
             </IonButton>
+            <IonLoading
+              cssClass="lp-sp-spinner"
+              isOpen={showLoading}
+              message={"logging out..."}
+              duration={1000}
+              spinner={"circular"}
+              animated={true}
+              keyboardClose={true}
+            />
           </IonRow>
         </IonGrid>
       </IonContent>

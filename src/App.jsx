@@ -127,18 +127,22 @@ const App = () => {
           const btn = updateDetails.btn;
           handleAlert(msg, title, btn, appVersion);
         }
-      } else {
-        const msg = "App is not running on android platform";
-        handleToast(msg);
-      }
-    } catch (error) {
-      handleAlert(error.message);
+      } 
+      // else {
+      //   const msg = "App is not running on android platform";
+      //   handleToast(msg);
+      // }
+    } 
+    catch (error) {
+      // handleAlert(error.message);
     }
   };
 
   useEffect(() => {
     getConfigData();
-    getAppInfo();
+    if (isPlatform("android")){
+      getAppInfo();
+    }
   }, [0]);
 
     checkUpdate();

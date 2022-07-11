@@ -308,3 +308,9 @@ http://ionicframework.com/docs/theming/ */
   --background: #ffffff;
 }
 
+.lp-sp-spinner{
+  --backdrop-opacity: 0.5;
+  --background:#ffffff;
+  --spinner-color:rgb(39, 39, 39);
+}
+

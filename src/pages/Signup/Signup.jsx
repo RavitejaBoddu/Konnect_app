@@ -5,6 +5,7 @@ import {
   IonImg,
   IonInput,
   IonLabel,
+  IonLoading,
   IonPage,
   IonRow,
   useIonAlert,
@@ -16,7 +17,6 @@ import { UserAuth } from "../../context/AuthContext";
 import "../../theme/Login_Signup.css";
 import { auth } from "../../firebase";
 import { sendEmailVerification, updateProfile } from "firebase/auth";
-import { alertOutline } from "ionicons/icons";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -24,6 +24,8 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [present] = useIonToast();
   const [presentAlert] = useIonAlert();
+  const [showLoading, setShowLoading] = useState(false);
+
 
   const { createUser, logout, addData } = UserAuth();
 
@@ -42,7 +44,7 @@ const Signup = () => {
 
   const handleAlert = async (msg) => {
     presentAlert({
-      header: "Alert",
+      header: "Successfully Signed up!",
       message: msg,
       buttons: ["OK"],
       backdropDismiss: true,
@@ -77,12 +79,13 @@ const Signup = () => {
         handleToast(msg);
       } else {
         try {
+          setShowLoading(true);
           await createUser(email, password);
           await updateProfile(auth.currentUser, {
             displayName: name,
           })
             .then(() => {
-              console.log(auth.currentUser.displayName);
+              // console.log(auth.currentUser.displayName);
             })
             .catch((error) => {
               handleAlert(error.message);
@@ -94,16 +97,19 @@ const Signup = () => {
             handleAlert(msg);
           });
           logout();
+          setShowLoading(false);
           setName("");
           setEmail("");
           setPassword("");
           router.push("/login");
         } catch (e) {
+          setShowLoading(false);
           const msg = e.message;
           handleAlert(msg);
         }
       }
     } catch (e) {
+      setShowLoading(false);
       const msg = e.message;
       handleAlert(msg);
     }
@@ -158,6 +164,15 @@ const Signup = () => {
               </IonLabel>
             </IonButton>
           </IonRow>
+          <IonLoading
+              cssClass="lp-sp-spinner"
+              isOpen={showLoading}
+              message={"signing up..."}
+              duration={5000}
+              spinner={"circular"}
+              animated={true}
+              keyboardClose={true}
+            />
           <IonRow class="lp-sp-switch-container">
             <IonLabel className="account-text">
               Already have an account?
@@ -167,6 +182,11 @@ const Signup = () => {
               fill="clear"
               color="dark"
               routerLink="/login"
+              onClick={()=>{
+                setName("");
+                setEmail("");
+                setPassword("");
+              }}
             >
               <IonLabel className="lp-sp-switch-btn-text ion-text-capitalize">
                 Login
