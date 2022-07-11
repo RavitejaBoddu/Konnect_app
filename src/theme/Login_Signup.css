@@ -141,7 +141,7 @@ ion-input {
 
 .lp-sp-alert {
   --backdrop-opacity: 0.5;
-  border-radius: 30px;
+  /* border-radius: 30px; */
 }
 
 @media screen and (min-width: 550px) {
