@@ -66,7 +66,7 @@ const ChatComponent = () => {
       //create query
       const q = query(msgRef, orderBy('createdAt', 'asc'))
 
-      onSnapshot(q, querySnapshot => {
+      onSnapshot(q, querySnapshot => { 
         let msgs = [];
         querySnapshot.forEach(doc => {
           msgs.push(doc.data())

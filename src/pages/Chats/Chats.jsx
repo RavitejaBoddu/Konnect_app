@@ -17,7 +17,7 @@ import { ellipsisVertical } from "ionicons/icons";
 import { UserAuth } from "../../context/AuthContext";
 import { useEffect } from "react";
 import {collection, query, where, onSnapshot } from "firebase/firestore";
-import { auth, db } from "../../firebase";
+import { db } from "../../firebase";
 import UserChat from "../../components/UserChat/UserChat";
 
 const Chats = () => {
