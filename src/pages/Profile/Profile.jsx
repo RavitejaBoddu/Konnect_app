@@ -11,6 +11,7 @@ import {
   IonPage,
   IonRow,
   useIonAlert,
+  useIonLoading,
   useIonRouter,
   useIonToast,
 } from "@ionic/react";
@@ -31,11 +32,13 @@ import { doc, updateDoc } from "firebase/firestore";
 import { closeCircleOutline, checkmarkCircleOutline } from "ionicons/icons";
 import "./Profile.css";
 
+
 const Profile = () => {
   const { user } = UserAuth();
   const user_id = user.uid;
   const [uname, setUname] = useState(user.displayName);
   const [isUpdate, setIsUpdate] = useState(false);
+  const [show, dismiss] = useIonLoading();
 
   let router = useIonRouter();
   const [presentAlert] = useIonAlert();
@@ -65,9 +68,19 @@ const Profile = () => {
     });
   };
   const handleUpdate = async () => {
+
     const userRef = doc(db, "users", user_id);
 
     try {
+      show({
+        message: "Logging in please wait...",
+        duration: 5000,
+        spinner: "circular",
+        cssClass: "lp-sp-spinner",
+        animated: true,
+        keyboardClose: true,
+        mode: "ios",
+      });
       await updateProfile(auth.currentUser, {
         displayName: uname,
       })
@@ -84,7 +97,9 @@ const Profile = () => {
       handleToast("Name has been Successfully Updated!")
 
       setIsUpdate(false);
+      dismiss();
     } catch (error) {
+      dismiss();
       handleAlert(error.message);
     }
   };

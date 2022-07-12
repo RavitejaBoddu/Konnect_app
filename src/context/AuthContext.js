@@ -9,7 +9,7 @@ import {
   FacebookAuthProvider,
 } from "firebase/auth";
 import { auth, db } from "../firebase";
-import { doc, setDoc, Timestamp, updateDoc, } from "firebase/firestore";
+import { doc, setDoc, Timestamp, updateDoc } from "firebase/firestore";
 
 const UserContext = createContext();
 

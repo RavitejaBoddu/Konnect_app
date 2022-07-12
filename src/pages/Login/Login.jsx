@@ -10,6 +10,7 @@ import {
   IonPage,
   IonRow,
   useIonAlert,
+  useIonLoading,
   useIonRouter,
   useIonToast,
 } from "@ionic/react";
@@ -24,8 +25,10 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [present] = useIonToast();
   const [presentAlert] = useIonAlert();
+  const [show, dismiss] = useIonLoading();
 
-  const { login, logout, googleSignIn, facebookSignIn, updateStatus } = UserAuth();
+  const { login, logout, googleSignIn, facebookSignIn, updateStatus } =
+    UserAuth();
 
   let router = useIonRouter();
   const handleAlert = (msg) => {
@@ -37,6 +40,7 @@ const Login = () => {
       translucent: true,
       animated: true,
       cssClass: "lp-sp-alert",
+      color: "white",
     });
   };
 
@@ -70,15 +74,26 @@ const Login = () => {
         handleToast(msg);
       } else {
         try {
+          show({
+            message: "Logging in please wait...",
+            duration: 5000,
+            spinner: "circular",
+            cssClass: "lp-sp-spinner",
+            animated: true,
+            keyboardClose: true,
+            mode: "ios",
+          });
           await login(email, password);
           if (auth.currentUser.emailVerified) {
             await updateStatus(auth, true);
+            dismiss();
             const msg = "You have Logged in successfully";
             handleToast(msg);
             setEmail("");
-            setPassword("");  
+            setPassword("");
             router.push("/home");
           } else {
+            dismiss();
             const msg = "Please complete the verification and try to login.";
             handleAlert(msg);
             logout();
@@ -86,6 +101,7 @@ const Login = () => {
           setEmail("");
           setPassword("");
         } catch (e) {
+          dismiss();
           const msg = JSON.stringify(e.message);
           try {
             if (msg.includes("user-not-found")) {
@@ -96,17 +112,27 @@ const Login = () => {
               handleAlert(
                 "Wrong password entered, Please enter the correct password"
               );
+              setPassword("");
             } else {
+              dismiss();
               handleAlert(msg);
+              setEmail("");
+              setPassword("");
             }
           } catch (e) {
+            dismiss();
             handleAlert(e.message);
+            setEmail("");
+            setPassword("");
           }
         }
       }
     } catch (e) {
+      dismiss();
       const msg = e.message;
       handleAlert(msg);
+      setEmail("");
+      setPassword("");
     }
   };
   const handleGoogleSignIn = async () => {
@@ -187,6 +213,10 @@ const Login = () => {
               fill="clear"
               color="dark"
               routerLink="/signup"
+              onClick={() => {
+                setEmail("");
+                setPassword("");
+              }}
             >
               <IonLabel className="lp-sp-switch-btn-text ion-text-capitalize">
                 Signup

@@ -8,6 +8,7 @@ import {
   IonPage,
   IonRow,
   useIonAlert,
+  useIonLoading,
   useIonRouter,
   useIonToast,
 } from "@ionic/react";
@@ -16,7 +17,6 @@ import { UserAuth } from "../../context/AuthContext";
 import "../../theme/Login_Signup.css";
 import { auth } from "../../firebase";
 import { sendEmailVerification, updateProfile } from "firebase/auth";
-import { alertOutline } from "ionicons/icons";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -24,6 +24,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [present] = useIonToast();
   const [presentAlert] = useIonAlert();
+  const [show, dismiss] = useIonLoading();
 
   const { createUser, logout, addData } = UserAuth();
 
@@ -77,6 +78,15 @@ const Signup = () => {
         handleToast(msg);
       } else {
         try {
+          show({
+            message: "Signing up please wait...",
+            // duration: 5000,
+            spinner: "circular",
+            cssClass: "lp-sp-spinner",
+            animated: true,
+            keyboardClose: true,
+            mode: "ios",
+          });
           await createUser(email, password);
           await updateProfile(auth.currentUser, {
             displayName: name,
@@ -93,17 +103,20 @@ const Signup = () => {
               "A verification link has been sent to your email(If not found please check in spam), please complete the verification and login. ";
             handleAlert(msg);
           });
+          dismiss();
           logout();
           setName("");
           setEmail("");
           setPassword("");
           router.push("/login");
         } catch (e) {
+          dismiss();
           const msg = e.message;
           handleAlert(msg);
         }
       }
     } catch (e) {
+      dismiss();
       const msg = e.message;
       handleAlert(msg);
     }
@@ -167,6 +180,11 @@ const Signup = () => {
               fill="clear"
               color="dark"
               routerLink="/login"
+              onClick={() => {
+                setName("");
+                setEmail("");
+                setPassword("");
+              }}
             >
               <IonLabel className="lp-sp-switch-btn-text ion-text-capitalize">
                 Login

@@ -1,12 +1,17 @@
 {
   "name": "Konnect",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "private": true,
   "dependencies": {
     "@capacitor/android": "^3.6.0",
+    "@capacitor/app": "^1.1.1",
+    "@capacitor/app-launcher": "^1.0.9",
+    "@capacitor/browser": "^1.0.7",
     "@capacitor/cli": "^3.6.0",
     "@capacitor/core": "^3.6.0",
+    "@capacitor/device": "^1.1.2",
     "@capacitor/ios": "^3.6.0",
+    "@capacitor/splash-screen": "^1.2.2",
     "@ionic/react": "^6.0.0",
     "@ionic/react-router": "^6.0.0",
     "@testing-library/jest-dom": "^5.11.9",
