@@ -6,45 +6,52 @@ import {
   IonGrid,
   IonIcon,
   IonLabel,
-  IonLoading,
   IonPage,
   IonRow,
+  useIonLoading,
   useIonRouter,
   useIonToast,
 } from "@ionic/react";
 import { UserAuth } from "../../context/AuthContext";
 import "./Settings.css";
 import { caretForward, toggle } from "ionicons/icons";
-import { useState } from "react";
 
 const Settings = () => {
   const { logout } = UserAuth();
   let router = useIonRouter();
   const [present] = useIonToast();
-  const [showLoading, setShowLoading] = useState(false);
-
+  const [show] = useIonLoading();
 
   const handleToast = (msg) => {
     present({
       message: msg,
       position: "top",
       animated: true,
-      duration: 2000,
+      duration: 1000,
       color: "dark3",
       mode: "ios",
     });
   };
 
   const handleLogout = () => {
-    setShowLoading(true);
-    logout();
     try {
+      show({
+        message: "Logging out...",
+        duration: 1000,
+        spinner: "circular",
+        cssClass: "lp-sp-spinner",
+        animated: true,
+        keyboardClose: true,
+        mode: "ios",
+      });
       const msg = "You have Logged out successfully";
       logout();
-      handleToast(msg)
+      setTimeout(() => {
+        handleToast(msg);
+      }, 2000);
       router.push("/login");
     } catch (error) {
-      alert(error.message);
+      handleToast(error.message);
     }
   };
 
@@ -112,15 +119,6 @@ const Settings = () => {
             >
               Logout
             </IonButton>
-            <IonLoading
-              cssClass="lp-sp-spinner"
-              isOpen={showLoading}
-              message={"logging out..."}
-              duration={1000}
-              spinner={"circular"}
-              animated={true}
-              keyboardClose={true}
-            />
           </IonRow>
         </IonGrid>
       </IonContent>

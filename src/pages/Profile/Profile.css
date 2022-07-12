@@ -59,7 +59,7 @@
   display: flex;
   height: 20px;
   width: 20px;
-  margin-left:10px;
+  margin-left: 10px;
 }
 
 .flex-row {
@@ -120,20 +120,21 @@
   width: 200px;
 }
 
-.update-row{
-    display: flex;
+.update-row {
+  display: flex;
   justify-content: center;
   align-items: center;
   margin: 1.5rem 1rem;
 }
 
-.update-icon{
-    margin-top: 5px;
-    margin-right: 5px;
+.update-icon {
+  margin-top: 5px;
+  margin-right: 5px;
 }
-.update-input{
-    color: black;
-    border: 1px solid #333333b1;
-    border-radius: 8px;
-    margin-right: 10px;
+
+.update-input {
+  color: black;
+  border: 1px solid #333333b1;
+  border-radius: 8px;
+  margin-right: 10px;
 }

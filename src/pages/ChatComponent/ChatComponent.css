@@ -1,41 +1,44 @@
-.chat-page{
+.chat-page {
     height: 100%;
 }
-.chat-toolbar{
+
+.chat-toolbar {
     display: flex;
     justify-content: center;
     align-items: center;
-    --background:transparent;
+    --background: transparent;
     box-shadow: none;
-    -webkit-box-shadow:none;
+    -webkit-box-shadow: none;
     margin-top: 16px;
 }
-.chat-toolbar-icon{
+
+.chat-toolbar-icon {
     display: flex;
     justify-content: center;
     align-items: center;
     flex: 1;
 }
 
-.chat-profile-container{
+.chat-profile-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex: 4;
 }
 
-.chat-img{
+.chat-img {
     height: 100%;
     margin-right: 5%;
 }
-.chat-profile-detail{
+
+.chat-profile-detail {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     font-family: 'Quicksand';
-font-weight: bold;
-font-size: 18px;
+    font-weight: bold;
+    font-size: 18px;
 
-color: #000000;
+    color: #000000;
 }

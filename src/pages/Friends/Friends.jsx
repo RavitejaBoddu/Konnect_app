@@ -49,6 +49,7 @@ const Friends = () => {
             return (
               <ChatRowComponent
                 key={chat.id}
+                id={chat.id}
                 name={chat.name}
                 image={chat.image}
                 isContactPage={isContactPage}

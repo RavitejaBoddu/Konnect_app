@@ -1,10 +1,12 @@
 import { Redirect, Route } from "react-router-dom";
 import {
   IonApp,
+  IonLoading,
   IonRouterOutlet,
   isPlatform,
   setupIonicReact,
   useIonAlert,
+  useIonLoading,
   useIonToast,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
@@ -43,8 +45,7 @@ import ChatComponent from "./pages/ChatComponent/ChatComponent";
 import { App as app } from "@capacitor/app";
 import { Browser } from "@capacitor/browser";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { collection, doc, getDoc, setDoc } from "firebase/firestore"; 
+import { doc, getDoc } from "firebase/firestore"; 
 import { db } from "./firebase";
 
 
@@ -52,18 +53,16 @@ setupIonicReact();
 
 const App = () => {
   const [updateDetails, setUpdateDetails] = useState({});
-  const [appVersion, setAppVersion] = useState("");
+  const [appVersion, setAppVersion] = useState("");  
+  // const [showLoading, setShowLoading] = useState(false);
+
+
+  const [show, dismiss] = useIonLoading();
 
   const updateRef = doc(db, "Konnect_app_config", "NF0sNetgoLAHF6d473kQ");
-  
-
-  const url =
-    "https://crudcrud.com/api/b531895bf7034294bd51e53ecf1a89ce/konnect-app-config/62cbe08a6f047803e8aec34a";
 
   const [presentAlert] = useIonAlert();
   const [present] = useIonToast();
-
- 
 
   const handleToast = (msg) => {
     present({
@@ -86,10 +85,19 @@ const App = () => {
           text: btn,
           role: "Download",
           handler: async () => {
-            handleToast("Download Clicked");
+            show({
+              message: 'Please wait...',
+              duration: 2000,
+              spinner: "circular",
+              cssClass: "lp-sp-spinner",
+              animated: true,
+              keyboardClose: true,
+              mode:"ios"
+            })
             await Browser.open({
               url: "https://play.google.com/store/apps/details?id=com.konnect_ptg.app",
             });
+            dismiss();
           },
         },
       ],
@@ -128,13 +136,13 @@ const App = () => {
           handleAlert(msg, title, btn, appVersion);
         }
       } 
-      // else {
-      //   const msg = "App is not running on android platform";
-      //   handleToast(msg);
-      // }
+      else {
+        const msg = "App is not running on android platform";
+        handleToast(msg);
+      }
     } 
     catch (error) {
-      // handleAlert(error.message);
+      handleAlert(error.message);
     }
   };
 
@@ -143,9 +151,9 @@ const App = () => {
     if (isPlatform("android")){
       getAppInfo();
     }
-  }, [0]);
+  }, []);
 
-    checkUpdate();
+  checkUpdate();
 
   return (
     <>

@@ -121,7 +121,7 @@ const Profile = () => {
                 required
               ></IonInput>
               <IonIcon
-              className="update-icon"
+                className="update-icon"
                 icon={checkmarkCircleOutline}
                 size="large"
                 color="dark3"
@@ -130,7 +130,7 @@ const Profile = () => {
                 }}
               />
               <IonIcon
-              className="update-icon"
+                className="update-icon"
                 icon={closeCircleOutline}
                 size="large"
                 color="dark3"

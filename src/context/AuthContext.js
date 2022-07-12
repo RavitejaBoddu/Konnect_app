@@ -9,7 +9,7 @@ import {
   FacebookAuthProvider,
 } from "firebase/auth";
 import { auth, db } from "../firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, Timestamp } from "firebase/firestore";
 
 const UserContext = createContext();
 
@@ -23,8 +23,11 @@ export const AuthContextProvider = ({ children }) => {
 
   const addData = async (auth, name, email) => {
     await setDoc(doc(db, "users", auth.currentUser.uid), {
+      uid: auth.currentUser.uid,
       name: name,
       email: email,
+      createdAt: Timestamp.fromDate(new Date()),
+      isOnline: false,
     });
   };
 

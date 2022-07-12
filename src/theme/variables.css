@@ -292,6 +292,24 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-tint: var(--ion-color-white-tint);
 }
 
+:root {
+	--ion-color-konnect-blue: #3c4368;
+	--ion-color-konnect-blue-rgb: 60,67,104;
+	--ion-color-konnect-blue-contrast: #ffffff;
+	--ion-color-konnect-blue-contrast-rgb: 255,255,255;
+	--ion-color-konnect-blue-shade: #353b5c;
+	--ion-color-konnect-blue-tint: #505677;
+}
+
+.ion-color-konnect-blue {
+	--ion-color-base: var(--ion-color-konnect-blue);
+	--ion-color-base-rgb: var(--ion-color-konnect-blue-rgb);
+	--ion-color-contrast: var(--ion-color-konnect-blue-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-konnect-blue-contrast-rgb);
+	--ion-color-shade: var(--ion-color-konnect-blue-shade);
+	--ion-color-tint: var(--ion-color-konnect-blue-tint);
+}
+
 .chats-page {
   --background: #ffffff;
 }
@@ -310,7 +328,7 @@ http://ionicframework.com/docs/theming/ */
 
 .lp-sp-spinner{
   --backdrop-opacity: 0.5;
-  --background:#ffffff;
-  --spinner-color:rgb(39, 39, 39);
+  --background: rgb(255, 255, 255);
+  --spinner-color:rgb(51, 71, 172);
+  color:#333333;
 }
-

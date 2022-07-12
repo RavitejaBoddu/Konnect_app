@@ -5,10 +5,10 @@ import {
   IonImg,
   IonInput,
   IonLabel,
-  IonLoading,
   IonPage,
   IonRow,
   useIonAlert,
+  useIonLoading,
   useIonRouter,
   useIonToast,
 } from "@ionic/react";
@@ -24,8 +24,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [present] = useIonToast();
   const [presentAlert] = useIonAlert();
-  const [showLoading, setShowLoading] = useState(false);
-
+  const [show, dismiss] = useIonLoading();
 
   const { createUser, logout, addData } = UserAuth();
 
@@ -79,14 +78,20 @@ const Signup = () => {
         handleToast(msg);
       } else {
         try {
-          setShowLoading(true);
+          show({
+            message: "Signing up please wait...",
+            duration: 5000,
+            spinner: "circular",
+            cssClass: "lp-sp-spinner",
+            animated: true,
+            keyboardClose: true,
+            mode: "ios",
+          });
           await createUser(email, password);
           await updateProfile(auth.currentUser, {
             displayName: name,
           })
-            .then(() => {
-              // console.log(auth.currentUser.displayName);
-            })
+            .then(() => {})
             .catch((error) => {
               handleAlert(error.message);
             });
@@ -97,19 +102,19 @@ const Signup = () => {
             handleAlert(msg);
           });
           logout();
-          setShowLoading(false);
+          dismiss();
           setName("");
           setEmail("");
           setPassword("");
           router.push("/login");
         } catch (e) {
-          setShowLoading(false);
+          dismiss();
           const msg = e.message;
           handleAlert(msg);
         }
       }
     } catch (e) {
-      setShowLoading(false);
+      dismiss();
       const msg = e.message;
       handleAlert(msg);
     }
@@ -164,15 +169,6 @@ const Signup = () => {
               </IonLabel>
             </IonButton>
           </IonRow>
-          <IonLoading
-              cssClass="lp-sp-spinner"
-              isOpen={showLoading}
-              message={"signing up..."}
-              duration={5000}
-              spinner={"circular"}
-              animated={true}
-              keyboardClose={true}
-            />
           <IonRow class="lp-sp-switch-container">
             <IonLabel className="account-text">
               Already have an account?
@@ -182,7 +178,7 @@ const Signup = () => {
               fill="clear"
               color="dark"
               routerLink="/login"
-              onClick={()=>{
+              onClick={() => {
                 setName("");
                 setEmail("");
                 setPassword("");

@@ -26,7 +26,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [present] = useIonToast();
   const [presentAlert] = useIonAlert();
-  const [showLoading, setShowLoading] = useState(false);
+  const [show, dismiss] = useIonLoading();
 
   const { login, logout, googleSignIn, facebookSignIn } = UserAuth();
 
@@ -40,6 +40,7 @@ const Login = () => {
       translucent: true,
       animated: true,
       cssClass: "lp-sp-alert",
+      color: "white",
     });
   };
 
@@ -54,7 +55,7 @@ const Login = () => {
     });
   };
 
-  const handleLogin = async (e) => {
+  const handleLogin = async () => {
     var atposition = email.indexOf("@");
     var dotposition = email.lastIndexOf(".");
     try {
@@ -73,10 +74,17 @@ const Login = () => {
         handleToast(msg);
       } else {
         try {
-          setShowLoading(true);
+          show({
+            message: "Logging in please wait...",
+            duration: 5000,
+            spinner: "circular",
+            cssClass: "lp-sp-spinner",
+            animated: true,
+            keyboardClose: true,
+            mode: "ios",
+          });
           await login(email, password);
-          // await login(email, password);
-          setShowLoading(false);
+          dismiss();
           if (auth.currentUser.emailVerified) {
             const msg = "You have Logged in successfully";
             handleToast(msg);
@@ -91,7 +99,7 @@ const Login = () => {
           setEmail("");
           setPassword("");
         } catch (e) {
-          setShowLoading(false);
+          dismiss();
           const msg = JSON.stringify(e.message);
           try {
             if (msg.includes("user-not-found")) {
@@ -110,7 +118,7 @@ const Login = () => {
               setPassword("");
             }
           } catch (e) {
-            setShowLoading(false);
+            dismiss();
             handleAlert(e.message);
             setEmail("");
             setPassword("");
@@ -118,7 +126,7 @@ const Login = () => {
         }
       }
     } catch (e) {
-      setShowLoading(false);
+      dismiss();
       const msg = e.message;
       handleAlert(msg);
       setEmail("");
@@ -187,15 +195,6 @@ const Login = () => {
                 </IonLabel>
               </IonButton>
             </IonCol>
-            <IonLoading
-              cssClass="lp-sp-spinner"
-              isOpen={showLoading}
-              message={"logging in..."}
-              duration={5000}
-              spinner={"circular"}
-              animated={true}
-              keyboardClose={true}
-            />
             {/* <IonLabel style={{marginTop: "15px"}}>(or)</IonLabel>
             <IonCol className="alternate-logins">
               <IonButton fill="outline" color="light" shape="round" className="alternate-icon" onClick={(e)=>{handleGoogleSignIn()}}><IonIcon icon={logoGoogle} color="light"  /></IonButton>
