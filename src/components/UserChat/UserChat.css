@@ -9,3 +9,8 @@
     margin-top: 10px;
     color: #606460;
 }
+
+.chat-text-msg{
+    display: flex;
+    flex-wrap: nowrap;
+}

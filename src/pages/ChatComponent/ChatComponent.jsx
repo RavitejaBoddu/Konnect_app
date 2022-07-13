@@ -103,7 +103,7 @@ const ChatComponent = () => {
   return (
     <IonPage className="chat-page">
       <IonHeader>
-      <IonToolbar>
+      <IonToolbar color="white">
       <IonCard className="chat-toolbar">
           <IonIcon
             icon={arrowBackOutline}
@@ -115,7 +115,7 @@ const ChatComponent = () => {
           />
           <IonRow className="chat-profile-container">
             <IonImg
-              src="assets/images/profiles/andrew.png"
+              src="assets/images/user.png"
               className="chat-img"
             />
             <IonCol className="chat-profile-detail">
@@ -153,6 +153,7 @@ const ChatComponent = () => {
       <IonFooter>
         <IonToolbar className="message-send" color="white">
         <IonInput
+              className="send-input"
               type="text"
               placeholder="Enter Your message here"
               value={text}
@@ -162,7 +163,7 @@ const ChatComponent = () => {
         <IonIcon icon={sendSharp} color="primary" size='large' onClick={(e)=> handleMessage()} slot="end"/>
         </IonToolbar>
           </IonFooter>
-    </IonPage>
+    </IonPage>  
   );
 };
 

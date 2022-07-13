@@ -33,8 +33,6 @@ import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import { AuthContextProvider } from "./context/AuthContext";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
-import Profile from "./pages/Profile/Profile";
-import ChatComponent from "./pages/ChatComponent/ChatComponent";
 import { App as app } from "@capacitor/app";
 import { Browser } from "@capacitor/browser";
 import { useEffect, useState } from "react";
@@ -47,7 +45,6 @@ setupIonicReact();
 const App = () => {
   const [updateDetails, setUpdateDetails] = useState({});
   const [appVersion, setAppVersion] = useState("");  
-  // const [showLoading, setShowLoading] = useState(false);
 
 
   const [show, dismiss] = useIonLoading();
@@ -128,14 +125,9 @@ const App = () => {
           const btn = updateDetails.btn;
           handleAlert(msg, title, btn, appVersion);
         }
-      } 
-      else {
-        const msg = "App is not running on android platform";
-        handleToast(msg);
       }
     } 
     catch (error) {
-      handleAlert(error.message);
     }
   };
 

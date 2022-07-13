@@ -43,6 +43,10 @@ const Login = () => {
       color: "white",
     });
   };
+  const clearInputs = () => {
+    setEmail("");
+    setPassword("");
+  }
 
   const handleToast = (msg) => {
     present({
@@ -89,17 +93,16 @@ const Login = () => {
             dismiss();
             const msg = "You have Logged in successfully";
             handleToast(msg);
-            setEmail("");
-            setPassword("");
+            clearInputs();
             router.push("/home");
           } else {
             dismiss();
             const msg = "Please complete the verification and try to login.";
             handleAlert(msg);
             logout();
+            clearInputs();
           }
-          setEmail("");
-          setPassword("");
+          clearInputs();
         } catch (e) {
           dismiss();
           const msg = JSON.stringify(e.message);
@@ -108,22 +111,22 @@ const Login = () => {
               handleAlert(
                 "User not found, please enter correct email address / If already signed up complete the verification process."
               );
+              clearInputs();
             } else if (msg.includes("wrong-password")) {
               handleAlert(
                 "Wrong password entered, Please enter the correct password"
               );
               setPassword("");
+              clearInputs();
             } else {
               dismiss();
               handleAlert(msg);
-              setEmail("");
-              setPassword("");
+              clearInputs();
             }
           } catch (e) {
             dismiss();
             handleAlert(e.message);
-            setEmail("");
-            setPassword("");
+            clearInputs();
           }
         }
       }
@@ -131,8 +134,7 @@ const Login = () => {
       dismiss();
       const msg = e.message;
       handleAlert(msg);
-      setEmail("");
-      setPassword("");
+      clearInputs();
     }
   };
   const handleGoogleSignIn = async () => {
@@ -214,8 +216,7 @@ const Login = () => {
               color="dark"
               routerLink="/signup"
               onClick={() => {
-                setEmail("");
-                setPassword("");
+                clearInputs();
               }}
             >
               <IonLabel className="lp-sp-switch-btn-text ion-text-capitalize">

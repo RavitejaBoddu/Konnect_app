@@ -27,7 +27,7 @@ const UserChat = (props) => {
   return (
     <IonRow className='chat-row' onClick={(e)=> {openChat(id)}}>
         <IonCol className='chat-img-container'>
-            <IonImg src="assets/images/profiles/andrew.png"  className='chat-img'/>
+            <IonImg src="assets/images/user.png"  className='chat-img'/>
         </IonCol>
         <IonCol className='chat-text'>    
         <IonLabel className='chat-text-name'>{name}</IonLabel>
@@ -38,7 +38,7 @@ const UserChat = (props) => {
       hour: "2-digit",
       minute: "2-digit",
     })}</IonLabel> }  */}
-        <IonIcon className='chat-info-img' icon={checkmarkDoneOutline} /> 
+        <IonIcon className='chat-info-img' color="dark3"icon={checkmarkDoneOutline} /> 
         </IonCol>
     </IonRow>
   )

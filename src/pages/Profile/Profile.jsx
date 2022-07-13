@@ -136,7 +136,7 @@ const Profile = () => {
           />
         </IonCard>
         <IonCard className="pro-pic-container">
-          <IonImg src="assets/images/propic.jpg" />
+          <IonImg src="assets/images/profile-pic.jpg" />
         </IonCard>
         <IonGrid className="profile-details">
           {isUpdate ? (
@@ -211,7 +211,7 @@ const Profile = () => {
               <IonLabel className="flex-row-label">Date of Birth</IonLabel>
               <IonLabel className="flex-row-value">
                 <IonIcon icon={calendarNumberOutline} />
-                17-JAN-1996
+                DD-MON-19XX
               </IonLabel>
             </IonCol>
           </IonRow>

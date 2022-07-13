@@ -62,7 +62,7 @@ const Home = () => {
             </ProtectedRoute>
           </Route>
         </IonRouterOutlet>
-        <IonTabBar slot="bottom" color="white">
+        <IonTabBar slot="bottom" color="white" className="tabBar">
           <IonTabButton tab="chats" href="/home/chats">
             <IonIcon icon={chatbubbles} />
             <IonLabel>Chats</IonLabel>

@@ -15,7 +15,7 @@ import {
 import "./Chats.css";
 import { ellipsisVertical } from "ionicons/icons";
 import { UserAuth } from "../../context/AuthContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {collection, query, where, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import UserChat from "../../components/UserChat/UserChat";
@@ -24,9 +24,9 @@ const Chats = () => {
   let router = useIonRouter();
 
   const { userList, setUserList, user} = UserAuth();
+  const [searchText, setSearchText] = useState("");
 
  const currentId = user.uid;
-
 
   useEffect(()=> {
     const userRef = collection(db, 'users')
@@ -60,7 +60,7 @@ useIonViewWillEnter(() => showTabs());
   return (
     <IonPage>
       <IonHeader>
-      <IonToolbar>
+      <IonToolbar className="chats-toolbar" color="white">
       <IonCard className="chats-header" lines="none">
           <IonLabel className="chats-heading">Konnect.</IonLabel>
           <IonImg
@@ -80,10 +80,16 @@ useIonViewWillEnter(() => showTabs());
       </IonHeader>
       <IonContent fullscreen className="chats-page">
         <div className="searchbar-container">
-          <IonSearchbar animated className="chats-searchbar"></IonSearchbar>
+          <IonSearchbar animated className="chats-searchbar" value={searchText} onIonChange={e => setSearchText(e.detail.value)}></IonSearchbar>
         </div>
         <IonGrid className="chats-container">
-          {userList.map((user) => {
+          {userList.filter((user)=>{
+            if(searchText === ""){
+              return user
+            }else if(user.name.toLowerCase().includes(searchText.toLowerCase())){
+              return user
+            }
+          }).map((user) => {
             return (
               <UserChat
                 key={user.uid}

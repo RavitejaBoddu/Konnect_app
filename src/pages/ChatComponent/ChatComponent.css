@@ -8,7 +8,8 @@
     height: calc(100vh - 86px);
     flex-direction: column;
     justify-content: space-between;
-    --background:#333333;
+    /* --background:#ffffff; */
+    --background:linear-gradient(rgba(201, 217, 219, 0.460), rgba(201, 217, 219, 0.460)) , url("../../../public/assets/images/chat-bg.png") no-repeat center/cover fixed;
 }
 .chat-toolbar{
     display: flex;
@@ -81,4 +82,8 @@
     padding: 0 10px;
     padding-right: 15px;
     height: 70px;
+}
+
+.send-input{
+    font-size: 18px;
 }

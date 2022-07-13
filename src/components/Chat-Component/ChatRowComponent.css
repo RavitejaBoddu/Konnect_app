@@ -39,11 +39,10 @@
 .contact-text-name {
     font-family: 'Roboto';
     font-weight: 400;
-    font-size: 18px;
+    font-size: 20px;
     line-height: 20px;
     display: flex;
     align-items: center;
-
     color: #000000;
 
 }
@@ -88,5 +87,4 @@
 .msg-icon {
     width: 30px;
     height: 30px;
-    margin-left: 20px;
 }

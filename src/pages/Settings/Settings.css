@@ -1,3 +1,16 @@
+.settings-page {
+  --background: #ffffff;
+  display: flex;
+  height: 100%;
+}
+.settings{
+  display: flex;
+  justify-content:space-between;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .settings-row {
   display: flex;
   flex-direction: column;
@@ -14,6 +27,7 @@
   display: flex;
   width: 100%;
   justify-content: center;
+  margin-top: 1rem;
 }
 
 .two-items {
@@ -37,5 +51,8 @@
 .setting-heading {
   color: #2457c5;
   margin-bottom: 1rem;
-
+}
+.heading{
+  color: #2457c5;
+  margin-bottom: 1.4rem;
 }

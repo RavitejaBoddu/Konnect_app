@@ -24,6 +24,7 @@ const Friends = () => {
 
   let router = useIonRouter();
   const { userList, setUserList, user} = UserAuth();
+  const [searchText, setSearchText] = useState("");
 
  const currentId = user.uid;
 
@@ -49,7 +50,7 @@ const Friends = () => {
   return (
     <IonPage>
       <IonHeader>
-      <IonToolbar>
+      <IonToolbar color="white">
       <IonCard className="chats-header" lines="none">
           <IonLabel className="chats-heading">Friends.</IonLabel>
           <IonImg
@@ -69,10 +70,16 @@ const Friends = () => {
       </IonHeader>
       <IonContent fullscreen className="friends-page">
         <div className="searchbar-container">
-          <IonSearchbar animated className="chats-searchbar"></IonSearchbar>
+          <IonSearchbar animated className="chats-searchbar" value={searchText} onIonChange={e => setSearchText(e.detail.value)}></IonSearchbar>
         </div>
         <IonGrid className="chats-container">
-          {userList.map((user) => {
+          {userList.filter((user) => {
+            if(searchText === ""){
+              return user
+            }else if(user.name.toLowerCase().includes(searchText.toLowerCase())){
+              return user
+            }
+          }).map((user) => {
             return (
               <ChatRowComponent
                 key={user.uid}

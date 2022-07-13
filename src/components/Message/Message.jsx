@@ -1,4 +1,4 @@
-import { IonItem, IonLabel, IonRow } from "@ionic/react";
+import { IonCol, IonItem, IonLabel, IonRow } from "@ionic/react";
 import "./Message.css";
 // import Moment from "react-moment";
 import { useEffect, useRef } from "react";
@@ -23,7 +23,7 @@ const Message = (props) => {
   return (
     <IonRow className={msg.from === user1 ? "message_wrapper-own" : "message_wrapper"} ref={scrollRef}>
       <IonItem lines="none" className={msg.from === user1 ? "me" : "friend"}>
-        <IonLabel className="msg-text">{msg.text}</IonLabel>
+        <IonCol className="msg-text">{msg.text}</IonCol>
         <IonLabel className="msg-time" slot="end">
           {time}
           {/* <Moment fromNow>{msg.createdAt.toDate()}</Moment> */}

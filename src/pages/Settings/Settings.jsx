@@ -4,10 +4,12 @@ import {
   IonCol,
   IonContent,
   IonGrid,
+  IonHeader,
   IonIcon,
   IonLabel,
   IonPage,
   IonRow,
+  IonToolbar,
   useIonLoading,
   useIonRouter,
   useIonToast,
@@ -58,19 +60,27 @@ const Settings = () => {
     }
   };
 
+  const goToProfile = () => {
+    router.push("/home/profile");
+  };
+
   return (
     <IonPage>
-      <IonContent fullscreen className="settings-page">
+      <IonHeader>
+        <IonToolbar color="white">
         <IonCard className="chats-header" lines="none">
           <IonLabel className="chats-heading">Settings</IonLabel>
         </IonCard>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent fullscreen className="settings-page">
         <IonGrid className="settings">
           <IonRow className="settings-row">
-            <IonCol className="setting-heading">General</IonCol>
-            <IonCol className="three-items">
-              <IonLabel>Account</IonLabel>
-              <IonLabel>Cj_barry</IonLabel>
-              <IonIcon icon={caretForward} />
+            <IonCol className="heading">General</IonCol>
+            <IonCol className="three-items" onClick={(e)=>goToProfile()}>
+              <IonLabel>Account:-</IonLabel>
+              <IonLabel >{auth.currentUser.displayName}</IonLabel>
+              <IonIcon icon={caretForward}  />
             </IonCol>
             <IonCol className="two-items">
               <IonLabel>Notifications</IonLabel>
@@ -78,7 +88,7 @@ const Settings = () => {
             </IonCol>
           </IonRow>
           <IonRow className="settings-row">
-            <IonCol className="setting-heading">Themes</IonCol>
+            <IonCol className="heading">Themes</IonCol>
             <IonCol className="three-items">
               <IonLabel>Text size</IonLabel>
               <IonLabel>Medium</IonLabel>

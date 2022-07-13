@@ -53,6 +53,12 @@ const Signup = () => {
     });
   };
 
+  const clearInputs = () => {
+    setName("");
+          setEmail("");
+          setPassword("");
+  }
+
   const handleSignup = async () => {
     var atposition = email.indexOf("@");
     var dotposition = email.lastIndexOf(".");
@@ -105,20 +111,20 @@ const Signup = () => {
           });
           dismiss();
           logout();
-          setName("");
-          setEmail("");
-          setPassword("");
+          clearInputs();
           router.push("/login");
         } catch (e) {
           dismiss();
           const msg = e.message;
           handleAlert(msg);
+          clearInputs();
         }
       }
     } catch (e) {
       dismiss();
       const msg = e.message;
       handleAlert(msg);
+      clearInputs();
     }
   };
 
@@ -181,9 +187,7 @@ const Signup = () => {
               color="dark"
               routerLink="/login"
               onClick={() => {
-                setName("");
-                setEmail("");
-                setPassword("");
+                clearInputs();
               }}
             >
               <IonLabel className="lp-sp-switch-btn-text ion-text-capitalize">
