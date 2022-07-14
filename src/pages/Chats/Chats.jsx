@@ -1,4 +1,5 @@
 import {
+  IonAvatar,
   IonCard,
   IonContent,
   IonGrid,
@@ -17,7 +18,7 @@ import { ellipsisVertical } from "ionicons/icons";
 import { UserAuth } from "../../context/AuthContext";
 import { useEffect, useState } from "react";
 import {collection, query, where, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebase";
+import { auth, db } from "../../firebase";
 import UserChat from "../../components/UserChat/UserChat";
 
 const Chats = () => {
@@ -32,14 +33,16 @@ const Chats = () => {
     const userRef = collection(db, 'users')
     //creating query object
     const q = query(userRef, where('uid', 'not-in', [currentId]))
-
     //executing query
-    onSnapshot(q, querySnapshot => {
+    const unsubscribe = onSnapshot(q, querySnapshot => {
       let users = [];
       querySnapshot.forEach(doc => {
         users.push(doc.data())
       });
       setUserList(users);
+  })
+  return(()=>{
+    unsubscribe();
   })
 }, []);
 
@@ -63,13 +66,22 @@ useIonViewWillEnter(() => showTabs());
       <IonToolbar className="chats-toolbar" color="white">
       <IonCard className="chats-header" lines="none">
           <IonLabel className="chats-heading">Konnect.</IonLabel>
+          <IonAvatar  className="profile-pic">{
+            auth.currentUser.photoURL ?
+            <IonImg
+            src={auth.currentUser.photoURL}
+            onClick={(e) => {
+              goToProfile();
+            }}
+          /> :
           <IonImg
             src="assets/images/profile.png"
-            className="profile-pic"
             onClick={(e) => {
               goToProfile();
             }}
           />
+          }
+          </IonAvatar>
           <IonIcon
             icon={ellipsisVertical}
             className="chats-vertical-dots"
@@ -83,7 +95,7 @@ useIonViewWillEnter(() => showTabs());
           <IonSearchbar animated className="chats-searchbar" value={searchText} onIonChange={e => setSearchText(e.detail.value)}></IonSearchbar>
         </div>
         <IonGrid className="chats-container">
-          {userList.filter((user)=>{
+          {userList.filter((user) =>{
             if(searchText === ""){
               return user
             }else if(user.name.toLowerCase().includes(searchText.toLowerCase())){
@@ -96,6 +108,7 @@ useIonViewWillEnter(() => showTabs());
                 id={user.uid}
                 name={user.name}
                 user1= {currentId}
+                photoURL = {user.photoURL}
               />
             );
           })}

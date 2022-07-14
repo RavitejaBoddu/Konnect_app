@@ -1,4 +1,5 @@
 import {
+  IonAvatar,
   IonButton,
   IonCard,
   IonCol,
@@ -7,6 +8,7 @@ import {
   IonIcon,
   IonImg,
   IonInput,
+  IonItem,
   IonLabel,
   IonPage,
   IonRow,
@@ -24,26 +26,98 @@ import {
   lockClosedOutline,
   calendarNumberOutline,
   informationCircleOutline,
+  camera,
+  trash,
 } from "ionicons/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UserAuth } from "../../context/AuthContext";
 import { auth, db } from "../../firebase";
-import { doc, updateDoc } from "firebase/firestore";
+import { getDoc, doc, updateDoc } from "firebase/firestore";
 import { closeCircleOutline, checkmarkCircleOutline } from "ionicons/icons";
 import "./Profile.css";
+import { storage } from "../../firebase";
+import { ref, getDownloadURL, uploadBytes, uploadBytesResumable, deleteObject} from "firebase/storage"
+import { useHistory } from "react-router";
+
 
 
 const Profile = () => {
+
   const { user } = UserAuth();
   const user_id = user.uid;
   const [uname, setUname] = useState(user.displayName);
   const [isUpdate, setIsUpdate] = useState(false);
   const [show, dismiss] = useIonLoading();
+  const [img, setImg] =useState("");
+  const [userProfile, setUserProfile] = useState();
 
   let router = useIonRouter();
   const [presentAlert] = useIonAlert();
 
   const [present] = useIonToast();
+  const history = useHistory("");
+
+  useEffect(() => {
+    getDoc(doc(db, "users", auth.currentUser.uid)).then((docSnap) => {
+      if (docSnap.exists) {
+        setUserProfile(docSnap.data());
+      }
+    });
+    if (img) {
+      const uploadImg = async () => {
+        const imgRef = ref(
+          storage,
+          `avatar/${new Date().getTime()} - ${img.name}`
+        );
+        try {
+          if (user.avatarPath) {
+            await deleteObject(ref(storage, user.avatarPath));
+          }
+          const snap = await uploadBytes(imgRef, img);
+          const url = await getDownloadURL(ref(storage, snap.ref.fullPath));
+
+          await updateDoc(doc(db, "users", auth.currentUser.uid), {
+            photoURL: url,
+            avatarPath: snap.ref.fullPath,
+          });
+          await updateProfile(auth.currentUser, {
+            photoURL: url,
+          })
+          .catch((error) => {
+            handleAlert(error.message);
+          });
+          setImg("");
+        } catch (err) {
+          handleAlert(err.message);
+        }
+      };
+      uploadImg();
+    }
+    return () => {
+    }
+  }, [img])
+
+  const deleteImage = async () => {
+    try {
+        await deleteObject(ref(storage, user.avatarPath));
+
+        await updateDoc(doc(db, "users", auth.currentUser.uid), {
+          photoURL: "",
+          avatarPath: "",
+        });
+        await updateProfile(auth.currentUser, {
+          photoURL: "",
+        })
+        .catch((error) => {
+          handleAlert(error.message);
+        });
+        history.replace("/");
+      }
+      catch (err) {
+        handleAlert(err.message);
+      }
+    }
+  
 
   const handleToast = (msg) => {
     present({
@@ -67,13 +141,42 @@ const Profile = () => {
       cssClass: "lp-sp-alert",
     });
   };
-  const handleUpdate = async () => {
 
+  const handleDelete = async () => {
+    presentAlert({
+      header: "Delete Profile Picture?",
+      buttons: [
+        {
+          text: "Delete",
+          role: "Delete",
+          handler: async () => {
+            show({
+              message: 'Deleting...',
+              duration: 2000,
+              spinner: "circular",
+              cssClass: "lp-sp-spinner",
+              animated: true,
+              keyboardClose: true,
+              mode:"ios"
+            })
+            await deleteImage();
+            dismiss();
+          }
+        }
+      ],
+      backdropDismiss: true,
+      translucent: true,
+      animated: true,
+      cssClass: "lp-sp-alert",
+    });
+  }
+
+  const handleUpdate = async () => {
     const userRef = doc(db, "users", user_id);
 
     try {
       show({
-        message: "Logging in please wait...",
+        message: "Updating...",
         duration: 5000,
         spinner: "circular",
         cssClass: "lp-sp-spinner",
@@ -84,18 +187,13 @@ const Profile = () => {
       await updateProfile(auth.currentUser, {
         displayName: uname,
       })
-        .then(() => {
-          console.log(auth.currentUser.displayName);
-        })
-        .catch((error) => {
-          handleAlert(error.message);
-        });
-
+      .catch((error) => {
+        handleAlert(error.message);
+      });
       await updateDoc(userRef, {
         name: uname,
       });
       handleToast("Name has been Successfully Updated!")
-
       setIsUpdate(false);
       dismiss();
     } catch (error) {
@@ -107,6 +205,7 @@ const Profile = () => {
   const toggleUpdate = () => {
     setIsUpdate(true);
   };
+
   const cancelUpdate = () => {
     setIsUpdate(false);
   };
@@ -114,6 +213,11 @@ const Profile = () => {
   const handleBack = () => {
     router.push("/home/chats");
   };
+
+  const handleInput = () => {
+    document.getElementById("photo").click();
+  }
+
   return (
     <IonPage>
       <IonContent fullscreen className="profile-page">
@@ -135,10 +239,22 @@ const Profile = () => {
             color="white"
           />
         </IonCard>
-        <IonCard className="pro-pic-container">
-          <IonImg src="assets/images/profile-pic.jpg" />
+        <IonCard className="avatar-container">
+        <IonAvatar className="pro-pic-container">
+          {
+            auth.currentUser.photoURL ?
+            <IonImg src={auth.currentUser.photoURL} /> :
+            <IonImg src="assets/images/default-user.jpg" />
+          }
+          
+        </IonAvatar>
+        <IonItem lines="none" className="pro-pic-btns">
+          <IonIcon  icon={camera} slot="start" color="white" size="large" onClick={((e)=>{handleInput()})} />
+          <input type="file" accept='image/*' style={{display:"none"}} id="photo" onChange={(e)=>setImg(e.target.files[0])}/>
+          <IonIcon icon={trash} slot="end" color="white" size="large" onClick={((e)=>{deleteImage()})}/>
+        </IonItem>
         </IonCard>
-        <IonGrid className="profile-details">
+        <IonGrid className="profile-details"> 
           {isUpdate ? (
             <IonRow className="update-row">
               <IonInput

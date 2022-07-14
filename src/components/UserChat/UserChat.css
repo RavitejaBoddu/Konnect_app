@@ -14,3 +14,13 @@
     display: flex;
     flex-wrap: nowrap;
 }
+
+.chat-info{
+    
+}
+
+.chat-img-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

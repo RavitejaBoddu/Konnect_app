@@ -1,4 +1,5 @@
 import {
+  IonAvatar,
   IonCard,
   IonContent,
   IonGrid,
@@ -16,7 +17,7 @@ import { ellipsisVertical } from "ionicons/icons";
 import { useEffect, useState } from "react";
 import ChatRowComponent from "../../components/Chat-Component/ChatRowComponent";
 import { UserAuth } from "../../context/AuthContext";
-import { db } from "../../firebase";
+import { auth, db } from "../../firebase";
 import "./Friends.css";
 
 const Friends = () => {
@@ -35,12 +36,15 @@ const Friends = () => {
     const q = query(userRef, where('uid', 'not-in', [currentId]))
 
     //executing query
-    onSnapshot(q, querySnapshot => {
+    const unsubscribe = onSnapshot(q, querySnapshot => {
       let users = [];
       querySnapshot.forEach(doc => {
         users.push(doc.data())
       });
       setUserList(users);
+  })
+  return(()=>{
+    unsubscribe();
   })
 }, []);
 
@@ -53,13 +57,22 @@ const Friends = () => {
       <IonToolbar color="white">
       <IonCard className="chats-header" lines="none">
           <IonLabel className="chats-heading">Friends.</IonLabel>
+          <IonAvatar  className="profile-pic">{
+            auth.currentUser.photoURL ?
+            <IonImg
+            src={auth.currentUser.photoURL}
+            onClick={(e) => {
+              goToProfile();
+            }}
+          /> :
           <IonImg
             src="assets/images/profile.png"
-            className="profile-pic"
             onClick={(e) => {
               goToProfile();
             }}
           />
+          }
+          </IonAvatar>
           <IonIcon
             icon={ellipsisVertical}
             className="chats-vertical-dots"
@@ -85,6 +98,7 @@ const Friends = () => {
                 key={user.uid}
                 id={user.uid}
                 name={user.name}
+                photoURL={user.photoURL}
                 isContactPage={isContactPage}
               />
             );

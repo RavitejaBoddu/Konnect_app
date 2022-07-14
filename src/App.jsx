@@ -107,7 +107,7 @@ const App = () => {
     const docSnap = await getDoc(updateRef);
     if (docSnap.exists()) {
       const data = docSnap.data();
-      console.log("Document data:", docSnap.data());
+      // console.log("Document data:", docSnap.data());
       setUpdateDetails(data.updateMsg);
       setAppVersion(data.current);
     } else {
@@ -133,7 +133,7 @@ const App = () => {
 
   useEffect(() => {
     getConfigData();
-    if (isPlatform("android")){
+    if (isPlatform('capacitor')){
       getAppInfo();
     }
   }, []);

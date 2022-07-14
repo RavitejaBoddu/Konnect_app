@@ -62,8 +62,9 @@
 .chat-info {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     flex: 2;
-    gap: 10px;
 }
 
 .chat-info-time {
@@ -82,9 +83,13 @@
     width: 20px;
     height: 20px;
     margin-left: 27px;
+    margin-top: 25px;
 }
 
 .msg-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 30px;
-    height: 30px;
+    height: 45px;
 }

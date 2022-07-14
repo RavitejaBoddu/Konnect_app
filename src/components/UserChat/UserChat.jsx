@@ -1,4 +1,4 @@
-import { IonCol, IonIcon, IonImg, IonLabel, IonRow, useIonRouter } from "@ionic/react";
+import { IonAvatar, IonCol, IonIcon, IonImg, IonLabel, IonRow, useIonRouter } from "@ionic/react";
 import './UserChat.css'
 import {checkmarkDoneOutline} from 'ionicons/icons'
 import { useEffect, useState } from "react";
@@ -6,7 +6,7 @@ import { onSnapshot, doc } from 'firebase/firestore'
 import { db } from "../../firebase";
 const UserChat = (props) => {
 
-    const {id, name, user1 } = props;
+    const {id, name, user1, photoURL } = props;
     let router = useIonRouter();
     const [data, setData]= useState({});
     // const [time, setTime] = useState("");
@@ -27,7 +27,17 @@ const UserChat = (props) => {
   return (
     <IonRow className='chat-row' onClick={(e)=> {openChat(id)}}>
         <IonCol className='chat-img-container'>
-            <IonImg src="assets/images/user.png"  className='chat-img'/>
+        <IonAvatar className="profile-pic-container">
+              {photoURL ? 
+              <IonImg
+                src={photoURL}
+                className="chat-img"
+              /> : <IonImg
+              src="assets/images/user.png"
+              className="chat-img"
+            /> 
+              }
+            </IonAvatar>
         </IonCol>
         <IonCol className='chat-text'>    
         <IonLabel className='chat-text-name'>{name}</IonLabel>

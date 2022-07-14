@@ -1,4 +1,5 @@
 import {
+  IonAvatar,
   IonCol,
   IonIcon,
   IonImg,
@@ -10,13 +11,8 @@ import "./ChatRowComponent.css";
 import { checkmarkDoneOutline, chatbubbleEllipses } from "ionicons/icons";
 
 const ChatRowComponent = (props) => {
-  const { id, name, msg, time, isContactPage } = props;
+  const { id, name, msg, time, isContactPage, photoURL } = props;
   let router = useIonRouter();
-
-  const initials = name.charAt(0);
-  
-  // document.getElementById("name").innerHTML = initials;
-  // console.log(initials)
 
   const openChat = (id) => {
     router.push(`/chat/${id}`);
@@ -29,9 +25,19 @@ const ChatRowComponent = (props) => {
         openChat(id);
       }}
     >
-      <IonCol className="chat-img-container">
-        <IonImg src="assets/images/user.png" className="chat-img" />
-      </IonCol>
+      <IonCol className='chat-img-container'>
+        <IonAvatar className="profile-pic-container">
+              {photoURL ? 
+              <IonImg
+                src={photoURL}
+                className="chat-img"
+              /> : <IonImg
+              src="assets/images/user.png"
+              className="chat-img"
+            /> 
+              }
+            </IonAvatar>
+        </IonCol>
       <IonCol className="chat-text">
         {isContactPage ? (
           <IonLabel className="contact-text-name">{name}</IonLabel>

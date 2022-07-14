@@ -1,4 +1,5 @@
 import {
+  IonAvatar,
   IonCard,
   IonCol,
   IonContent,
@@ -8,6 +9,7 @@ import {
   IonIcon,
   IonImg,
   IonInput,
+  IonItem,
   IonLabel,
   IonPage,
   IonRow,
@@ -66,12 +68,15 @@ const ChatComponent = () => {
       //create query
       const q = query(msgRef, orderBy('createdAt', 'asc'))
 
-      onSnapshot(q, querySnapshot => { 
+      const unsubscribe = onSnapshot(q, querySnapshot => { 
         let msgs = [];
         querySnapshot.forEach(doc => {
           msgs.push(doc.data())
         });
         setMsgs(msgs);
+      })
+      return(()=>{
+        unsubscribe();
       })
     }, [user2]);
 
@@ -114,13 +119,28 @@ const ChatComponent = () => {
             }}
           />
           <IonRow className="chat-profile-container">
+            <IonItem lines="none">
+            <IonAvatar slot="start" className="profile-pic-container">
             <IonImg
-              src="assets/images/user.png"
-              className="chat-img"
-            />
-            <IonCol className="chat-profile-detail">
-              <IonLabel>{usersData.name}</IonLabel>
+                src={usersData.photoURL}  
+              />
+            </IonAvatar>
+            <IonCol>
+            <IonLabel className="profile-name">{usersData.name}</IonLabel>
               {usersData.isOnline ? (
+                <IonLabel color="success" className="online-toggle">
+                  <IonIcon icon={ellipse} color="success"  className="online-toggle-icon"/> Online
+                </IonLabel>
+              ) : (
+                <IonLabel color="medium" className="online-toggle">
+                  <IonIcon icon={ellipse} color="medium" /> Offline
+                </IonLabel>
+              )}
+              </IonCol>
+          </IonItem>
+            <IonCol className="chat-profile-detail">
+              {/* <IonLabel>{usersData.name}</IonLabel> */}
+              {/* {usersData.isOnline ? (
                 <IonLabel color="success" className="online-toggle">
                   <IonIcon icon={ellipse} color="success"  className="online-toggle-icon"/> Online{" "}
                 </IonLabel>
@@ -128,7 +148,7 @@ const ChatComponent = () => {
                 <IonLabel color="medium" className="online-toggle">
                   <IonIcon icon={ellipse} color="medium" /> Offline{" "}
                 </IonLabel>
-              )}
+              )} */}
             </IonCol>
           </IonRow>
           <IonIcon
