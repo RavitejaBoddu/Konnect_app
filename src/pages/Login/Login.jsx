@@ -3,6 +3,7 @@ import {
   IonCol,
   IonContent,
   IonGrid,
+  IonIcon,
   IonImg,
   IonInput,
   IonItem,
@@ -19,6 +20,9 @@ import { UserAuth } from "../../context/AuthContext";
 // import { logoGoogle, logoFacebook, alertOutline } from "ionicons/icons";
 import "../../theme/Login_Signup.css";
 import { auth } from "../../firebase";
+import { logoGoogle } from "ionicons/icons";
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -27,7 +31,7 @@ const Login = () => {
   const [presentAlert] = useIonAlert();
   const [show, dismiss] = useIonLoading();
 
-  const { login, logout, googleSignIn, facebookSignIn, updateStatus } =
+  const { login, logout, isGoogleLogin, setIsGoogleLogin, facebookSignIn, updateStatus, setUser, addGoogleData } =
     UserAuth();
 
   let router = useIonRouter();
@@ -137,14 +141,32 @@ const Login = () => {
       clearInputs();
     }
   };
+
   const handleGoogleSignIn = async () => {
     try {
-      await googleSignIn();
-      router.push("/home");
+      GoogleAuth.initialize();
+      const result = await GoogleAuth.signIn();
+      addGoogleData(result.id, result.displayName, result.email, result.imageUrl);
+      setUser(result);
+      setIsGoogleLogin(true)
+      console.log(result);  
+      if (result) {
+        router.push("/home");
+      }
     } catch (error) {
       handleAlert(error.message);
     }
   };
+
+
+  // const handleGoogleSignIn = async () => {
+  //   try {
+  //     await googleSignIn();
+  //     router.push("/home");
+  //   } catch (error) {
+  //     handleAlert(error.message);
+  //   }
+  // };
   const handleFacebookSignIn = async () => {
     try {
       await facebookSignIn();
@@ -199,12 +221,12 @@ const Login = () => {
                 </IonLabel>
               </IonButton>
             </IonCol>
-            {/* <IonLabel style={{marginTop: "15px"}}>(or)</IonLabel>
+            <IonLabel style={{marginTop: "15px"}}>(or)</IonLabel>
             <IonCol className="alternate-logins">
               <IonButton fill="outline" color="light" shape="round" className="alternate-icon" onClick={(e)=>{handleGoogleSignIn()}}><IonIcon icon={logoGoogle} color="light"  /></IonButton>
-              <IonButton fill="outline" color="light" shape="round" className="alternate-icon" onClick={(e)=>{handleFacebookSignIn()}} ><IonIcon icon={logoFacebook} color="light" /></IonButton>
+              {/* <IonButton fill="outline" color="light" shape="round" className="alternate-icon" onClick={(e)=>{handleFacebookSignIn()}} ><IonIcon icon={logoFacebook} color="light" /></IonButton> */}
             
-            </IonCol> */}
+            </IonCol>
           </IonRow>
           <IonRow class="lp-sp-switch-container">
             <IonLabel className="lp-account-text">

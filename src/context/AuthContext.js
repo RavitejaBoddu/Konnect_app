@@ -18,9 +18,21 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(true);
   const [userList, setUserList] = useState([]);
+  const [isGoogleLogin, setIsGoogleLogin] =useState(false)
 
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  const addGoogleData = async (id, name, email, imageUrl) => {
+    await setDoc(doc(db, "users", auth.currentUser.uid), {
+      uid: id,
+      name: name,
+      email: email,
+      createdAt: Timestamp.fromDate(new Date()),
+      photoURL:imageUrl,
+      isOnline:false,
+    });
   };
 
   const addData = async (auth, name, email) => {
@@ -81,7 +93,9 @@ export const AuthContextProvider = ({ children }) => {
         addData,
         updateStatus,
         userList,
-        setUserList
+        setUserList,
+        setUser,
+        addGoogleData
       }}
     >
       {children}
