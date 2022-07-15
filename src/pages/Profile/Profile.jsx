@@ -16,6 +16,7 @@ import {
   useIonLoading,
   useIonRouter,
   useIonToast,
+  useIonViewWillEnter,
 } from "@ionic/react";
 import { updateProfile } from "firebase/auth";
 import {
@@ -50,13 +51,15 @@ const Profile = () => {
   const [show, dismiss] = useIonLoading();
   const [img, setImg] =useState("");
   const [userProfile, setUserProfile] = useState();
+  const [per, setPerc] = useState(null)
+  const [propicPath, setPropicPath] = useState("")
 
   let router = useIonRouter();
   const [presentAlert] = useIonAlert();
 
   const [present] = useIonToast();
   const history = useHistory("");
-
+// console.log(userProfile);
   useEffect(() => {
     getDoc(doc(db, "users", auth.currentUser.uid)).then((docSnap) => {
       if (docSnap.exists) {
@@ -70,8 +73,8 @@ const Profile = () => {
           `avatar/${new Date().getTime()} - ${img.name}`
         );
         try {
-          if (user.avatarPath) {
-            await deleteObject(ref(storage, user.avatarPath));
+          if (userProfile.avatarPath) {
+            await deleteObject(ref(storage, userProfile.avatarPath));
           }
           const snap = await uploadBytes(imgRef, img);
           const url = await getDownloadURL(ref(storage, snap.ref.fullPath));
@@ -99,7 +102,8 @@ const Profile = () => {
 
   const deleteImage = async () => {
     try {
-        await deleteObject(ref(storage, user.avatarPath));
+      console.log(userProfile.avatarPath)
+        await deleteObject(ref(storage, userProfile.avatarPath));
 
         await updateDoc(doc(db, "users", auth.currentUser.uid), {
           photoURL: "",
@@ -111,10 +115,10 @@ const Profile = () => {
         .catch((error) => {
           handleAlert(error.message);
         });
-        history.replace("/");
+        // window.location.reload()
       }
       catch (err) {
-        handleAlert(err.message);
+        console.log(err.message);
       }
     }
   
@@ -141,6 +145,15 @@ const Profile = () => {
       cssClass: "lp-sp-alert",
     });
   };
+
+  const hideTabs = () => {
+    const tabsEl = document.querySelector('ion-tab-bar');
+    if (tabsEl) {
+      tabsEl.hidden = true;
+    }
+  }
+
+  useIonViewWillEnter(() => hideTabs())
 
   const handleDelete = async () => {
     presentAlert({

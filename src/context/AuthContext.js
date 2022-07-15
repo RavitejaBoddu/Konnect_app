@@ -66,6 +66,7 @@ export const AuthContextProvider = ({ children }) => {
       unsubscribe();
     };
   }, []);
+  
 
   return (
     <UserContext.Provider
