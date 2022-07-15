@@ -45,19 +45,19 @@ const ChatRowComponent = (props) => {
           <IonLabel className="chat-text-name">{name}</IonLabel>
         )}
 
-        <IonLabel className="chat-text-msg">{msg}</IonLabel>
+        {/* <IonLabel className="chat-text-msg">{msg}</IonLabel> */}
       </IonCol>
       <IonCol className="message-icon">
-        <IonLabel className="chat-info-time">{time}</IonLabel>
-        {isContactPage ? (
+        {/* <IonLabel className="chat-info-time">{time}</IonLabel>
+        {isContactPage ? ( */}
           <IonIcon
             className="msg-icon"
             color="primary"
             icon={chatbubbleEllipses}
           />
-        ) : (
+        {/* ) : (
           <IonIcon className="chat-info-img" icon={checkmarkDoneOutline} />
-        )}
+        )} */}
       </IonCol>
     </IonRow>
   );

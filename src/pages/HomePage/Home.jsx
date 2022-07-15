@@ -67,10 +67,10 @@ const Home = () => {
             <IonIcon icon={chatbubbles} />
             <IonLabel>Chats</IonLabel>
           </IonTabButton>
-          {/* <IonTabButton tab="groups" href="/home/groups">
+          <IonTabButton tab="groups" href="/home/groups">
             <IonIcon icon={apps} />
-            <IonLabel>Groups</IonLabel>
-          </IonTabButton> */}
+            <IonLabel>Contacts</IonLabel>
+          </IonTabButton>
           <IonTabButton tab="friends" href="/home/friends">
             <IonIcon icon={people} />
             <IonLabel>Friends</IonLabel>
