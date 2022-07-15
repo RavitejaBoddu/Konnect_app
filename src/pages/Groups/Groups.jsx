@@ -49,8 +49,8 @@ const Groups = () => {
       console.log('Loaded data');
       ev.target.complete();
       console.log(data.length);
-      if(data.length === 12){
-        setInfiniteDisabled(data.length < 12);
+      if(data.length === 10){
+        setInfiniteDisabled(data.length < 10);
       }
     }, 5000);
   }
