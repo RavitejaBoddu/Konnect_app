@@ -164,6 +164,8 @@ const Login = () => {
       handleToast(msg);
       if (result) {
         router.push("/home");
+
+        
       }
     } catch (error) {
       handleAlert(error.message);
