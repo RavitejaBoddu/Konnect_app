@@ -23,11 +23,6 @@ import "../../theme/Login_Signup.css";
 import { auth } from "../../firebase";
 import { logoFacebook, logoGoogle } from "ionicons/icons";
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
-import {
-  FacebookLogin,
-  FacebookLoginResponse,
-} from '@capacitor-community/facebook-login';
-
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -185,33 +180,33 @@ const Login = () => {
     }
   };
 
-  const handleMobileFacebookSignIn = async () => {
-    try {
-      const FACEBOOK_PERMISSIONS = [
-        'email',
-        'user_birthday',
-        'user_photos',
-        'user_gender',
-      ];
-      const result = await FacebookLogin.login( FACEBOOK_PERMISSIONS) 
-      if (result.accessToken) {
-  // Login successful.
-  router.push("/home");
-  console.log(`Facebook access token is ${result.accessToken.token}`);
-}  
-    } catch (error) {
-      handleAlert(error.message);
-    }
-  };
+//   const handleMobileFacebookSignIn = async () => {
+//     try {
+//       const FACEBOOK_PERMISSIONS = [
+//         'email',
+//         'user_birthday',
+//         'user_photos',
+//         'user_gender',
+//       ];
+//       const result = await FacebookLogin.login( FACEBOOK_PERMISSIONS) 
+//       if (result.accessToken) {
+//   // Login successful.
+//   router.push("/home");
+//   console.log(`Facebook access token is ${result.accessToken.token}`);
+// }  
+//     } catch (error) {
+//       handleAlert(error.message);
+//     }
+//   };
 
-  const handleFacebookSignIn = async () => {
-    try {
-      await facebookSignIn();
-      router.push("/home");
-    } catch (error) {
-      handleAlert(error.message);
-    }
-  };
+  // const handleFacebookSignIn = async () => {
+  //   try {
+  //     await facebookSignIn();
+  //     router.push("/home");
+  //   } catch (error) {
+  //     handleAlert(error.message);
+  //   }
+  // };
 
   return (
     <IonPage>
@@ -262,8 +257,8 @@ const Login = () => {
             <IonCol className="alternate-logins">
               {isPlatform('android') ? <IonButton fill="outline" color="white" shape="round" className="alternate-icon" onClick={(e)=>{handleMobileGoogleSignIn()}}><IonIcon icon={logoGoogle} color="white"  /></IonButton> :
               <IonButton fill="outline" color="white" shape="round" className="alternate-icon" onClick={(e)=>{handleGoogleSignIn()}}><IonIcon icon={logoGoogle} color="white"  /></IonButton>}
-              {isPlatform('android') ? <IonButton fill="outline" color="white" shape="round" className="alternate-icon" onClick={(e)=>{handleMobileFacebookSignIn()}}><IonIcon icon={logoFacebook} color="white"  /></IonButton> :
-              <IonButton fill="outline" color="light" shape="round" className="alternate-icon" onClick={(e)=>{handleFacebookSignIn()}} ><IonIcon icon={logoFacebook} color="white" /></IonButton>}            
+              {/* {isPlatform('android') ? <IonButton fill="outline" color="white" shape="round" className="alternate-icon" onClick={(e)=>{handleMobileFacebookSignIn()}}><IonIcon icon={logoFacebook} color="white"  /></IonButton> :
+              <IonButton fill="outline" color="light" shape="round" className="alternate-icon" onClick={(e)=>{handleFacebookSignIn()}} ><IonIcon icon={logoFacebook} color="white" /></IonButton>}             */}
             </IonCol>
           </IonRow>
           <IonRow class="lp-sp-switch-container">

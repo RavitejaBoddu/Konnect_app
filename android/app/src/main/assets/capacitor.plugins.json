@@ -1,9 +1,5 @@
 [
 	{
-		"pkg": "@capacitor-community/facebook-login",
-		"classpath": "com.getcapacitor.community.facebooklogin.FacebookLogin"
-	},
-	{
 		"pkg": "@capacitor/app",
 		"classpath": "com.capacitorjs.plugins.app.AppPlugin"
 	},
