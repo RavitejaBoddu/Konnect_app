@@ -23,17 +23,19 @@ const Friends = () => {
   const [isContactPage] = useState(true);
 
   let router = useIonRouter();
-  const { userList, setUserList, user} = UserAuth();
+  const { userList, setUserList, user, isGoogleLogin, googleUser} = UserAuth();
   const [searchText, setSearchText] = useState("");
 
- const currentId = user.uid;
+ let userId = user.uid;
 
 
   useEffect(()=> {
-    const userRef = collection(db, 'users')
+    if(isGoogleLogin){
+      userId= user.id;
+    }
+      const userRef = collection(db, 'users')
     //creating query object
-    const q = query(userRef, where('uid', 'not-in', [currentId]))
-
+    const q = query(userRef, where('uid', 'not-in', [userId]))
     //executing query
     onSnapshot(q, querySnapshot => {
       let users = [];

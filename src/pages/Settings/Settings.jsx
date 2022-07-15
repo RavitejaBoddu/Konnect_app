@@ -18,9 +18,10 @@ import { UserAuth } from "../../context/AuthContext";
 import "./Settings.css";
 import { caretForward, toggle } from "ionicons/icons";
 import { auth } from "../../firebase";
+import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 const Settings = () => {
-  const { logout, updateStatus } = UserAuth();
+  const { logout, updateStatus, user ,setUser, isGoogleLogin, updateGoogleStatus } = UserAuth();
   let router = useIonRouter();
   const [present] = useIonToast();
   const [show, dismiss] = useIonLoading();
@@ -34,6 +35,31 @@ const Settings = () => {
       color: "dark3",
       mode: "ios",
     });
+  };
+
+  const handleGoogleLogout = async() => {
+    try {
+      show({
+        message: "Logging out...",
+        duration: 1000,
+        spinner: "circular",
+        cssClass: "lp-sp-spinner",
+        animated: true,
+        keyboardClose: true,
+        mode: "ios",
+      });
+      const msg = "You have Logged out successfully";
+      await updateGoogleStatus(user.id, false);
+      await GoogleAuth.signOut();
+      setTimeout(() => {
+        handleToast(msg);
+      }, 2000);
+      setUser("")
+      router.push("/login");
+    } catch (error) {
+      dismiss();
+      handleToast(error.message);
+    }
   };
 
   const handleLogout = async() => {
@@ -53,6 +79,7 @@ const Settings = () => {
       setTimeout(() => {
         handleToast(msg);
       }, 2000);
+      setUser("")
       router.push("/login");
     } catch (error) {
       dismiss();
@@ -79,7 +106,7 @@ const Settings = () => {
             <IonCol className="heading">General</IonCol>
             <IonCol className="three-items" onClick={(e)=>goToProfile()}>
               <IonLabel>Account:-</IonLabel>
-              <IonLabel >{auth.currentUser.displayName}</IonLabel>
+              <IonLabel >{user.displayName}</IonLabel>
               <IonIcon icon={caretForward}  />
             </IonCol>
             <IonCol className="two-items">
@@ -125,13 +152,23 @@ const Settings = () => {
             </IonCol>
           </IonRow>
           <IonRow className="logout-btn">
-            <IonButton
-              onClick={(e) => handleLogout()}
+            {
+              isGoogleLogin ?
+              <IonButton
+              onClick={(e) => handleGoogleLogout()}
               color="primary"
               shape="round"
             >
               Logout
-            </IonButton>
+            </IonButton> :
+            <IonButton
+            onClick={(e) => handleLogout()}
+            color="primary"
+            shape="round"
+          >
+            Logout
+          </IonButton>
+            }
           </IonRow>
         </IonGrid>
       </IonContent>

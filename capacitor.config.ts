@@ -5,6 +5,9 @@ const config: CapacitorConfig = {
   appName: 'Konnect',
   webDir: 'build',
   bundledWebRuntime: false,
+  // server: {
+  //   url: "http://172.17.1.255:8100"
+  // },
   plugins: {
     SplashScreen: {
         launchShowDuration : 2000

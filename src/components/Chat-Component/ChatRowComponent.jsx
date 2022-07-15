@@ -13,11 +13,6 @@ const ChatRowComponent = (props) => {
   const { id, name, msg, time, isContactPage } = props;
   let router = useIonRouter();
 
-  const initials = name.charAt(0);
-  
-  // document.getElementById("name").innerHTML = initials;
-  // console.log(initials)
-
   const openChat = (id) => {
     router.push(`/chat/${id}`);
   };

@@ -25,7 +25,7 @@ import "./ChatComponent.css";
 import Message from "../../components/Message/Message";
 
 const ChatComponent = () => {
-  const { userList } = UserAuth();
+  const { userList, isGoogleLogin, user} = UserAuth();
 
 
   const { id } = useParams();
@@ -34,7 +34,13 @@ const ChatComponent = () => {
   const [text, setText] = useState("");
   const [msgs, setMsgs] = useState([]);
 
-    const user1 = auth.currentUser.uid;
+  let user1;
+  if(isGoogleLogin){
+    user1 = user.id
+  }else{
+    user1 = user.uid
+  }
+
     const user2 = id;
 
     const handleMessage = async() => {

@@ -5,4 +5,6 @@
     <string name="package_name">com.konnect_ptg.app</string>
     <string name="custom_url_scheme">com.konnect_ptg.app</string>
     <string name="server_client_id">987108446678-c7b7e30tgfva58nd7ilt3ng5vjfnfaqn.apps.googleusercontent.com</string>
+    <string name="facebook_app_id">6049958528353736</string>
+    <string name="facebook_client_token">4109ca849c9c1c1a68ae766199d05748</string>
 </resources>

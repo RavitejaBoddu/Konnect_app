@@ -10,6 +10,7 @@ import {
   IonLabel,
   IonPage,
   IonRow,
+  isPlatform,
   useIonAlert,
   useIonLoading,
   useIonRouter,
@@ -20,8 +21,12 @@ import { UserAuth } from "../../context/AuthContext";
 // import { logoGoogle, logoFacebook, alertOutline } from "ionicons/icons";
 import "../../theme/Login_Signup.css";
 import { auth } from "../../firebase";
-import { logoGoogle } from "ionicons/icons";
+import { logoFacebook, logoGoogle } from "ionicons/icons";
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import {
+  FacebookLogin,
+  FacebookLoginResponse,
+} from '@capacitor-community/facebook-login';
 
 
 const Login = () => {
@@ -31,7 +36,7 @@ const Login = () => {
   const [presentAlert] = useIonAlert();
   const [show, dismiss] = useIonLoading();
 
-  const { login, logout, isGoogleLogin, setIsGoogleLogin, facebookSignIn, updateStatus, setUser, addGoogleData } =
+  const { login, logout, setGoogleUser, setIsGoogleLogin, facebookSignIn, updateStatus, setUser, addGoogleData, googleSignIn } =
     UserAuth();
 
   let router = useIonRouter();
@@ -142,14 +147,26 @@ const Login = () => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
+  const handleMobileGoogleSignIn = async () => {
     try {
+      show({
+      message: "Logging in please wait...",
+      duration: 5000,
+      spinner: "circular",
+      cssClass: "lp-sp-spinner",
+      animated: true,
+      keyboardClose: true,
+      mode: "ios",
+    });
       GoogleAuth.initialize();
       const result = await GoogleAuth.signIn();
       addGoogleData(result.id, result.displayName, result.email, result.imageUrl);
       setUser(result);
+      setGoogleUser(result);
       setIsGoogleLogin(true)
-      console.log(result);  
+      dismiss();
+      const msg = "You have Logged in successfully";
+      handleToast(msg);
       if (result) {
         router.push("/home");
       }
@@ -159,14 +176,34 @@ const Login = () => {
   };
 
 
-  // const handleGoogleSignIn = async () => {
-  //   try {
-  //     await googleSignIn();
-  //     router.push("/home");
-  //   } catch (error) {
-  //     handleAlert(error.message);
-  //   }
-  // };
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleSignIn();
+      router.push("/home");
+    } catch (error) {
+      handleAlert(error.message);
+    }
+  };
+
+  const handleMobileFacebookSignIn = async () => {
+    try {
+      const FACEBOOK_PERMISSIONS = [
+        'email',
+        'user_birthday',
+        'user_photos',
+        'user_gender',
+      ];
+      const result = await FacebookLogin.login( FACEBOOK_PERMISSIONS) 
+      if (result.accessToken) {
+  // Login successful.
+  router.push("/home");
+  console.log(`Facebook access token is ${result.accessToken.token}`);
+}  
+    } catch (error) {
+      handleAlert(error.message);
+    }
+  };
+
   const handleFacebookSignIn = async () => {
     try {
       await facebookSignIn();
@@ -223,9 +260,10 @@ const Login = () => {
             </IonCol>
             <IonLabel style={{marginTop: "15px"}}>(or)</IonLabel>
             <IonCol className="alternate-logins">
-              <IonButton fill="outline" color="light" shape="round" className="alternate-icon" onClick={(e)=>{handleGoogleSignIn()}}><IonIcon icon={logoGoogle} color="light"  /></IonButton>
-              {/* <IonButton fill="outline" color="light" shape="round" className="alternate-icon" onClick={(e)=>{handleFacebookSignIn()}} ><IonIcon icon={logoFacebook} color="light" /></IonButton> */}
-            
+              {isPlatform('android') ? <IonButton fill="outline" color="white" shape="round" className="alternate-icon" onClick={(e)=>{handleMobileGoogleSignIn()}}><IonIcon icon={logoGoogle} color="white"  /></IonButton> :
+              <IonButton fill="outline" color="white" shape="round" className="alternate-icon" onClick={(e)=>{handleGoogleSignIn()}}><IonIcon icon={logoGoogle} color="white"  /></IonButton>}
+              {isPlatform('android') ? <IonButton fill="outline" color="white" shape="round" className="alternate-icon" onClick={(e)=>{handleMobileFacebookSignIn()}}><IonIcon icon={logoFacebook} color="white"  /></IonButton> :
+              <IonButton fill="outline" color="light" shape="round" className="alternate-icon" onClick={(e)=>{handleFacebookSignIn()}} ><IonIcon icon={logoFacebook} color="white" /></IonButton>}            
             </IonCol>
           </IonRow>
           <IonRow class="lp-sp-switch-container">

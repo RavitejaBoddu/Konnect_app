@@ -14,6 +14,7 @@ const UserChat = (props) => {
     const user2= id;
 
     useEffect(() => {
+      
         const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
         onSnapshot(doc(db, "lastMsg", id), (doc) => {
           setData(doc.data());

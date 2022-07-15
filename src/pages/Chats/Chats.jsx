@@ -17,22 +17,31 @@ import { ellipsisVertical } from "ionicons/icons";
 import { UserAuth } from "../../context/AuthContext";
 import { useEffect, useState } from "react";
 import {collection, query, where, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebase";
+import { auth, db } from "../../firebase";
 import UserChat from "../../components/UserChat/UserChat";
 
 const Chats = () => {
   let router = useIonRouter();
 
-  const { userList, setUserList, user} = UserAuth();
+  const { userList, setUserList, user, isGoogleLogin, googleUser} = UserAuth();
   const [searchText, setSearchText] = useState("");
 
- const currentId = user.uid;
+  let userId = user.uid;
+  let user1;
+  if(isGoogleLogin){
+    user1 = user.id
+  }else{
+    user1 = user.uid
+  }
+
 
   useEffect(()=> {
-    const userRef = collection(db, 'users')
+    if(isGoogleLogin){
+      userId= user.id;
+    }
+      const userRef = collection(db, 'users')
     //creating query object
-    const q = query(userRef, where('uid', 'not-in', [currentId]))
-
+    const q = query(userRef, where('uid', 'not-in', [userId]))
     //executing query
     onSnapshot(q, querySnapshot => {
       let users = [];
@@ -83,7 +92,7 @@ useIonViewWillEnter(() => showTabs());
           <IonSearchbar animated className="chats-searchbar" value={searchText} onIonChange={e => setSearchText(e.detail.value)}></IonSearchbar>
         </div>
         <IonGrid className="chats-container">
-          {userList.filter((user)=>{
+          {userList.filter((user) => {
             if(searchText === ""){
               return user
             }else if(user.name.toLowerCase().includes(searchText.toLowerCase())){
@@ -95,7 +104,7 @@ useIonViewWillEnter(() => showTabs());
                 key={user.uid}
                 id={user.uid}
                 name={user.name}
-                user1= {currentId}
+                user1= {user1}
               />
             );
           })}
