@@ -20,7 +20,7 @@ import { caretForward, toggle } from "ionicons/icons";
 import { auth } from "../../firebase";
 
 const Settings = () => {
-  const { logout, updateStatus } = UserAuth();
+  const { logout, updateStatus, user } = UserAuth();
   let router = useIonRouter();
   const [present] = useIonToast();
   const [show, dismiss] = useIonLoading();
@@ -79,7 +79,7 @@ const Settings = () => {
             <IonCol className="heading">General</IonCol>
             <IonCol className="three-items" onClick={(e)=>goToProfile()}>
               <IonLabel>Account:-</IonLabel>
-              <IonLabel >{auth.currentUser.displayName}</IonLabel>
+              <IonLabel >{user.displayName}</IonLabel>
               <IonIcon icon={caretForward}  />
             </IonCol>
             <IonCol className="two-items">

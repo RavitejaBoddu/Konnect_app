@@ -1,28 +1,19 @@
 import {
-  IonAvatar,
-  IonCard,
   IonContent,
   IonGrid,
-  IonHeader,
-  IonIcon,
-  IonImg,
-  IonLabel,
   IonPage,
   IonSearchbar,
-  IonToolbar,
-  useIonRouter,
   useIonViewWillEnter,
 } from "@ionic/react";
 import "./Chats.css";
-import { ellipsisVertical } from "ionicons/icons";
 import { UserAuth } from "../../context/AuthContext";
 import { useEffect, useState } from "react";
 import {collection, query, where, onSnapshot } from "firebase/firestore";
-import { auth, db } from "../../firebase";
+import { db } from "../../firebase";
 import UserChat from "../../components/UserChat/UserChat";
+import Header from "../../components/Header/Header";
 
 const Chats = () => {
-  let router = useIonRouter();
 
   const { userList, setUserList, user} = UserAuth();
   const [searchText, setSearchText] = useState("");
@@ -30,21 +21,22 @@ const Chats = () => {
  const currentId = user.uid;
 
   useEffect(()=> {
-    const userRef = collection(db, 'users')
+
+    const getUsers = async () => {
+      const userRef = collection(db, 'users')
     //creating query object
     const q = query(userRef, where('uid', 'not-in', [currentId]))
     //executing query
-    const unsubscribe = onSnapshot(q, querySnapshot => {
+     onSnapshot(q, querySnapshot => {
       let users = [];
       querySnapshot.forEach(doc => {
         users.push(doc.data())
       });
-      setUserList(users);
+     setUserList(users);
   })
-  return(()=>{
-    unsubscribe();
-  })
-}, []);
+  }
+  getUsers();
+}, [setUserList, currentId]);
 
 const showTabs = () => {
   const tabsEl = document.querySelector('ion-tab-bar');
@@ -54,42 +46,10 @@ const showTabs = () => {
 }
 
 useIonViewWillEnter(() => showTabs());
- 
-  const goToProfile = () => {
-    router.push("/home/profile");
-  };
-
 
   return (
     <IonPage>
-      <IonHeader>
-      <IonToolbar className="chats-toolbar" color="white">
-      <IonCard className="chats-header" lines="none">
-          <IonLabel className="chats-heading">Konnect.</IonLabel>
-          <IonAvatar  className="profile-pic">{
-            auth.currentUser.photoURL ?
-            <IonImg
-            src={auth.currentUser.photoURL}
-            onClick={(e) => {
-              goToProfile();
-            }}
-          /> :
-          <IonImg
-            src="assets/images/profile.png"
-            onClick={(e) => {
-              goToProfile();
-            }}
-          />
-          }
-          </IonAvatar>
-          <IonIcon
-            icon={ellipsisVertical}
-            className="chats-vertical-dots"
-            size="large"
-          />
-        </IonCard>
-      </IonToolbar>
-      </IonHeader>
+      <Header heading="Konnect."/>
       <IonContent fullscreen className="chats-page">
         <div className="searchbar-container">
           <IonSearchbar animated className="chats-searchbar" value={searchText} onIonChange={e => setSearchText(e.detail.value)}></IonSearchbar>

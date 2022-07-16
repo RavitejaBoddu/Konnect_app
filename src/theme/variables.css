@@ -327,17 +327,35 @@ http://ionicframework.com/docs/theming/ */
 	--ion-color-tint: var(--ion-color-konnect-gray-tint);
 }
 
+:root {
+	--ion-color-blue: #2457C5;
+	--ion-color-blue-rgb: 36,87,197;
+	--ion-color-blue-contrast: #ffffff;
+	--ion-color-blue-contrast-rgb: 255,255,255;
+	--ion-color-blue-shade: #204dad;
+	--ion-color-blue-tint: #3a68cb;
+}
+
+.ion-color-blue {
+	--ion-color-base: var(--ion-color-blue);
+	--ion-color-base-rgb: var(--ion-color-blue-rgb);
+	--ion-color-contrast: var(--ion-color-blue-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-blue-contrast-rgb);
+	--ion-color-shade: var(--ion-color-blue-shade);
+	--ion-color-tint: var(--ion-color-blue-tint);
+}
+
 .chats-page {
-  --background: #ffffff;
+  --background: #f5f5f5;
 }
 .friends-page {
-  --background: #ffffff;
+  --background: #f5f5f5;
 }
 .profile-page {
-  --background: #ffffff;
+  --background: #f5f5f5;
 }
 .groups-page {
-  --background: #ffffff;
+  --background: #f5f5f5;
 }
 .lp-sp-spinner{
   --backdrop-opacity: 0.5;
@@ -347,5 +365,7 @@ http://ionicframework.com/docs/theming/ */
 }
 .tabBar{
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.100);
-  --background: #e8e8e8;
+}
+.tab-selected {
+  color:#2457C5;
 }

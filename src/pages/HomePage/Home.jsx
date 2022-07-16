@@ -62,20 +62,20 @@ const Home = () => {
             </ProtectedRoute>
           </Route>
         </IonRouterOutlet>
-        <IonTabBar slot="bottom" color="white" className="tabBar">
-          <IonTabButton tab="chats" href="/home/chats">
+        <IonTabBar slot="bottom" color="white" className="tabBar" >
+          <IonTabButton className="tab-btn" tab="chats" href="/home/chats">
             <IonIcon icon={chatbubbles} />
             <IonLabel>Chats</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="groups" href="/home/groups">
+          <IonTabButton className="tab-btn" tab="groups" href="/home/groups">
             <IonIcon icon={apps} />
             <IonLabel>Contacts</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="friends" href="/home/friends">
+          <IonTabButton className="tab-btn" tab="friends" href="/home/friends">
             <IonIcon icon={people} />
             <IonLabel>Friends</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="settings" href="/home/settings">
+          <IonTabButton  className="tab-btn" tab="settings" href="/home/settings">
             <IonIcon icon={settings} />
             <IonLabel>Settings</IonLabel>
           </IonTabButton>

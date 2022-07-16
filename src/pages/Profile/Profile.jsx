@@ -37,9 +37,7 @@ import { getDoc, doc, updateDoc } from "firebase/firestore";
 import { closeCircleOutline, checkmarkCircleOutline } from "ionicons/icons";
 import "./Profile.css";
 import { storage } from "../../firebase";
-import { ref, getDownloadURL, uploadBytes, uploadBytesResumable, deleteObject} from "firebase/storage"
-import { useHistory } from "react-router";
-
+import { ref, getDownloadURL, uploadBytesResumable, deleteObject} from "firebase/storage"
 
 
 const Profile = () => {
@@ -51,15 +49,13 @@ const Profile = () => {
   const [show, dismiss] = useIonLoading();
   const [img, setImg] =useState("");
   const [userProfile, setUserProfile] = useState();
-  const [per, setPerc] = useState(null)
-  const [propicPath, setPropicPath] = useState("")
+  const [deleteImg, setDeleteImg] =useState(false);
 
   let router = useIonRouter();
   const [presentAlert] = useIonAlert();
 
   const [present] = useIonToast();
-  const history = useHistory("");
-// console.log(userProfile);
+
   useEffect(() => {
     getDoc(doc(db, "users", auth.currentUser.uid)).then((docSnap) => {
       if (docSnap.exists) {
@@ -76,9 +72,8 @@ const Profile = () => {
           if (userProfile.avatarPath) {
             await deleteObject(ref(storage, userProfile.avatarPath));
           }
-          const snap = await uploadBytes(imgRef, img);
+          const snap = await uploadBytesResumable(imgRef, img);
           const url = await getDownloadURL(ref(storage, snap.ref.fullPath));
-
           await updateDoc(doc(db, "users", auth.currentUser.uid), {
             photoURL: url,
             avatarPath: snap.ref.fullPath,
@@ -96,13 +91,14 @@ const Profile = () => {
       };
       uploadImg();
     }
-    return () => {
+    if(deleteImg){
+      deleteImage();
     }
-  }, [img])
+    
+  }, [img, deleteImg])
 
   const deleteImage = async () => {
     try {
-      console.log(userProfile.avatarPath)
         await deleteObject(ref(storage, userProfile.avatarPath));
 
         await updateDoc(doc(db, "users", auth.currentUser.uid), {
@@ -115,6 +111,7 @@ const Profile = () => {
         .catch((error) => {
           handleAlert(error.message);
         });
+        setDeleteImg(false)
         // window.location.reload()
       }
       catch (err) {
@@ -172,7 +169,7 @@ const Profile = () => {
               keyboardClose: true,
               mode:"ios"
             })
-            await deleteImage();
+            setDeleteImg(true);
             dismiss();
           }
         }
@@ -264,7 +261,7 @@ const Profile = () => {
         <IonItem lines="none" className="pro-pic-btns">
           <IonIcon  icon={camera} slot="start" color="white" size="large" onClick={((e)=>{handleInput()})} />
           <input type="file" accept='image/*' style={{display:"none"}} id="photo" onChange={(e)=>setImg(e.target.files[0])}/>
-          <IonIcon icon={trash} slot="end" color="white" size="large" onClick={((e)=>{deleteImage()})}/>
+          <IonIcon icon={trash} slot="end" color="white" size="large" onClick={((e)=>{handleDelete()})}/>
         </IonItem>
         </IonCard>
         <IonGrid className="profile-details"> 

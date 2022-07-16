@@ -1,31 +1,23 @@
 import {
-  IonAvatar,
-  IonCard,
   IonContent,
-  IonHeader,
-  IonIcon,
-  IonImg,
   IonInfiniteScroll,
   IonInfiniteScrollContent,
-  IonLabel,
   IonPage,
   IonSearchbar,
-  IonToolbar,
-  useIonRouter,
   useIonViewWillEnter,
 } from "@ionic/react";
-import { ellipsisVertical } from "ionicons/icons";
 import "./Groups.css";
 import chatsData from "../../chatData";
 import ChatRowComponent from "../../components/Chat-Component/ChatRowComponent";
 import { useState } from "react";
-import { auth } from "../../firebase";
+import { UserAuth } from "../../context/AuthContext";
+import Header from "../../components/Header/Header";
 const groupsData = chatsData.data.groups;
 
 const Groups = () => {
-  let router = useIonRouter();
   const [data, setData] = useState([]);
   const [isInfiniteDisabled, setInfiniteDisabled] = useState(false);
+  const { user } = UserAuth();
 
 
   const pushData = () => {
@@ -59,42 +51,9 @@ const Groups = () => {
     pushData();
   });
 
-
-  const goToProfile = () => {
-    router.push("/home/profile");
-  };
-
-
   return (
     <IonPage>
-      <IonHeader>
-      <IonToolbar className="chats-toolbar" color="white">
-      <IonCard className="chats-header" lines="none">
-          <IonLabel className="chats-heading">Contacts</IonLabel>
-          <IonAvatar  className="profile-pic">{
-            auth.currentUser.photoURL ?
-            <IonImg
-            src={auth.currentUser.photoURL}
-            onClick={(e) => {
-              goToProfile();
-            }}
-          /> :
-          <IonImg
-            src="assets/images/profile.png"
-            onClick={(e) => {
-              goToProfile();
-            }}
-          />
-          }
-          </IonAvatar>
-          <IonIcon
-            icon={ellipsisVertical}
-            className="chats-vertical-dots"
-            size="large"
-          />
-        </IonCard>
-      </IonToolbar>
-      </IonHeader>
+      <Header heading="Contacts"/>
       <IonContent fullscreen className="groups-page">
         <div className="searchbar-container">
           <IonSearchbar animated className="chats-searchbar"></IonSearchbar>

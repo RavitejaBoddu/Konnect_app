@@ -1,29 +1,19 @@
 import {
-  IonAvatar,
-  IonCard,
   IonContent,
   IonGrid,
-  IonHeader,
-  IonIcon,
-  IonImg,
-  IonLabel,
   IonPage,
   IonSearchbar,
-  IonToolbar,
-  useIonRouter,
 } from "@ionic/react";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { ellipsisVertical } from "ionicons/icons";
 import { useEffect, useState } from "react";
 import ChatRowComponent from "../../components/Chat-Component/ChatRowComponent";
+import Header from "../../components/Header/Header";
 import { UserAuth } from "../../context/AuthContext";
-import { auth, db } from "../../firebase";
+import { db } from "../../firebase";
 import "./Friends.css";
 
 const Friends = () => {
   const [isContactPage] = useState(true);
-
-  let router = useIonRouter();
   const { userList, setUserList, user} = UserAuth();
   const [searchText, setSearchText] = useState("");
 
@@ -31,56 +21,27 @@ const Friends = () => {
 
 
   useEffect(()=> {
-    const userRef = collection(db, 'users')
+    const getUsers = async () => {
+      const userRef = collection(db, 'users')
     //creating query object
     const q = query(userRef, where('uid', 'not-in', [currentId]))
-
     //executing query
-    const unsubscribe = onSnapshot(q, querySnapshot => {
+     onSnapshot(q, querySnapshot => {
       let users = [];
       querySnapshot.forEach(doc => {
         users.push(doc.data())
       });
-      setUserList(users);
+     setUserList(users);
   })
+  }
+  getUsers();
   return(()=>{
-    unsubscribe();
   })
-}, []);
+}, [setUserList, currentId]);
 
-  const goToProfile = () => {
-    router.push("/home/profile");
-  };
   return (
     <IonPage>
-      <IonHeader>
-      <IonToolbar color="white">
-      <IonCard className="chats-header" lines="none">
-          <IonLabel className="chats-heading">Friends.</IonLabel>
-          <IonAvatar  className="profile-pic">{
-            auth.currentUser.photoURL ?
-            <IonImg
-            src={auth.currentUser.photoURL}
-            onClick={(e) => {
-              goToProfile();
-            }}
-          /> :
-          <IonImg
-            src="assets/images/profile.png"
-            onClick={(e) => {
-              goToProfile();
-            }}
-          />
-          }
-          </IonAvatar>
-          <IonIcon
-            icon={ellipsisVertical}
-            className="chats-vertical-dots"
-            size="large"
-          />
-        </IonCard>
-      </IonToolbar>
-      </IonHeader>
+      <Header heading="Friends"/>
       <IonContent fullscreen className="friends-page">
         <div className="searchbar-container">
           <IonSearchbar animated className="chats-searchbar" value={searchText} onIonChange={e => setSearchText(e.detail.value)}></IonSearchbar>

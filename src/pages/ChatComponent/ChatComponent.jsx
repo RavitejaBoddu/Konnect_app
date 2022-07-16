@@ -62,23 +62,28 @@ const ChatComponent = () => {
     }
 
     useEffect(()=> {
-      const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`
+
+      const getMsgs = () => {
+        const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`
 
       const msgRef = collection(db, 'messages', id, 'chat');
       //create query
       const q = query(msgRef, orderBy('createdAt', 'asc'))
 
-      const unsubscribe = onSnapshot(q, querySnapshot => { 
+       onSnapshot(q, querySnapshot => { 
         let msgs = [];
         querySnapshot.forEach(doc => {
           msgs.push(doc.data())
         });
         setMsgs(msgs);
       })
+      }
+      getMsgs();
+      
       return(()=>{
-        unsubscribe();
+        // unsubscribe();
       })
-    }, [user2]);
+    }, [user2, user1]);
 
   const getUserData = () => {
     let data = {};
@@ -121,9 +126,14 @@ const ChatComponent = () => {
           <IonRow className="chat-profile-container">
             <IonItem lines="none">
             <IonAvatar slot="start" className="profile-pic-container">
-            <IonImg
+              {
+                usersData.photoURL ? <IonImg
                 src={usersData.photoURL}  
-              />
+              /> : <IonImg
+              src="assets/images/user.png"  
+            />
+              }
+            
             </IonAvatar>
             <IonCol>
             <IonLabel className="profile-name">{usersData.name}</IonLabel>

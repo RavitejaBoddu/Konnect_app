@@ -2,30 +2,49 @@ import { IonAvatar, IonCol, IonIcon, IonImg, IonLabel, IonRow, useIonRouter } fr
 import './UserChat.css'
 import {checkmarkDoneOutline} from 'ionicons/icons'
 import { useEffect, useState } from "react";
-import { onSnapshot, doc } from 'firebase/firestore'
+import { onSnapshot, doc, getDoc, updateDoc } from 'firebase/firestore'
 import { db } from "../../firebase";
+import Moment from "react-moment";
+
+
 const UserChat = (props) => {
 
     const {id, name, user1, photoURL } = props;
     let router = useIonRouter();
     const [data, setData]= useState({});
-    // const [time, setTime] = useState("");
+    const [time, setTime] = useState("");
 
     const user2= id;
+    const c_id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
 
     useEffect(() => {
-        const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
-        onSnapshot(doc(db, "lastMsg", id), (doc) => {
+      const getLastMsg = () => {
+        onSnapshot(doc(db, "lastMsg", c_id), (doc) => {
           setData(doc.data());
+          setTime(doc.data().createdAt.toDate().toLocaleTimeString(navigator.language, {
+            hour: "2-digit",
+            minute: "2-digit",
+          }));
         });
-      }, [id]);
+      }
+      getLastMsg();
 
-    const openChat = (id) => {
+      }, [c_id]);
+
+    const openChat = async (id) => {
+        const docSnap = await getDoc(doc(db, 'lastMsg', c_id));
+        if(docSnap.data()){
+          if(docSnap.data().from !== user1){
+            await updateDoc(doc(db, 'lastMsg', c_id), {
+              unread:false
+            })
+          }
+        }
         router.push(`/chat/${id}`)
     }
 
   return (
-    <IonRow className='chat-row' onClick={(e)=> {openChat(id)}}>
+    <IonRow className='chat-row' onClick={(e)=> {openChat(user2)}}>
         <IonCol className='chat-img-container'>
         <IonAvatar className="profile-pic-container">
               {photoURL ? 
@@ -44,12 +63,10 @@ const UserChat = (props) => {
         {data && <IonLabel className='chat-text-msg'>{data.text}</IonLabel> }   
         </IonCol>
         <IonCol className='chat-info'>
-        {/* {data && <IonLabel className='user-last-msg-time'>{time.toDate().toLocaleTimeString(navigator.language, {
-      hour: "2-digit",
-      minute: "2-digit",
-    })}</IonLabel> }  */}
-        <IonIcon className='chat-info-img' color="dark3"icon={checkmarkDoneOutline} /> 
-        </IonCol>
+          {data?.from !== user1 && data?.unread &&  <IonLabel color="white" className="unread">New</IonLabel>}
+        {data ? <IonLabel className='user-last-msg-time'>{time}</IonLabel> :
+        <IonIcon className='double-tick-img' color="dark3"icon={checkmarkDoneOutline} />}
+        </IonCol> 
     </IonRow>
   )
 }

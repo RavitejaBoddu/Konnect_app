@@ -1,6 +1,6 @@
 import { IonCol, IonItem, IonLabel, IonRow } from "@ionic/react";
 import "./Message.css";
-// import Moment from "react-moment";
+import Moment from "react-moment";
 import { useEffect, useRef } from "react";
 
 const Message = (props) => {
@@ -25,8 +25,8 @@ const Message = (props) => {
       <IonItem lines="none" className={msg.from === user1 ? "me" : "friend"}>
         <IonCol className="msg-text">{msg.text}</IonCol>
         <IonLabel className="msg-time" slot="end">
-          {time}
-          {/* <Moment fromNow>{msg.createdAt.toDate()}</Moment> */}
+          {/* {time} */}
+          <Moment fromNow>{msg.createdAt.toDate()}</Moment>
         </IonLabel>
       </IonItem>
     </IonRow>

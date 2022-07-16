@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -18,6 +18,7 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(true);
   const [userList, setUserList] = useState([]);
+  // const User = useRef();
 
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -39,7 +40,6 @@ export const AuthContextProvider = ({ children }) => {
       isOnline : status
   })
   }
-
 
   const login = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
