@@ -46,7 +46,7 @@ const UserChat = (props) => {
   return (
     <IonRow className='chat-row' onClick={(e)=> {openChat(user2)}}>
         <IonCol className='chat-img-container'>
-        <IonAvatar className="profile-pic-container">
+        <IonAvatar className="chat-pic-container">
               {photoURL ? 
               <IonImg
                 src={photoURL}

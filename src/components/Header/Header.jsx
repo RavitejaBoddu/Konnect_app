@@ -16,7 +16,8 @@ const Header = (props) => {
     <IonHeader>
       <IonToolbar className="chats-toolbar" color="white">
       <IonCard className="chats-header" lines="none">
-          <IonLabel className="chats-heading">{heading}</IonLabel>
+          {/* <IonImg className="logo" src="assets/images/logo.png" /> */}
+          <IonLabel className="chats-heading roll-in-blurred-right">{heading}</IonLabel>
           <IonAvatar  className="profile-pic">{
             user.photoURL ?
             <IonImg

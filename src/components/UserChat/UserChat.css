@@ -1,8 +1,8 @@
 .user-last-msg-time{
     font-family: 'Roboto';
-    font-size: 13px;
+    font-size: 10px;
     display: flex;
-    margin-top: 15px;
+    margin-top: 13px;
     color: #606460;
 }
 
@@ -11,25 +11,28 @@
     flex-wrap: nowrap;
 }
 
-.chat-info{
-    
-}
 
 .chat-img-container{
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 8px;    
 }
 
 .unread{
     background: #2457C5;
     border-radius: 10px;
     padding: 4px 6px;
-    font-size: 12px;
+    font-size: 10px;
 }
 
 .double-tick-img{
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     margin-top: 13px;
+}
+.chat-pic-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

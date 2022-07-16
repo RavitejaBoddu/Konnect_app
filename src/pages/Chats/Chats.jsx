@@ -52,7 +52,7 @@ useIonViewWillEnter(() => showTabs());
       <Header heading="Konnect."/>
       <IonContent fullscreen className="chats-page">
         <div className="searchbar-container">
-          <IonSearchbar animated className="chats-searchbar" value={searchText} onIonChange={e => setSearchText(e.detail.value)}></IonSearchbar>
+          <IonSearchbar mode="ios" className="chats-searchbar" value={searchText} onIonChange={e => setSearchText(e.detail.value)}></IonSearchbar>
         </div>
         <IonGrid className="chats-container">
           {userList.filter((user) =>{

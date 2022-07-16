@@ -69,7 +69,7 @@ const Settings = () => {
       <IonHeader>
         <IonToolbar color="white">
         <IonCard className="chats-header" lines="none">
-          <IonLabel className="chats-heading">Settings</IonLabel>
+          <IonLabel className="chats-heading roll-in-blurred-right">Settings</IonLabel>
         </IonCard>
         </IonToolbar>
       </IonHeader>

@@ -253,7 +253,7 @@ const Profile = () => {
         <IonAvatar className="pro-pic-container">
           {
             auth.currentUser.photoURL ?
-            <IonImg src={auth.currentUser.photoURL} /> :
+            <IonImg className="shadow-drop-2-center puff-in-center" src={auth.currentUser.photoURL} /> :
             <IonImg src="assets/images/default-user.jpg" />
           }
           

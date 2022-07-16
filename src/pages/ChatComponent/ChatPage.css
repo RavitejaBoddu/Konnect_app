@@ -9,7 +9,7 @@
     flex-direction: column;
     justify-content: space-between;
     /* --background:#ffffff; */
-    --background:linear-gradient(rgba(201, 217, 219, 0.460), rgba(201, 217, 219, 0.460)) , url("../../../public/assets/images/chat-bg.png") no-repeat center/cover fixed;
+    --background:linear-gradient(rgba(201, 217, 219, 0.460), rgba(201, 217, 219, 0.460)) , url("../../../public/assets/images/bg-2.jpg") no-repeat center/cover fixed;
 }
 .chat-toolbar{
     display: flex;
@@ -51,13 +51,14 @@
     display: flex;
     font-family: 'Quicksand';
     align-items: center;
-    font-size: 16px;
-    margin-top: 5px;
+    justify-content: flex-start;
+    font-size: 13px;
+    margin-top: 3px;
     
 }
 .online-toggle-icon{
     font-size: 8px;
-    margin: 5px;
+    /* margin: 5px; */
 }
 
 .messages-container{
@@ -92,11 +93,19 @@
     align-items: center;
     width: 45px;
     height:45px;
+    margin: none;
+    margin-right: 8px;
 }
 
 .profile-name{
     font-family: 'Quicksand';
-    font-weight: bold;
-     font-size: 18px;
-     color: #000000;
+    font-weight:500 ;
+    font-size: 18px;
+    color: #000000;
+}
+
+.profile-info-status{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }

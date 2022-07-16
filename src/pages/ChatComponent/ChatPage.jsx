@@ -23,7 +23,7 @@ import { useParams } from "react-router";
 import { UserAuth } from "../../context/AuthContext";
 import { auth, db } from '../../firebase';
 import { collection, addDoc, Timestamp, orderBy, query, onSnapshot, setDoc, doc } from 'firebase/firestore';
-import "./ChatComponent.css";
+import "./ChatPage.css";
 import Message from "../../components/Message/Message";
 
 const ChatComponent = () => {
@@ -124,7 +124,7 @@ const ChatComponent = () => {
             }}
           />
           <IonRow className="chat-profile-container">
-            <IonItem lines="none">
+            <IonItem lines="none" color="white">
             <IonAvatar slot="start" className="profile-pic-container">
               {
                 usersData.photoURL ? <IonImg
@@ -135,7 +135,7 @@ const ChatComponent = () => {
               }
             
             </IonAvatar>
-            <IonCol>
+            <IonCol className="profile-info-status">
             <IonLabel className="profile-name">{usersData.name}</IonLabel>
               {usersData.isOnline ? (
                 <IonLabel color="success" className="online-toggle">

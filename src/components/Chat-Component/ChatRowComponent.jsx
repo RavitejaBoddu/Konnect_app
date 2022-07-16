@@ -25,8 +25,8 @@ const ChatRowComponent = (props) => {
         openChat(id);
       }}
     >
-      <IonCol className='chat-img-container'>
-        <IonAvatar className="profile-pic-container">
+      <IonCol className='contact-img-container'>
+        <IonAvatar className="chat-pic-container">
               {photoURL ? 
               <IonImg
                 src={photoURL}

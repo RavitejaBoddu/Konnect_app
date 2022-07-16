@@ -17,7 +17,7 @@ import Settings from "../Settings/Settings";
 import Login from "../Login/Login";
 import ProtectedRoute from "../../ProtectedRoute/ProtectedRoute";
 import Profile from "../Profile/Profile";
-import ChatComponent from "../ChatComponent/ChatComponent";
+import ChatComponent from "../ChatComponent/ChatPage";
 
 const Home = () => {
   return (
