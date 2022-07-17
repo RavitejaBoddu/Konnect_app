@@ -17,7 +17,7 @@ import Settings from "../Settings/Settings";
 import Login from "../Login/Login";
 import ProtectedRoute from "../../ProtectedRoute/ProtectedRoute";
 import Profile from "../Profile/Profile";
-import ChatComponent from "../ChatComponent/ChatPage";
+import ChatPage from "../ChatComponent/ChatPage";
 
 const Home = () => {
   return (
@@ -50,19 +50,19 @@ const Home = () => {
               <Profile />
             </ProtectedRoute>
           </Route>
+          <Route path="/chat/:id">
+            <ProtectedRoute>
+              <ChatPage />
+            </ProtectedRoute>
+          </Route>
           <Route exact path="/home">
             <Redirect to="/home/chats" />
           </Route>
           <Route path="/login">
             <Login />
           </Route>
-          <Route path="/chat/:id">
-            <ProtectedRoute>
-              <ChatComponent />
-            </ProtectedRoute>
-          </Route>
         </IonRouterOutlet>
-        <IonTabBar slot="bottom" color="white" className="tabBar">
+        <IonTabBar slot="bottom" color="white" className="tabBar" >
           <IonTabButton className="tab-btn" tab="chats" href="/home/chats">
             <IonIcon icon={chatbubbles} />
             <IonLabel>Chats</IonLabel>
@@ -75,11 +75,7 @@ const Home = () => {
             <IonIcon icon={people} />
             <IonLabel>Friends</IonLabel>
           </IonTabButton>
-          <IonTabButton
-            className="tab-btn"
-            tab="settings"
-            href="/home/settings"
-          >
+          <IonTabButton  className="tab-btn" tab="settings" href="/home/settings">
             <IonIcon icon={settings} />
             <IonLabel>Settings</IonLabel>
           </IonTabButton>

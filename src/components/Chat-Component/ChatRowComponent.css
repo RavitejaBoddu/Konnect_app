@@ -25,10 +25,9 @@
 }
 
 .chat-text-name {
-    font-family: 'Roboto';
-    font-style: normal;
+    font-family: 'Quicksand';
     font-weight: 700;
-    font-size: 15px;
+    font-size: 18px;
     line-height: 20px;
     display: flex;
     align-items: center;
@@ -37,8 +36,8 @@
 }
 
 .contact-text-name {
-    font-family: 'Roboto';
-    font-weight: 400;
+    font-family: 'Quicksand';
+    font-weight: 700;
     font-size: 20px;
     line-height: 20px;
     display: flex;
@@ -48,14 +47,13 @@
 }
 
 .chat-text-msg {
-    font-family: 'Roboto';
+    font-family: 'Quicksand';
     font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
+    font-weight: 500;
+    font-size: 14px;
     line-height: 14px;
     display: flex;
     align-items: center;
-
     color: #606460;
 }
 

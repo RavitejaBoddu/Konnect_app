@@ -19,6 +19,8 @@
 }
 
 .msg-text {
+    font-family: 'Quicksand';
+    font-weight: 600;
     padding: 3px;
     display: flex;
     flex-wrap: wrap;
@@ -28,6 +30,8 @@
 }
 
 .msg-time {
+    font-family: 'Quicksand';
+    font-weight: 400;
     display: flex;
     margin: 15px 5px;
     opacity: 0.8;

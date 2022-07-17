@@ -217,14 +217,19 @@ const Profile = () => {
     document.getElementById("photo").click();
   };
 
+  const goBack = () => {
+    // router.goBack();
+    router.push("/home", "back", "pop")
+  }
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar className="profile-toolbar">
           <IonButtons slot="start">
-            <IonBackButton color="white" className="profile-back-button">
+            <IonButton color="white" onClick={(e)=>{goBack()}} className="profile-back-button">
               <IonIcon icon={arrowBackOutline} size="large" />
-            </IonBackButton>
+            </IonButton>
           </IonButtons>
           <IonCard className="chats-header" lines="none">
             <IonLabel className="profile-heading">My Profile</IonLabel>
@@ -237,7 +242,6 @@ const Profile = () => {
           </IonCard>
         </IonToolbar>
       </IonHeader>
-
       <IonContent fullscreen className="profile-page">
         <IonCard className="avatar-container">
           <IonAvatar className="pro-pic-container">

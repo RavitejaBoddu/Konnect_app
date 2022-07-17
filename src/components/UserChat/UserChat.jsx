@@ -47,7 +47,7 @@ const UserChat = (props) => {
         });
       }
     }
-    router.push(`/chat/${id}`, "forward", "push");
+    router.push(`/chat/${id}`, "forward");
   };
 
   return (

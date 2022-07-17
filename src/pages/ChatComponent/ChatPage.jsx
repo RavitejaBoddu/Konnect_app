@@ -1,6 +1,7 @@
 import {
   IonAvatar,
   IonBackButton,
+  IonButton,
   IonButtons,
   IonCard,
   IonCol,
@@ -42,7 +43,7 @@ import {
 import "./ChatPage.css";
 import Message from "../../components/Message/Message";
 
-const ChatComponent = () => {
+const ChatPage = () => {
   const { userList, hideTabs } = UserAuth();
 
   const { id } = useParams();
@@ -113,14 +114,20 @@ const ChatComponent = () => {
 
   const usersData = getUserData();
 
+  const goBack = () => {
+    console.log(router.canGoBack())
+    // router.goBack();
+    router.push("/home", "back", "pop")
+  }
+
   return (
     <IonPage className="chat-page">
       <IonHeader>
         <IonToolbar color="white">
           <IonButtons slot="start">
-            <IonBackButton color="dark" className="back-button">
+            <IonButton color="jet-black" onClick={(e)=>{goBack()}} className="back-button">
               <IonIcon icon={arrowBackOutline} size="large" />
-            </IonBackButton>
+            </IonButton>
           </IonButtons>
           <IonCard className="chat-toolbar">
             <IonRow className="chat-profile-container">
@@ -190,4 +197,4 @@ const ChatComponent = () => {
   );
 };
 
-export default ChatComponent;
+export default ChatPage;
