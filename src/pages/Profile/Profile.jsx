@@ -1,10 +1,13 @@
 import {
   IonAvatar,
+  IonBackButton,
   IonButton,
+  IonButtons,
   IonCard,
   IonCol,
   IonContent,
   IonGrid,
+  IonHeader,
   IonIcon,
   IonImg,
   IonInput,
@@ -12,6 +15,7 @@ import {
   IonLabel,
   IonPage,
   IonRow,
+  IonToolbar,
   useIonAlert,
   useIonLoading,
   useIonRouter,
@@ -37,19 +41,22 @@ import { getDoc, doc, updateDoc } from "firebase/firestore";
 import { closeCircleOutline, checkmarkCircleOutline } from "ionicons/icons";
 import "./Profile.css";
 import { storage } from "../../firebase";
-import { ref, getDownloadURL, uploadBytesResumable, deleteObject} from "firebase/storage"
-
+import {
+  ref,
+  getDownloadURL,
+  uploadBytesResumable,
+  deleteObject,
+} from "firebase/storage";
 
 const Profile = () => {
-
-  const { user } = UserAuth();
+  const { user, hideTabs } = UserAuth();
   const user_id = user.uid;
   const [uname, setUname] = useState(user.displayName);
   const [isUpdate, setIsUpdate] = useState(false);
   const [show, dismiss] = useIonLoading();
-  const [img, setImg] =useState("");
+  const [img, setImg] = useState("");
   const [userProfile, setUserProfile] = useState();
-  const [deleteImg, setDeleteImg] =useState(false);
+  const [deleteImg, setDeleteImg] = useState(false);
 
   let router = useIonRouter();
   const [presentAlert] = useIonAlert();
@@ -80,8 +87,7 @@ const Profile = () => {
           });
           await updateProfile(auth.currentUser, {
             photoURL: url,
-          })
-          .catch((error) => {
+          }).catch((error) => {
             handleAlert(error.message);
           });
           setImg("");
@@ -91,34 +97,30 @@ const Profile = () => {
       };
       uploadImg();
     }
-    if(deleteImg){
+    if (deleteImg) {
       deleteImage();
     }
-    
-  }, [img, deleteImg])
+  }, [img, deleteImg]);
 
   const deleteImage = async () => {
     try {
-        await deleteObject(ref(storage, userProfile.avatarPath));
+      await deleteObject(ref(storage, userProfile.avatarPath));
 
-        await updateDoc(doc(db, "users", auth.currentUser.uid), {
-          photoURL: "",
-          avatarPath: "",
-        });
-        await updateProfile(auth.currentUser, {
-          photoURL: "",
-        })
-        .catch((error) => {
-          handleAlert(error.message);
-        });
-        setDeleteImg(false)
-        // window.location.reload()
-      }
-      catch (err) {
-        console.log(err.message);
-      }
+      await updateDoc(doc(db, "users", auth.currentUser.uid), {
+        photoURL: "",
+        avatarPath: "",
+      });
+      await updateProfile(auth.currentUser, {
+        photoURL: "",
+      }).catch((error) => {
+        handleAlert(error.message);
+      });
+      setDeleteImg(false);
+      // window.location.reload()
+    } catch (err) {
+      console.log(err.message);
     }
-  
+  };
 
   const handleToast = (msg) => {
     present({
@@ -143,14 +145,7 @@ const Profile = () => {
     });
   };
 
-  const hideTabs = () => {
-    const tabsEl = document.querySelector('ion-tab-bar');
-    if (tabsEl) {
-      tabsEl.hidden = true;
-    }
-  }
-
-  useIonViewWillEnter(() => hideTabs())
+  useIonViewWillEnter(() => hideTabs());
 
   const handleDelete = async () => {
     presentAlert({
@@ -161,25 +156,25 @@ const Profile = () => {
           role: "Delete",
           handler: async () => {
             show({
-              message: 'Deleting...',
+              message: "Deleting...",
               duration: 2000,
               spinner: "circular",
               cssClass: "lp-sp-spinner",
               animated: true,
               keyboardClose: true,
-              mode:"ios"
-            })
+              mode: "ios",
+            });
             setDeleteImg(true);
             dismiss();
-          }
-        }
+          },
+        },
       ],
       backdropDismiss: true,
       translucent: true,
       animated: true,
       cssClass: "lp-sp-alert",
     });
-  }
+  };
 
   const handleUpdate = async () => {
     const userRef = doc(db, "users", user_id);
@@ -196,14 +191,13 @@ const Profile = () => {
       });
       await updateProfile(auth.currentUser, {
         displayName: uname,
-      })
-      .catch((error) => {
+      }).catch((error) => {
         handleAlert(error.message);
       });
       await updateDoc(userRef, {
         name: uname,
       });
-      handleToast("Name has been Successfully Updated!")
+      handleToast("Name has been Successfully Updated!");
       setIsUpdate(false);
       dismiss();
     } catch (error) {
@@ -219,52 +213,72 @@ const Profile = () => {
   const cancelUpdate = () => {
     setIsUpdate(false);
   };
-
-  const handleBack = () => {
-    router.push("/home/chats");
-  };
-
   const handleInput = () => {
     document.getElementById("photo").click();
-  }
+  };
 
   return (
     <IonPage>
+      <IonHeader>
+        <IonToolbar className="profile-toolbar">
+          <IonButtons slot="start">
+            <IonBackButton color="white" className="profile-back-button">
+              <IonIcon icon={arrowBackOutline} size="large" />
+            </IonBackButton>
+          </IonButtons>
+          <IonCard className="chats-header" lines="none">
+            <IonLabel className="profile-heading">My Profile</IonLabel>
+            <IonIcon
+              icon={qrCodeOutline}
+              className="chats-vertical-dots"
+              size="large"
+              color="white"
+            />
+          </IonCard>
+        </IonToolbar>
+      </IonHeader>
+
       <IonContent fullscreen className="profile-page">
-        <IonCard className="chats-header" lines="none">
-          <IonIcon
-            icon={arrowBackOutline}
-            className="chats-vertical-dots"
-            size="large"
-            color="white"
-            onClick={(e) => {
-              handleBack();
-            }}
-          />
-          <IonLabel className="profile-heading">My Profile</IonLabel>
-          <IonIcon
-            icon={qrCodeOutline}
-            className="chats-vertical-dots"
-            size="large"
-            color="white"
-          />
-        </IonCard>
         <IonCard className="avatar-container">
-        <IonAvatar className="pro-pic-container">
-          {
-            auth.currentUser.photoURL ?
-            <IonImg className="shadow-drop-2-center puff-in-center" src={auth.currentUser.photoURL} /> :
-            <IonImg src="assets/images/default-user.jpg" />
-          }
-          
-        </IonAvatar>
-        <IonItem lines="none" className="pro-pic-btns">
-          <IonIcon  icon={camera} slot="start" color="white" size="large" onClick={((e)=>{handleInput()})} />
-          <input type="file" accept='image/*' style={{display:"none"}} id="photo" onChange={(e)=>setImg(e.target.files[0])}/>
-          <IonIcon icon={trash} slot="end" color="white" size="large" onClick={((e)=>{handleDelete()})}/>
-        </IonItem>
+          <IonAvatar className="pro-pic-container">
+            {auth.currentUser.photoURL ? (
+              <IonImg
+                className="shadow-drop-2-center fade-in-fwd"
+                src={auth.currentUser.photoURL}
+              />
+            ) : (
+              <IonImg src="assets/images/default-user.jpg" />
+            )}
+          </IonAvatar>
+          <IonItem lines="none" className="pro-pic-btns">
+            <IonIcon
+              icon={camera}
+              slot="start"
+              color="white"
+              size="large"
+              onClick={(e) => {
+                handleInput();
+              }}
+            />
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              id="photo"
+              onChange={(e) => setImg(e.target.files[0])}
+            />
+            <IonIcon
+              icon={trash}
+              slot="end"
+              color="white"
+              size="large"
+              onClick={(e) => {
+                handleDelete();
+              }}
+            />
+          </IonItem>
         </IonCard>
-        <IonGrid className="profile-details"> 
+        <IonGrid className="profile-details">
           {isUpdate ? (
             <IonRow className="update-row">
               <IonInput
@@ -277,7 +291,7 @@ const Profile = () => {
                 required
               ></IonInput>
               <IonIcon
-              className="update-icon"
+                className="update-icon"
                 icon={checkmarkCircleOutline}
                 size="large"
                 color="dark3"
@@ -286,7 +300,7 @@ const Profile = () => {
                 }}
               />
               <IonIcon
-              className="update-icon"
+                className="update-icon"
                 icon={closeCircleOutline}
                 size="large"
                 color="dark3"

@@ -46,7 +46,7 @@ const Login = () => {
   const clearInputs = () => {
     setEmail("");
     setPassword("");
-  }
+  };
 
   const handleToast = (msg) => {
     present({
@@ -94,7 +94,7 @@ const Login = () => {
             const msg = "You have Logged in successfully";
             handleToast(msg);
             clearInputs();
-            router.push("/home");
+            router.push("/home", "forward");
           } else {
             dismiss();
             const msg = "Please complete the verification and try to login.";

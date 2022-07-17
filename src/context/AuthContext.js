@@ -14,7 +14,6 @@ import { doc, setDoc, Timestamp, updateDoc } from "firebase/firestore";
 const UserContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-
   const [user, setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(true);
   const [userList, setUserList] = useState([]);
@@ -30,16 +29,16 @@ export const AuthContextProvider = ({ children }) => {
       name: name,
       email: email,
       createdAt: Timestamp.fromDate(new Date()),
-      isOnline:false,
+      isOnline: false,
     });
   };
 
   const updateStatus = async (auth, status) => {
     const updateRef = doc(db, "users", auth.currentUser.uid);
     await updateDoc(updateRef, {
-      isOnline : status
-  })
-  }
+      isOnline: status,
+    });
+  };
 
   const login = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
@@ -57,6 +56,20 @@ export const AuthContextProvider = ({ children }) => {
     return signInWithPopup(auth, facebookAuthProvider);
   };
 
+  const showTabs = () => {
+    const tabsEl = document.querySelector("ion-tab-bar");
+    if (tabsEl) {
+      tabsEl.hidden = false;
+    }
+  };
+
+  const hideTabs = () => {
+    const tabsEl = document.querySelector("ion-tab-bar");
+    if (tabsEl) {
+      tabsEl.hidden = true;
+    }
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       let user = currentUser;
@@ -66,7 +79,6 @@ export const AuthContextProvider = ({ children }) => {
       unsubscribe();
     };
   }, []);
-  
 
   return (
     <UserContext.Provider
@@ -82,7 +94,9 @@ export const AuthContextProvider = ({ children }) => {
         addData,
         updateStatus,
         userList,
-        setUserList
+        setUserList,
+        showTabs,
+        hideTabs,
       }}
     >
       {children}

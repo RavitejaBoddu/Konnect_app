@@ -1,4 +1,4 @@
-.user-last-msg-time{
+.user-last-msg-time {
     font-family: 'Roboto';
     font-size: 10px;
     display: flex;
@@ -6,32 +6,35 @@
     color: #606460;
 }
 
-.chat-text-msg{
-    display: flex;
-    flex-wrap: nowrap;
+.chat-text-msg {
+    display: block;
+    overflow: hidden;
+    font-size: inherit;
+    text-overflow: ellipsis;
 }
 
 
-.chat-img-container{
+.chat-img-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 8px;    
+    margin-left: 8px;
 }
 
-.unread{
+.unread {
     background: #2457C5;
     border-radius: 10px;
     padding: 4px 6px;
     font-size: 10px;
 }
 
-.double-tick-img{
+.double-tick-img {
     width: 18px;
     height: 18px;
     margin-top: 13px;
 }
-.chat-pic-container{
+
+.chat-pic-container {
     display: flex;
     justify-content: center;
     align-items: center;

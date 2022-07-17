@@ -15,7 +15,7 @@ const ChatRowComponent = (props) => {
   let router = useIonRouter();
 
   const openChat = (id) => {
-    router.push(`/chat/${id}`);
+    router.push(`/chat/${id}`, "forward");
   };
 
   return (
@@ -25,19 +25,15 @@ const ChatRowComponent = (props) => {
         openChat(id);
       }}
     >
-      <IonCol className='contact-img-container'>
+      <IonCol className="contact-img-container">
         <IonAvatar className="chat-pic-container">
-              {photoURL ? 
-              <IonImg
-                src={photoURL}
-                className="chat-img"
-              /> : <IonImg
-              src="assets/images/user.png"
-              className="chat-img"
-            /> 
-              }
-            </IonAvatar>
-        </IonCol>
+          {photoURL ? (
+            <IonImg src={photoURL} className="chat-img" />
+          ) : (
+            <IonImg src="assets/images/user.png" className="chat-img" />
+          )}
+        </IonAvatar>
+      </IonCol>
       <IonCol className="chat-text">
         {isContactPage ? (
           <IonLabel className="contact-text-name">{name}</IonLabel>
@@ -50,11 +46,11 @@ const ChatRowComponent = (props) => {
       <IonCol className="message-icon">
         {/* <IonLabel className="chat-info-time">{time}</IonLabel>
         {isContactPage ? ( */}
-          <IonIcon
-            className="msg-icon"
-            color="primary"
-            icon={chatbubbleEllipses}
-          />
+        <IonIcon
+          className="msg-icon"
+          color="primary"
+          icon={chatbubbleEllipses}
+        />
         {/* ) : (
           <IonIcon className="chat-info-img" icon={checkmarkDoneOutline} />
         )} */}
@@ -63,5 +59,4 @@ const ChatRowComponent = (props) => {
   );
 };
 
-
-export default ChatRowComponent
+export default ChatRowComponent;

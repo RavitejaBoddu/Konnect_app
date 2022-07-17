@@ -3,9 +3,10 @@
   display: flex;
   height: 100%;
 }
-.settings{
+
+.settings {
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
@@ -52,7 +53,8 @@
   color: #2457c5;
   margin-bottom: 1rem;
 }
-.heading{
+
+.heading {
   color: #2457c5;
   margin-bottom: 1.4rem;
 }

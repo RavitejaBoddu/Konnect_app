@@ -1,38 +1,48 @@
-import { IonAvatar, IonCard, IonHeader, IonIcon, IonImg, IonLabel, IonToolbar, useIonRouter } from '@ionic/react';
-import { ellipsisVertical } from 'ionicons/icons';
-import React from 'react'
-import { UserAuth } from '../../context/AuthContext';
+import {
+  IonAvatar,
+  IonCard,
+  IonHeader,
+  IonIcon,
+  IonImg,
+  IonLabel,
+  IonToolbar,
+  useIonRouter,
+} from "@ionic/react";
+import { ellipsisVertical } from "ionicons/icons";
+import { UserAuth } from "../../context/AuthContext";
 
 const Header = (props) => {
-    const { heading } = props;
+  const { heading } = props;
 
-    const { user } = UserAuth();
-    let router = useIonRouter();
+  const { user } = UserAuth();
+  let router = useIonRouter();
 
-    const goToProfile = () => {
-        router.push("/home/profile");
-      };
+  const goToProfile = () => {
+    router.push("/home/profile");
+  };
   return (
     <IonHeader>
       <IonToolbar className="chats-toolbar" color="white">
-      <IonCard className="chats-header" lines="none">
-          {/* <IonImg className="logo" src="assets/images/logo.png" /> */}
-          <IonLabel className="chats-heading roll-in-blurred-right">{heading}</IonLabel>
-          <IonAvatar  className="profile-pic">{
-            user.photoURL ?
-            <IonImg
-            src={user.photoURL}
-            onClick={(e) => {
-              goToProfile();
-            }}
-          /> :
-          <IonImg
-            src="assets/images/user.png"
-            onClick={(e) => {
-              goToProfile();
-            }}
-          />
-          }
+        <IonCard className="chats-header" lines="none">
+          <IonLabel className="chats-heading tracking-in-expand">
+            {heading}
+          </IonLabel>
+          <IonAvatar className="profile-pic">
+            {user.photoURL ? (
+              <IonImg
+                src={user.photoURL}
+                onClick={(e) => {
+                  goToProfile();
+                }}
+              />
+            ) : (
+              <IonImg
+                src="assets/images/user.png"
+                onClick={(e) => {
+                  goToProfile();
+                }}
+              />
+            )}
           </IonAvatar>
           <IonIcon
             icon={ellipsisVertical}
@@ -42,8 +52,8 @@ const Header = (props) => {
           />
         </IonCard>
       </IonToolbar>
-      </IonHeader>
-  )
-}
+    </IonHeader>
+  );
+};
 
-export default Header
+export default Header;

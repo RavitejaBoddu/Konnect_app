@@ -55,9 +55,9 @@ const Signup = () => {
 
   const clearInputs = () => {
     setName("");
-          setEmail("");
-          setPassword("");
-  }
+    setEmail("");
+    setPassword("");
+  };
 
   const handleSignup = async () => {
     var atposition = email.indexOf("@");

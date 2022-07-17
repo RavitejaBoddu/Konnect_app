@@ -36,16 +36,14 @@ import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import { App as app } from "@capacitor/app";
 import { Browser } from "@capacitor/browser";
 import { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore"; 
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
-
 
 setupIonicReact();
 
 const App = () => {
   const [updateDetails, setUpdateDetails] = useState({});
-  const [appVersion, setAppVersion] = useState("");  
-
+  const [appVersion, setAppVersion] = useState("");
 
   const [show, dismiss] = useIonLoading();
 
@@ -76,14 +74,14 @@ const App = () => {
           role: "Download",
           handler: async () => {
             show({
-              message: 'Please wait...',
+              message: "Please wait...",
               duration: 2000,
               spinner: "circular",
               cssClass: "lp-sp-spinner",
               animated: true,
               keyboardClose: true,
-              mode:"ios"
-            })
+              mode: "ios",
+            });
             await Browser.open({
               url: "https://play.google.com/store/apps/details?id=com.konnect_ptg.app",
             });
@@ -126,47 +124,44 @@ const App = () => {
           handleAlert(msg, title, btn, appVersion);
         }
       }
-    } 
-    catch (error) {
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
     getConfigData();
-    if (isPlatform('capacitor')){
+    if (isPlatform("capacitor")) {
       getAppInfo();
     }
   }, []);
 
   checkUpdate();
 
-  return(
-  <>
-    <AuthContextProvider>
-      <IonApp>
-        <IonReactRouter>
-          <IonRouterOutlet>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/signup">
-              <Signup />
-            </Route>
-            <Route path="/home">
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            </Route>
-            <Route exact path="/">
-              <Redirect to="/login" />
-            </Route>
-          </IonRouterOutlet>
-        </IonReactRouter>
-      </IonApp>
-    </AuthContextProvider>
-  </>
-);
-
-}
+  return (
+    <>
+      <AuthContextProvider>
+        <IonApp>
+          <IonReactRouter>
+            <IonRouterOutlet>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/signup">
+                <Signup />
+              </Route>
+              <Route path="/home">
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              </Route>
+              <Route exact path="/">
+                <Redirect to="/login" />
+              </Route>
+            </IonRouterOutlet>
+          </IonReactRouter>
+        </IonApp>
+      </AuthContextProvider>
+    </>
+  );
+};
 
 export default App;

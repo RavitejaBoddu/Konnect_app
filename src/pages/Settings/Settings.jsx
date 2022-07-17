@@ -13,6 +13,7 @@ import {
   useIonLoading,
   useIonRouter,
   useIonToast,
+  useIonViewWillEnter,
 } from "@ionic/react";
 import { UserAuth } from "../../context/AuthContext";
 import "./Settings.css";
@@ -20,7 +21,7 @@ import { caretForward, toggle } from "ionicons/icons";
 import { auth } from "../../firebase";
 
 const Settings = () => {
-  const { logout, updateStatus, user } = UserAuth();
+  const { logout, updateStatus, user, showTabs } = UserAuth();
   let router = useIonRouter();
   const [present] = useIonToast();
   const [show, dismiss] = useIonLoading();
@@ -36,7 +37,7 @@ const Settings = () => {
     });
   };
 
-  const handleLogout = async() => {
+  const handleLogout = async () => {
     try {
       show({
         message: "Logging out...",
@@ -64,23 +65,27 @@ const Settings = () => {
     router.push("/home/profile");
   };
 
+  useIonViewWillEnter(() => showTabs());
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar color="white">
-        <IonCard className="chats-header" lines="none">
-          <IonLabel className="chats-heading roll-in-blurred-right">Settings</IonLabel>
-        </IonCard>
+          <IonCard className="chats-header" lines="none">
+            <IonLabel className="chats-heading roll-in-blurred-right">
+              Settings
+            </IonLabel>
+          </IonCard>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="settings-page">
         <IonGrid className="settings">
           <IonRow className="settings-row">
             <IonCol className="heading">General</IonCol>
-            <IonCol className="three-items" onClick={(e)=>goToProfile()}>
+            <IonCol className="three-items" onClick={(e) => goToProfile()}>
               <IonLabel>Account:-</IonLabel>
-              <IonLabel >{user.displayName}</IonLabel>
-              <IonIcon icon={caretForward}  />
+              <IonLabel>{user.displayName}</IonLabel>
+              <IonIcon icon={caretForward} />
             </IonCol>
             <IonCol className="two-items">
               <IonLabel>Notifications</IonLabel>

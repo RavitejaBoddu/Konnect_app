@@ -7,6 +7,14 @@
   justify-content: space-between;
 }
 
+.profile-toolbar {
+  --background: #3c4368;
+}
+
+.profile-back-button {
+  margin-right: 5px;
+}
+
 .profile-heading {
   flex: 10;
   font-family: "Quicksand";
@@ -32,7 +40,7 @@
   height: 65%;
 }
 
-.avatar-container{
+.avatar-container {
   --background: transparent;
   box-shadow: none;
   -webkit-box-shadow: none;
@@ -53,7 +61,8 @@
   max-width: 100%;
   height: auto;
 }
-.pro-pic-btns{
+
+.pro-pic-btns {
   --background: transparent;
 }
 
@@ -67,7 +76,7 @@
   display: flex;
   height: 20px;
   width: 20px;
-  margin-left:10px;
+  margin-left: 10px;
 }
 
 .flex-row {
@@ -128,19 +137,20 @@
   margin-right: 10px;
 }
 
-.update-row{
-    display: flex;
+.update-row {
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.update-icon{
-    margin-top: 5px;
-    margin-right: 5px;
+.update-icon {
+  margin-top: 5px;
+  margin-right: 5px;
 }
-.update-input{
-    color: black;
-    border: 1px solid #333333b1;
-    border-radius: 8px;
-    margin-right: 10px;
+
+.update-input {
+  color: black;
+  border: 1px solid #333333b1;
+  border-radius: 8px;
+  margin-right: 10px;
 }

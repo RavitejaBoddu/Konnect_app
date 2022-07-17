@@ -46,15 +46,16 @@
   height: 35px;
   --border-radius: 10px;
   margin: 1rem 1rem;
-  --color:black;
-  --icon-color:black;
+  --color: black;
+  --icon-color: black;
 }
 
 .chats-container {
   /* margin-top: 0.8rem; */
   margin-right: 5px;
 }
-.chat-info{
+
+.chat-info {
   display: flex;
   justify-content: center;
   align-items: center;
