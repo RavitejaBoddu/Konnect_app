@@ -26,13 +26,15 @@ const UserChat = (props) => {
   useEffect(() => {
     const getLastMsg = () => {
       onSnapshot(doc(db, "lastMsg", c_id), (doc) => {
-        setData(doc.data());
+        if(doc.data()){
+          setData(doc.data());
         setTime(
           doc.data().createdAt.toDate().toLocaleTimeString(navigator.language, {
             hour: "2-digit",
             minute: "2-digit",
           })
         );
+        }
       });
     };
     getLastMsg();

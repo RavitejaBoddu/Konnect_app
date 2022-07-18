@@ -115,7 +115,7 @@ const ChatPage = () => {
   const usersData = getUserData();
 
   const goBack = () => {
-    console.log(router.canGoBack())
+    // console.log(router.canGoBack())
     // router.goBack();
     router.push("/home", "back", "pop")
   }

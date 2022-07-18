@@ -17,7 +17,7 @@ import Settings from "../Settings/Settings";
 import Login from "../Login/Login";
 import ProtectedRoute from "../../ProtectedRoute/ProtectedRoute";
 import Profile from "../Profile/Profile";
-import ChatPage from "../ChatComponent/ChatPage";
+import ChatPage from "../ChatPage/ChatPage";
 
 const Home = () => {
   return (
@@ -67,10 +67,10 @@ const Home = () => {
             <IonIcon icon={chatbubbles} />
             <IonLabel>Chats</IonLabel>
           </IonTabButton>
-          <IonTabButton className="tab-btn" tab="groups" href="/home/groups">
+          {/* <IonTabButton className="tab-btn" tab="groups" href="/home/groups">
             <IonIcon icon={apps} />
             <IonLabel>Contacts</IonLabel>
-          </IonTabButton>
+          </IonTabButton> */}
           <IonTabButton className="tab-btn" tab="friends" href="/home/friends">
             <IonIcon icon={people} />
             <IonLabel>Friends</IonLabel>
