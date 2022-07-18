@@ -42,7 +42,7 @@
 .chats-searchbar {
   --background: #ffffff;
   --border-radius: 12px;
-    margin: 1rem;
+    margin: 10px 1rem; 
   --color: black;
   --icon-color: black;
 }

@@ -64,7 +64,7 @@ const Profile = () => {
   const [present] = useIonToast();
 
   useEffect(() => {
-    getDoc(doc(db, "users", auth.currentUser.uid)).then((docSnap) => {
+    getDoc(doc(db, "users", user.uid)).then((docSnap) => {
       if (docSnap.exists) {
         setUserProfile(docSnap.data());
       }
@@ -81,7 +81,7 @@ const Profile = () => {
           }
           const snap = await uploadBytesResumable(imgRef, img);
           const url = await getDownloadURL(ref(storage, snap.ref.fullPath));
-          await updateDoc(doc(db, "users", auth.currentUser.uid), {
+          await updateDoc(doc(db, "users", user.uid), {
             photoURL: url,
             avatarPath: snap.ref.fullPath,
           });
@@ -106,7 +106,7 @@ const Profile = () => {
     try {
       await deleteObject(ref(storage, userProfile.avatarPath));
 
-      await updateDoc(doc(db, "users", auth.currentUser.uid), {
+      await updateDoc(doc(db, "users", user.uid), {
         photoURL: "",
         avatarPath: "",
       });
@@ -245,10 +245,10 @@ const Profile = () => {
       <IonContent fullscreen className="profile-page">
         <IonCard className="avatar-container">
           <IonAvatar className="pro-pic-container">
-            {auth.currentUser.photoURL ? (
+            {user.photoURL ? (
               <IonImg
                 className="shadow-drop-2-center fade-in-fwd"
-                src={auth.currentUser.photoURL}
+                src={user.photoURL}
               />
             ) : (
               <IonImg src="assets/images/default-user.jpg" />
@@ -282,7 +282,7 @@ const Profile = () => {
             />
           </IonItem>
         </IonCard>
-        <IonGrid className="profile-details">
+          <IonGrid className="grid">
           {isUpdate ? (
             <IonRow className="update-row">
               <IonInput
@@ -314,7 +314,7 @@ const Profile = () => {
               />
             </IonRow>
           ) : (
-            <IonRow className="row">
+            <IonRow className="name-row">
               <IonLabel className="Profile-name">{user.displayName}</IonLabel>
               <IonImg
                 src="assets/icon/Edit.svg"
@@ -323,50 +323,40 @@ const Profile = () => {
               />
             </IonRow>
           )}
-          <IonRow className="flex-row">
-            <IonCol className="col1">
-              <IonLabel className="flex-row-label">Email Address</IonLabel>
+          <IonRow className="email-row">
+          <IonLabel className="flex-row-label">Email Address</IonLabel>
               <IonLabel className="flex-row-value">
                 <IonIcon icon={atOutline} />
                 {user.email}
               </IonLabel>
-            </IonCol>
           </IonRow>
-          <IonRow className="flex-row">
-            <IonCol className="col1">
-              <IonLabel className="flex-row-label">Phone Number</IonLabel>
+          <IonRow className="email-row">
+          <IonLabel className="flex-row-label">Phone Number</IonLabel>
               <IonLabel className="flex-row-value">
                 <IonIcon icon={callOutline} />
                 +91-9999999999
               </IonLabel>
-            </IonCol>
           </IonRow>
-          <IonRow className="flex-row">
-            <IonCol className="col1">
-              <IonLabel className="flex-row-label">Password</IonLabel>
+          <IonRow className="email-row">
+          <IonLabel className="flex-row-label">Password</IonLabel>
               <IonLabel className="flex-row-value">
                 <IonIcon icon={lockClosedOutline} />
-                ********
+                *************
               </IonLabel>
-            </IonCol>
           </IonRow>
-          <IonRow className="flex-row">
-            <IonCol className="col1">
-              <IonLabel className="flex-row-label">Date of Birth</IonLabel>
+          <IonRow className="email-row">
+          <IonLabel className="flex-row-label">Date of Birth</IonLabel>
               <IonLabel className="flex-row-value">
                 <IonIcon icon={calendarNumberOutline} />
                 DD-MON-19XX
               </IonLabel>
-            </IonCol>
           </IonRow>
-          <IonRow className="flex-row">
-            <IonCol className="col1">
-              <IonLabel className="flex-row-label">About</IonLabel>
+          <IonRow className="email-row">
+          <IonLabel className="flex-row-label">About</IonLabel>
               <IonLabel className="flex-row-value">
                 <IonIcon icon={informationCircleOutline} />
                 Hi, this is about me!
               </IonLabel>
-            </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>
