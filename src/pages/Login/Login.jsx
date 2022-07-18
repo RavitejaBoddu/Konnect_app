@@ -257,7 +257,8 @@ const Login = () => {
             </IonCol>
             <IonLabel style={{marginTop: "15px"}}>(or)</IonLabel>
             <IonCol className="alternate-logins">
-              {isPlatform('android') ? <IonButton fill="outline" color="white" shape="round" className="alternate-icon" onClick={(e)=>{handleMobileGoogleSignIn()}}><IonIcon icon={logoGoogle} color="white"  /></IonButton> :
+              {isPlatform('android') ? 
+              <IonButton fill="outline" color="white" shape="round" className="alternate-icon" onClick={(e)=>{handleMobileGoogleSignIn()}}><IonIcon icon={logoGoogle} color="white"  /></IonButton> :
               <IonButton fill="outline" color="white" shape="round" className="alternate-icon" onClick={(e)=>{handleGoogleSignIn()}}><IonIcon icon={logoGoogle} color="white"  /></IonButton>}
               {/* {isPlatform('android') ? <IonButton fill="outline" color="white" shape="round" className="alternate-icon" onClick={(e)=>{handleMobileFacebookSignIn()}}><IonIcon icon={logoFacebook} color="white"  /></IonButton> :
               <IonButton fill="outline" color="light" shape="round" className="alternate-icon" onClick={(e)=>{handleFacebookSignIn()}} ><IonIcon icon={logoFacebook} color="white" /></IonButton>}             */}
