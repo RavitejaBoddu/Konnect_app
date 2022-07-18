@@ -142,7 +142,7 @@ const Login = () => {
     }
   };
 
-  const handleMobileGoogleSignIn = async () => {
+  const handleGoogleSignIn = async () => {
     try {
       show({
       message: "Logging in please wait...",
@@ -155,32 +155,23 @@ const Login = () => {
     });
       GoogleAuth.initialize();
       const result = await GoogleAuth.signIn();
-      addGoogleData(result.id, result.displayName, result.email, result.imageUrl);
-      setUser(result);
-      setGoogleUser(result);
+      console.log(result)
+      let displayName = result.givenName + " " + result.familyName;
+      await addGoogleData(result.id, displayName, result.email, result.imageUrl);
+      setUser({...result, [displayName]:displayName});
+      setGoogleUser({...result, [displayName]:displayName});
       setIsGoogleLogin(true)
       dismiss();
       const msg = "You have Logged in successfully";
       handleToast(msg);
       if (result) {
         router.push("/home");
-
-        
       }
     } catch (error) {
       handleAlert(error.message);
     }
   };
 
-
-  const handleGoogleSignIn = async () => {
-    try {
-      await googleSignIn();
-      router.push("/home");
-    } catch (error) {
-      handleAlert(error.message);
-    }
-  };
 
 //   const handleMobileFacebookSignIn = async () => {
 //     try {
@@ -257,9 +248,7 @@ const Login = () => {
             </IonCol>
             <IonLabel style={{marginTop: "15px"}}>(or)</IonLabel>
             <IonCol className="alternate-logins">
-              {isPlatform('android') ? 
-              <IonButton fill="outline" color="white" shape="round" className="alternate-icon" onClick={(e)=>{handleMobileGoogleSignIn()}}><IonIcon icon={logoGoogle} color="white"  /></IonButton> :
-              <IonButton fill="outline" color="white" shape="round" className="alternate-icon" onClick={(e)=>{handleGoogleSignIn()}}><IonIcon icon={logoGoogle} color="white"  /></IonButton>}
+              <IonButton fill="outline" color="white" shape="round" className="alternate-icon" onClick={(e)=>{handleGoogleSignIn()}}><IonIcon icon={logoGoogle} color="white"  /></IonButton>
               {/* {isPlatform('android') ? <IonButton fill="outline" color="white" shape="round" className="alternate-icon" onClick={(e)=>{handleMobileFacebookSignIn()}}><IonIcon icon={logoFacebook} color="white"  /></IonButton> :
               <IonButton fill="outline" color="light" shape="round" className="alternate-icon" onClick={(e)=>{handleFacebookSignIn()}} ><IonIcon icon={logoFacebook} color="white" /></IonButton>}             */}
             </IonCol>

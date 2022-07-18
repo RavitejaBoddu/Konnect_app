@@ -34,7 +34,7 @@ import "./Profile.css";
 
 
 const Profile = () => {
-  const { user } = UserAuth();
+  const { user, isGoogleLogin } = UserAuth();
   const user_id = user.uid;
   const [uname, setUname] = useState(user.displayName);
   const [isUpdate, setIsUpdate] = useState(false);
@@ -171,7 +171,10 @@ const Profile = () => {
             </IonRow>
           ) : (
             <IonRow className="row">
-              <IonLabel className="Profile-name">{user.displayName}</IonLabel>
+              {
+                isGoogleLogin ? <IonLabel className="Profile-name" >{user.givenName+ " " +user.familyName}</IonLabel> :
+                <IonLabel className="Profile-name" >{user.displayName}</IonLabel>
+              }
               <IonImg
                 src="assets/icon/Edit.svg"
                 className="edit-icon"

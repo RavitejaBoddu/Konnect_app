@@ -21,7 +21,7 @@ import { auth } from "../../firebase";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 const Settings = () => {
-  const { logout, updateStatus, user ,setUser, isGoogleLogin, updateGoogleStatus } = UserAuth();
+  const { logout, updateStatus, user ,setUser, isGoogleLogin,updateGoogleStatus } = UserAuth();
   let router = useIonRouter();
   const [present] = useIonToast();
   const [show, dismiss] = useIonLoading();
@@ -106,7 +106,10 @@ const Settings = () => {
             <IonCol className="heading">General</IonCol>
             <IonCol className="three-items" onClick={(e)=>goToProfile()}>
               <IonLabel>Account:-</IonLabel>
-              <IonLabel >{user.displayName}</IonLabel>
+              {
+                isGoogleLogin ? <IonLabel >{user.givenName+ " " +user.familyName}</IonLabel> :
+                <IonLabel >{user.displayName}</IonLabel>
+              }
               <IonIcon icon={caretForward}  />
             </IonCol>
             <IonCol className="two-items">
