@@ -26,6 +26,7 @@
     "core-js": "^3.23.3",
     "css-select": "^5.1.0",
     "firebase": "^9.8.4",
+    "firebase-tools": "^11.3.0",
     "heroku": "^7.60.2",
     "ionicons": "^5.4.0",
     "moment": "^2.29.4",
