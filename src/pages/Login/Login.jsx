@@ -133,8 +133,7 @@ const Login = () => {
       }
     } catch (e) {
       dismiss();
-      const msg = e.message;
-      handleAlert(msg);
+      handleAlert(e.message);
       clearInputs();
     }
   };

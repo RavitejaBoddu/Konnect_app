@@ -105,7 +105,6 @@ const App = () => {
     const docSnap = await getDoc(updateRef);
     if (docSnap.exists()) {
       const data = docSnap.data();
-      // console.log("Document data:", docSnap.data());
       setUpdateDetails(data.updateMsg);
       setAppVersion(data.current);
     } else {
@@ -116,8 +115,8 @@ const App = () => {
   const checkUpdate = async () => {
     try {
       if (isPlatform("android")) {
-        const currentAppInfo = getAppInfo();
-        if (appVersion > (await currentAppInfo).version) {
+        const currentAppInfo = await getAppInfo();
+        if (appVersion > currentAppInfo.version) {
           const msg = updateDetails.msg;
           const title = updateDetails.title;
           const btn = updateDetails.btn;
@@ -129,12 +128,9 @@ const App = () => {
 
   useEffect(() => {
     getConfigData();
-    if (isPlatform("capacitor")) {
-      getAppInfo();
-    }
+    checkUpdate();
   }, []);
 
-  checkUpdate();
 
   return (
     <>
