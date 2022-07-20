@@ -7,7 +7,7 @@ import {
   IonTabs,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { people, apps, chatbubbles, settings } from "ionicons/icons";
+import { people, chatbubbles, settings } from "ionicons/icons";
 import { Redirect, Route } from "react-router-dom";
 
 import Chats from "../Chats/Chats";
@@ -38,7 +38,6 @@ const Home = () => {
             <ProtectedRoute>
               <Friends />
             </ProtectedRoute>
-            <Friends />
           </Route>
           <Route path="/home/settings">
             <ProtectedRoute>
@@ -62,7 +61,7 @@ const Home = () => {
             <Login />
           </Route>
         </IonRouterOutlet>
-        <IonTabBar slot="bottom" color="white" className="tabBar" >
+        <IonTabBar slot="bottom" color="white" className="tabBar">
           <IonTabButton className="tab-btn" tab="chats" href="/home/chats">
             <IonIcon icon={chatbubbles} />
             <IonLabel>Chats</IonLabel>
@@ -75,7 +74,11 @@ const Home = () => {
             <IonIcon icon={people} />
             <IonLabel>Friends</IonLabel>
           </IonTabButton>
-          <IonTabButton  className="tab-btn" tab="settings" href="/home/settings">
+          <IonTabButton
+            className="tab-btn"
+            tab="settings"
+            href="/home/settings"
+          >
             <IonIcon icon={settings} />
             <IonLabel>Settings</IonLabel>
           </IonTabButton>

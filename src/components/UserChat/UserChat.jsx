@@ -12,7 +12,6 @@ import { checkmarkDoneOutline } from "ionicons/icons";
 import { useEffect, useState } from "react";
 import { onSnapshot, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
-// import Moment from "react-moment";
 
 const UserChat = (props) => {
   const { id, name, user1, photoURL } = props;
@@ -26,14 +25,17 @@ const UserChat = (props) => {
   useEffect(() => {
     const getLastMsg = () => {
       onSnapshot(doc(db, "lastMsg", c_id), (doc) => {
-        if(doc.data()){
+        if (doc.data()) {
           setData(doc.data());
-        setTime(
-          doc.data().createdAt.toDate().toLocaleTimeString(navigator.language, {
-            hour: "2-digit",
-            minute: "2-digit",
-          })
-        );
+          setTime(
+            doc
+              .data()
+              .createdAt.toDate()
+              .toLocaleTimeString(navigator.language, {
+                hour: "2-digit",
+                minute: "2-digit",
+              })
+          );
         }
       });
     };

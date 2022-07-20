@@ -8,16 +8,16 @@ import {
 } from "@ionic/react";
 import "./Groups.css";
 import chatsData from "../../chatData";
-import ChatRowComponent from "../../components/Chat-Component/ChatRowComponent";
 import { useState } from "react";
 import { UserAuth } from "../../context/AuthContext";
 import Header from "../../components/Header/Header";
+import ContactRow from "../../components/ContactRow/ContactRow";
 const groupsData = chatsData.data.groups;
 
 const Groups = () => {
   const [data, setData] = useState([]);
   const [isInfiniteDisabled, setInfiniteDisabled] = useState(false);
-  const { user, showTabs } = UserAuth();
+  const { showTabs } = UserAuth();
 
   const pushData = () => {
     const max = data.length + 10;
@@ -62,7 +62,7 @@ const Groups = () => {
         <div className="chats-container">
           {data.map((chat) => {
             return (
-              <ChatRowComponent
+              <ContactRow
                 key={chat.id}
                 name={chat.name}
                 image={chat.image}

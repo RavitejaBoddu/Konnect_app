@@ -94,10 +94,6 @@ const ChatPage = () => {
       });
     };
     getMsgs();
-
-    return () => {
-      // unsubscribe();
-    };
   }, [user2, user1]);
 
   const getUserData = () => {
@@ -115,17 +111,21 @@ const ChatPage = () => {
   const usersData = getUserData();
 
   const goBack = () => {
-    // console.log(router.canGoBack())
-    // router.goBack();
-    router.push("/home", "back", "pop")
-  }
+    router.push("/home", "back", "pop");
+  };
 
   return (
     <IonPage className="chat-page">
       <IonHeader>
         <IonToolbar color="white">
           <IonButtons slot="start">
-            <IonButton color="jet-black" onClick={(e)=>{goBack()}} className="back-button">
+            <IonButton
+              color="jet-black"
+              onClick={(e) => {
+                goBack();
+              }}
+              className="back-button"
+            >
               <IonIcon icon={arrowBackOutline} size="large" />
             </IonButton>
           </IonButtons>

@@ -28,7 +28,9 @@ yarn-error.log*
 .eslintcache
 
 #platform files
-/platforms
 /android
+/platforms
 /.firebase
+/.firebaserc
+/firebase.json
 /resources

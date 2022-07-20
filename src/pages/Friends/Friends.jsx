@@ -7,11 +7,10 @@ import {
 } from "@ionic/react";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import ChatRowComponent from "../../components/Chat-Component/ChatRowComponent";
+import ContactRow from "../../components/ContactRow/ContactRow";
 import Header from "../../components/Header/Header";
 import { UserAuth } from "../../context/AuthContext";
 import { db } from "../../firebase";
-import "./Friends.css";
 
 const Friends = () => {
   const [isContactPage] = useState(true);
@@ -66,7 +65,7 @@ const Friends = () => {
             })
             .map((user) => {
               return (
-                <ChatRowComponent
+                <ContactRow
                   key={user.uid}
                   id={user.uid}
                   name={user.name}

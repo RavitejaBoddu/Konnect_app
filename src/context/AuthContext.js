@@ -17,7 +17,6 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(true);
   const [userList, setUserList] = useState([]);
-  // const User = useRef();
 
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -74,7 +73,6 @@ export const AuthContextProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       let user = currentUser;
       setUser(user);
-      console.log(user)
     });
     return () => {
       unsubscribe();

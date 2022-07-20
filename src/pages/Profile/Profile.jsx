@@ -219,15 +219,21 @@ const Profile = () => {
 
   const goBack = () => {
     // router.goBack();
-    router.push("/home", "back", "pop")
-  }
+    router.push("/home", "back", "pop");
+  };
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar className="profile-toolbar">
           <IonButtons slot="start">
-            <IonButton color="white" onClick={(e)=>{goBack()}} className="profile-back-button">
+            <IonButton
+              color="white"
+              onClick={(e) => {
+                goBack();
+              }}
+              className="profile-back-button"
+            >
               <IonIcon icon={arrowBackOutline} size="large" />
             </IonButton>
           </IonButtons>
@@ -282,7 +288,7 @@ const Profile = () => {
             />
           </IonItem>
         </IonCard>
-          <IonGrid className="grid">
+        <IonGrid className="grid">
           {isUpdate ? (
             <IonRow className="update-row">
               <IonInput
@@ -324,39 +330,39 @@ const Profile = () => {
             </IonRow>
           )}
           <IonRow className="email-row">
-          <IonLabel className="flex-row-label">Email Address</IonLabel>
-              <IonLabel className="flex-row-value">
-                <IonIcon icon={atOutline} />
-                {user.email}
-              </IonLabel>
+            <IonLabel className="flex-row-label">Email Address</IonLabel>
+            <IonLabel className="flex-row-value">
+              <IonIcon icon={atOutline} />
+              {user.email}
+            </IonLabel>
           </IonRow>
           <IonRow className="email-row">
-          <IonLabel className="flex-row-label">Phone Number</IonLabel>
-              <IonLabel className="flex-row-value">
-                <IonIcon icon={callOutline} />
-                +91-9999999999
-              </IonLabel>
+            <IonLabel className="flex-row-label">Phone Number</IonLabel>
+            <IonLabel className="flex-row-value">
+              <IonIcon icon={callOutline} />
+              +91-9999999999
+            </IonLabel>
           </IonRow>
           <IonRow className="email-row">
-          <IonLabel className="flex-row-label">Password</IonLabel>
-              <IonLabel className="flex-row-value">
-                <IonIcon icon={lockClosedOutline} />
-                *************
-              </IonLabel>
+            <IonLabel className="flex-row-label">Password</IonLabel>
+            <IonLabel className="flex-row-value">
+              <IonIcon icon={lockClosedOutline} />
+              *************
+            </IonLabel>
           </IonRow>
           <IonRow className="email-row">
-          <IonLabel className="flex-row-label">Date of Birth</IonLabel>
-              <IonLabel className="flex-row-value">
-                <IonIcon icon={calendarNumberOutline} />
-                DD-MON-19XX
-              </IonLabel>
+            <IonLabel className="flex-row-label">Date of Birth</IonLabel>
+            <IonLabel className="flex-row-value">
+              <IonIcon icon={calendarNumberOutline} />
+              DD-MON-19XX
+            </IonLabel>
           </IonRow>
           <IonRow className="email-row">
-          <IonLabel className="flex-row-label">About</IonLabel>
-              <IonLabel className="flex-row-value">
-                <IonIcon icon={informationCircleOutline} />
-                Hi, this is about me!
-              </IonLabel>
+            <IonLabel className="flex-row-label">About</IonLabel>
+            <IonLabel className="flex-row-value">
+              <IonIcon icon={informationCircleOutline} />
+              Hi, this is about me!
+            </IonLabel>
           </IonRow>
         </IonGrid>
       </IonContent>

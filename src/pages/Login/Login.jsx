@@ -100,6 +100,7 @@ const Login = () => {
             const msg = "Please complete the verification and try to login.";
             handleAlert(msg);
             logout();
+            await updateStatus(auth, false);
             clearInputs();
           }
           clearInputs();

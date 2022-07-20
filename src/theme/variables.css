@@ -291,6 +291,7 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-shade: var(--ion-color-white-shade);
   --ion-color-tint: var(--ion-color-white-tint);
 }
+
 :root {
   --ion-color-konnect-blue: #3c4368;
   --ion-color-konnect-blue-rgb: 60, 67, 104;
@@ -346,42 +347,47 @@ http://ionicframework.com/docs/theming/ */
 }
 
 :root {
-	--ion-color-jet-black: #000000;
-	--ion-color-jet-black-rgb: 0,0,0;
-	--ion-color-jet-black-contrast: #ffffff;
-	--ion-color-jet-black-contrast-rgb: 255,255,255;
-	--ion-color-jet-black-shade: #000000;
-	--ion-color-jet-black-tint: #1a1a1a;
+  --ion-color-jet-black: #000000;
+  --ion-color-jet-black-rgb: 0, 0, 0;
+  --ion-color-jet-black-contrast: #ffffff;
+  --ion-color-jet-black-contrast-rgb: 255, 255, 255;
+  --ion-color-jet-black-shade: #000000;
+  --ion-color-jet-black-tint: #1a1a1a;
 }
 
 .ion-color-jet-black {
-	--ion-color-base: var(--ion-color-jet-black);
-	--ion-color-base-rgb: var(--ion-color-jet-black-rgb);
-	--ion-color-contrast: var(--ion-color-jet-black-contrast);
-	--ion-color-contrast-rgb: var(--ion-color-jet-black-contrast-rgb);
-	--ion-color-shade: var(--ion-color-jet-black-shade);
-	--ion-color-tint: var(--ion-color-jet-black-tint);
+  --ion-color-base: var(--ion-color-jet-black);
+  --ion-color-base-rgb: var(--ion-color-jet-black-rgb);
+  --ion-color-contrast: var(--ion-color-jet-black-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-jet-black-contrast-rgb);
+  --ion-color-shade: var(--ion-color-jet-black-shade);
+  --ion-color-tint: var(--ion-color-jet-black-tint);
 }
 
 .chats-page {
   --background: #ffffff;
 }
+
 .friends-page {
   --background: #ffffff;
 }
+
 .groups-page {
   --background: #ffffff;
 }
+
 .lp-sp-spinner {
   --backdrop-opacity: 0.5;
   --background: rgb(255, 255, 255);
   --spinner-color: rgb(51, 71, 172);
   color: #333333;
 }
+
 .tabBar {
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
   border-top: none;
 }
+
 .tab-selected {
   color: #2457c5;
 }
@@ -389,8 +395,7 @@ http://ionicframework.com/docs/theming/ */
 /* Animations */
 
 .shadow-drop-2-center {
-  -webkit-animation: shadow-drop-2-center 0.4s
-    cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  -webkit-animation: shadow-drop-2-center 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: shadow-drop-2-center 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
@@ -401,6 +406,7 @@ http://ionicframework.com/docs/theming/ */
     -webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
     box-shadow: 0 0 0 0 rgba(252, 252, 252, 0);
   }
+
   100% {
     -webkit-transform: translateZ(50px);
     transform: translateZ(50px);
@@ -408,6 +414,7 @@ http://ionicframework.com/docs/theming/ */
     box-shadow: 0 0 20px 0px rgba(255, 255, 255, 0.35);
   }
 }
+
 @keyframes shadow-drop-2-center {
   0% {
     -webkit-transform: translateZ(0);
@@ -415,6 +422,7 @@ http://ionicframework.com/docs/theming/ */
     -webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
     box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
   }
+
   100% {
     -webkit-transform: translateZ(50px);
     transform: translateZ(50px);
@@ -424,8 +432,7 @@ http://ionicframework.com/docs/theming/ */
 }
 
 .tracking-in-expand {
-  -webkit-animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.61, 0.355, 1)
-    both;
+  -webkit-animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.61, 0.355, 1) both;
   animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.61, 0.355, 1) both;
 }
 
@@ -434,45 +441,53 @@ http://ionicframework.com/docs/theming/ */
     letter-spacing: -0.5em;
     opacity: 0;
   }
+
   40% {
     opacity: 0.6;
   }
+
   100% {
     opacity: 1;
   }
 }
+
 @keyframes tracking-in-expand {
   0% {
     letter-spacing: -0.5em;
     opacity: 0;
   }
+
   40% {
     opacity: 0.6;
   }
+
   100% {
     opacity: 1;
   }
 }
 
 .text-pop-up {
-  -webkit-animation: text-pop-up-right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
-    both;
+  -webkit-animation: text-pop-up-right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: text-pop-up-right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
+
 @-webkit-keyframes text-pop-up-right {
   0% {
     text-shadow: none;
   }
+
   100% {
     text-shadow: 0 1px 0 #cccccc, 0 2px 0 #cccccc, 0 3px 0 #cccccc,
       0 4px 0 #cccccc, 0 5px 0 #cccccc, 0 6px 0 #cccccc, 0 7px 0 #cccccc,
       0 8px 0 #cccccc, 0 9px 0 #cccccc, 0 50px 30px rgba(0, 0, 0, 0.3);
   }
 }
+
 @keyframes text-pop-up-right {
   0% {
     text-shadow: none;
   }
+
   100% {
     text-shadow: 0 1px 0 #cccccc, 0 2px 0 #cccccc, 0 3px 0 #cccccc,
       0 4px 0 #cccccc, 0 5px 0 #cccccc, 0 6px 0 #cccccc, 0 7px 0 #cccccc,
@@ -491,18 +506,21 @@ http://ionicframework.com/docs/theming/ */
     transform: translateZ(-80px);
     opacity: 0;
   }
+
   100% {
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     opacity: 1;
   }
 }
+
 @keyframes fade-in-fwd {
   0% {
     -webkit-transform: translateZ(-80px);
     transform: translateZ(-80px);
     opacity: 0;
   }
+
   100% {
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
@@ -511,8 +529,7 @@ http://ionicframework.com/docs/theming/ */
 }
 
 .puff-in-center {
-  -webkit-animation: puff-in-center 0.7s cubic-bezier(0.47, 0, 0.745, 0.715)
-    both;
+  -webkit-animation: puff-in-center 0.7s cubic-bezier(0.47, 0, 0.745, 0.715) both;
   animation: puff-in-center 0.7s cubic-bezier(0.47, 0, 0.745, 0.715) both;
 }
 
@@ -524,6 +541,7 @@ http://ionicframework.com/docs/theming/ */
     filter: blur(4px);
     opacity: 0;
   }
+
   100% {
     -webkit-transform: scale(1);
     transform: scale(1);
@@ -532,6 +550,7 @@ http://ionicframework.com/docs/theming/ */
     opacity: 1;
   }
 }
+
 @keyframes puff-in-center {
   0% {
     -webkit-transform: scale(2);
@@ -540,6 +559,7 @@ http://ionicframework.com/docs/theming/ */
     filter: blur(4px);
     opacity: 0;
   }
+
   100% {
     -webkit-transform: scale(1);
     transform: scale(1);

@@ -7,11 +7,11 @@ import {
   IonRow,
   useIonRouter,
 } from "@ionic/react";
-import "./ChatRowComponent.css";
-import { checkmarkDoneOutline, chatbubbleEllipses } from "ionicons/icons";
+import "./ContactRow.css";
+import { chatbubbleEllipses } from "ionicons/icons";
 
-const ChatRowComponent = (props) => {
-  const { id, name, msg, time, isContactPage, photoURL } = props;
+const ContactRow = (props) => {
+  const { id, name, isContactPage, photoURL } = props;
   let router = useIonRouter();
 
   const openChat = (id) => {
@@ -40,23 +40,16 @@ const ChatRowComponent = (props) => {
         ) : (
           <IonLabel className="chat-text-name">{name}</IonLabel>
         )}
-
-        {/* <IonLabel className="chat-text-msg">{msg}</IonLabel> */}
       </IonCol>
       <IonCol className="message-icon">
-        {/* <IonLabel className="chat-info-time">{time}</IonLabel>
-        {isContactPage ? ( */}
         <IonIcon
           className="msg-icon"
           color="primary"
           icon={chatbubbleEllipses}
         />
-        {/* ) : (
-          <IonIcon className="chat-info-img" icon={checkmarkDoneOutline} />
-        )} */}
       </IonCol>
     </IonRow>
   );
 };
 
-export default ChatRowComponent;
+export default ContactRow;
