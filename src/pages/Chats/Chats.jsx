@@ -53,6 +53,7 @@ const Chats = () => {
         </div>
         <IonGrid className="chats-container">
           {userList
+            // eslint-disable-next-line array-callback-return
             .filter((user) => {
               if (searchText === "") {
                 return user;

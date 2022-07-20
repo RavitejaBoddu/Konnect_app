@@ -12,10 +12,10 @@ const Message = (props) => {
     scrollRef.current?.scrollIntoView({ behaviour: "smooth" });
   }, [msg]);
 
-  const time = msg.createdAt.toDate().toLocaleTimeString(navigator.language, {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  // const time = msg.createdAt.toDate().toLocaleTimeString(navigator.language, {
+  //   hour: "2-digit",
+  //   minute: "2-digit",
+  // });
 
   return (
     <IonRow

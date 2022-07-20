@@ -1,6 +1,5 @@
 import {
   IonAvatar,
-  IonBackButton,
   IonButton,
   IonButtons,
   IonCard,

@@ -137,22 +137,22 @@ const Login = () => {
       clearInputs();
     }
   };
-  const handleGoogleSignIn = async () => {
-    try {
-      await googleSignIn();
-      router.push("/home");
-    } catch (error) {
-      handleAlert(error.message);
-    }
-  };
-  const handleFacebookSignIn = async () => {
-    try {
-      await facebookSignIn();
-      router.push("/home");
-    } catch (error) {
-      handleAlert(error.message);
-    }
-  };
+  // const handleGoogleSignIn = async () => {
+  //   try {
+  //     await googleSignIn();
+  //     router.push("/home");
+  //   } catch (error) {
+  //     handleAlert(error.message);
+  //   }
+  // };
+  // const handleFacebookSignIn = async () => {
+  //   try {
+  //     await facebookSignIn();
+  //     router.push("/home");
+  //   } catch (error) {
+  //     handleAlert(error.message);
+  //   }
+  // };
 
   return (
     <IonPage>

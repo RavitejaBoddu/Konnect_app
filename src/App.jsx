@@ -50,18 +50,7 @@ const App = () => {
   const updateRef = doc(db, "Konnect_app_config", "NF0sNetgoLAHF6d473kQ");
 
   const [presentAlert] = useIonAlert();
-  const [present] = useIonToast();
 
-  const handleToast = (msg) => {
-    present({
-      message: msg,
-      position: "top",
-      animated: true,
-      duration: 2000,
-      color: "dark3",
-      mode: "ios",
-    });
-  };
 
   const handleAlert = (msg, title, btn, appVersion) => {
     presentAlert({

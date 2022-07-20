@@ -1,10 +1,8 @@
 import {
   IonAvatar,
-  IonBackButton,
   IonButton,
   IonButtons,
   IonCard,
-  IonCol,
   IonContent,
   IonGrid,
   IonHeader,
@@ -100,6 +98,7 @@ const Profile = () => {
     if (deleteImg) {
       deleteImage();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [img, deleteImg]);
 
   const deleteImage = async () => {
