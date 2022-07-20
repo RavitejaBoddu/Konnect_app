@@ -1,5 +1,4 @@
 "# Konnect_app" 
 
-CHAT WITH YOUR FRIENDS AND fAMILY
-
+"Connect With your friends and Family"
 
