@@ -1,0 +1,60 @@
+.settings-page {
+  --background: #ffffff;
+  display: flex;
+  height: 100%;
+}
+
+.settings {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.settings-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Quicksand";
+  font-size: 18px;
+  font-weight: 700;
+  margin: 1.5rem;
+  color: #454545;
+}
+
+.logout-btn {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.two-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.8rem 0;
+}
+
+.three-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.8rem 0;
+}
+
+.setting-col {
+  margin: 0.8rem 0;
+}
+
+.setting-heading {
+  color: #2457c5;
+  margin-bottom: 1rem;
+}
+
+.heading {
+  color: #2457c5;
+  margin-bottom: 1.4rem;
+}

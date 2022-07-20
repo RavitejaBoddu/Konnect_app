@@ -26,3 +26,9 @@ yarn-error.log*
 
 # Optional eslint cache
 .eslintcache
+
+#platform files
+/android
+/platforms
+/.firebase
+/resources

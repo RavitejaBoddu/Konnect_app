@@ -1,0 +1,64 @@
+.chats-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  --background: transparent;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  padding: 5px 0;
+}
+
+.chats-heading {
+  flex: 10;
+  font-family: "Quicksand";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 43px;
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+  color: #284a94;
+  height: auto;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+}
+
+.chats-vertical-dots {
+  flex: 3;
+  height: 30px;
+  margin-left: -4px;
+}
+
+.searchbar-container {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.chats-searchbar {
+  --background: #ffffff;
+  --border-radius: 12px;
+  margin: 10px 1rem;
+  --color: black;
+  --icon-color: black;
+}
+
+.searchbar-input-container {
+  border: 1px solid rgb(85, 85, 85);
+  border-radius: 12px;
+}
+
+.chats-container {
+  /* margin-top: 0.8rem; */
+  margin-right: 5px;
+}
+
+.chat-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

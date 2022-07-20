@@ -1,0 +1,167 @@
+.profile-page {
+  --background: #3c4368;
+}
+
+.profile-toolbar {
+  --background: #3c4368;
+}
+
+.profile-back-button {
+  margin-right: 5px;
+}
+
+.profile-heading {
+  flex: 10;
+  font-family: "Quicksand";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 43px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  height: auto;
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  /* background: #fff; */
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  /* height: calc(100vh - 25%); */
+  height: auto;
+  padding: 10%;
+  color:#fff
+}
+
+.avatar-container {
+  --background: transparent;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pro-pic-container {
+  margin: 1rem;
+  width: 250px;
+  height: 250px;
+  border-radius: 20px;
+}
+
+.pro-pic {
+  max-width: 100%;
+  height: auto;
+}
+
+.pro-pic-btns {
+  --background: transparent;
+}
+
+.row {
+  display: flex;
+}
+
+.edit-icon {
+  display: flex;
+  height: 20px;
+  width: 20px;
+  margin-left: 10px;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+ color: white;
+  /* background: rgba(218, 233, 244, 0.5); */
+  border-radius: 20px;
+  margin-top: 8%;
+}
+
+.col1 {
+  display: flex;
+  flex-direction: column;
+  /* flex: 4; */
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 20px;
+  margin-left: 20px;
+  gap: 5px;
+}
+
+.col2 {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-row-label {
+  font-family: "Quicksand";
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 21px;
+  color: #000000;
+}
+
+.flex-row-value {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-family: "Quicksand";
+  /* font-style: italic; */
+  font-weight: 500;
+  font-size: 18px;
+  color: #000000;
+}
+
+.Profile-name {
+  font-family: "Quicksand";
+  font-weight: 700;
+  font-size: 30px;
+  color: #000000;
+  width: auto;
+}
+
+.update-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.update-icon {
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+.update-input {
+  color: black;
+  border: 1px solid #333333b1;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+.grid {
+  padding: 10% 12%;
+  background: #ffffff;
+  border-radius: 30px 30px 0 0;
+}
+
+.email-row{
+  margin-top: 10%;
+  display: flex;
+  flex-direction: column;
+}
+
+.name-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+}
