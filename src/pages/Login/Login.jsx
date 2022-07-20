@@ -27,7 +27,7 @@ const Login = () => {
   const [presentAlert] = useIonAlert();
   const [show, dismiss] = useIonLoading();
 
-  const { login, logout, googleSignIn, facebookSignIn, updateStatus } =
+  const { login, logout, updateStatus } =
     UserAuth();
 
   let router = useIonRouter();

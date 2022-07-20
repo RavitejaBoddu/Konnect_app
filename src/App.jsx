@@ -6,7 +6,6 @@ import {
   setupIonicReact,
   useIonAlert,
   useIonLoading,
-  useIonToast,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 
@@ -118,6 +117,7 @@ const App = () => {
   useEffect(() => {
     getConfigData();
     checkUpdate();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
