@@ -208,7 +208,7 @@ const Login = () => {
           </IonRow>
           <IonRow class="lp-sp-switch-container">
             <IonLabel className="lp-account-text">
-              Dont have an account?
+              Dont have an account in konnect?
             </IonLabel>
             <IonButton
               className="lp-sp-switch-btn"
