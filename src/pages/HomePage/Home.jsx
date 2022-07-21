@@ -18,6 +18,7 @@ import Login from "../Login/Login";
 import ProtectedRoute from "../../ProtectedRoute/ProtectedRoute";
 import Profile from "../Profile/Profile";
 import ChatPage from "../ChatPage/ChatPage";
+import AudioCall from "../AudioCall/AudioCall";
 
 const Home = () => {
   return (
@@ -52,6 +53,11 @@ const Home = () => {
           <Route path="/chat/:id">
             <ProtectedRoute>
               <ChatPage />
+            </ProtectedRoute>
+          </Route>
+          <Route path="/audio/:id">
+            <ProtectedRoute>
+              <AudioCall />
             </ProtectedRoute>
           </Route>
           <Route exact path="/home">

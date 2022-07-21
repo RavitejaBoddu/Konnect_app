@@ -24,6 +24,7 @@ import {
   ellipsisVertical,
   ellipse,
   sendSharp,
+  call,
 } from "ionicons/icons";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
@@ -113,6 +114,10 @@ const ChatPage = () => {
     router.push("/home", "back", "pop");
   };
 
+  const handleAudioCall =(id) => {
+    router.push(`/audio/${id}`);
+  }
+
   return (
     <IonPage className="chat-page">
       <IonHeader>
@@ -158,6 +163,9 @@ const ChatPage = () => {
               </IonItem>
               <IonCol className="chat-profile-detail"></IonCol>
             </IonRow>
+            <IonButton fill="clear" onClick={(e)=>{handleAudioCall(user2)}}>
+              <IonIcon size="large" color="success" icon={call}/> 
+            </IonButton>
             <IonIcon
               icon={ellipsisVertical}
               size="large"
