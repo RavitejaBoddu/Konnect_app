@@ -86,7 +86,6 @@ const Signup = () => {
         try {
           show({
             message: "Signing up please wait...",
-            // duration: 5000,
             spinner: "circular",
             cssClass: "lp-sp-spinner",
             animated: true,

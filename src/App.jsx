@@ -84,11 +84,6 @@ const App = () => {
     });
   };
 
-  const getAppInfo = async () => {
-    let info = await app.getInfo();
-    return info;
-  };
-
   const getConfigData = async () => {
     const docSnap = await getDoc(updateRef);
     if (docSnap.exists()) {
@@ -103,12 +98,9 @@ const App = () => {
   const checkUpdate = async () => {
     try {
       if (isPlatform("android")) {
-        const currentAppInfo = await getAppInfo();
+        const currentAppInfo = await app.getInfo();
         if (appVersion > currentAppInfo.version) {
-          const msg = updateDetails.msg;
-          const title = updateDetails.title;
-          const btn = updateDetails.btn;
-          handleAlert(msg, title, btn, appVersion);
+          handleAlert(updateDetails.msg, updateDetails.title, updateDetails.btn, appVersion);
         }
       }
     } catch (error) {}

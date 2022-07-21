@@ -74,6 +74,14 @@ const Profile = () => {
           `avatar/${new Date().getTime()} - ${img.name}`
         );
         try {
+          show({
+            message: "Updating Profile Photo...",
+            spinner: "circular",
+            cssClass: "lp-sp-spinner",
+            animated: true,
+            keyboardClose: true,
+            mode: "ios",
+          });
           if (userProfile.avatarPath) {
             await deleteObject(ref(storage, userProfile.avatarPath));
           }
@@ -89,6 +97,7 @@ const Profile = () => {
             handleAlert(error.message);
           });
           setImg("");
+          dismiss();
         } catch (err) {
           handleAlert(err.message);
         }
@@ -103,6 +112,14 @@ const Profile = () => {
 
   const deleteImage = async () => {
     try {
+      show({
+        message: "Deleting Profile Photo...",
+        spinner: "circular",
+        cssClass: "lp-sp-spinner",
+        animated: true,
+        keyboardClose: true,
+        mode: "ios",
+      });
       await deleteObject(ref(storage, userProfile.avatarPath));
 
       await updateDoc(doc(db, "users", user.uid), {
@@ -115,7 +132,7 @@ const Profile = () => {
         handleAlert(error.message);
       });
       setDeleteImg(false);
-      // window.location.reload()
+      dismiss();
     } catch (err) {
       console.log(err.message);
     }
@@ -154,17 +171,7 @@ const Profile = () => {
           text: "Delete",
           role: "Delete",
           handler: async () => {
-            show({
-              message: "Deleting...",
-              duration: 2000,
-              spinner: "circular",
-              cssClass: "lp-sp-spinner",
-              animated: true,
-              keyboardClose: true,
-              mode: "ios",
-            });
             setDeleteImg(true);
-            dismiss();
           },
         },
       ],
@@ -180,8 +187,7 @@ const Profile = () => {
 
     try {
       show({
-        message: "Updating...",
-        duration: 5000,
+        message: "Updating Name...",
         spinner: "circular",
         cssClass: "lp-sp-spinner",
         animated: true,
@@ -217,7 +223,6 @@ const Profile = () => {
   };
 
   const goBack = () => {
-    // router.goBack();
     router.push("/home", "back", "pop");
   };
 
@@ -250,10 +255,10 @@ const Profile = () => {
       <IonContent fullscreen className="profile-page">
         <IonCard className="avatar-container">
           <IonAvatar className="pro-pic-container">
-            {user.photoURL ? (
+            {auth.currentUser.photoURL ? (
               <IonImg
                 className="shadow-drop-2-center fade-in-fwd"
-                src={user.photoURL}
+                src={auth.currentUser.photoURL}
               />
             ) : (
               <IonImg src="assets/images/default-user.jpg" />
@@ -320,7 +325,7 @@ const Profile = () => {
             </IonRow>
           ) : (
             <IonRow className="name-row">
-              <IonLabel className="Profile-name">{user.displayName}</IonLabel>
+              <IonLabel className="Profile-name">{auth.currentUser.displayName}</IonLabel>
               <IonImg
                 src="assets/icon/Edit.svg"
                 className="edit-icon"

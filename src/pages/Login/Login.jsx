@@ -80,7 +80,6 @@ const Login = () => {
         try {
           show({
             message: "Logging in please wait...",
-            duration: 5000,
             spinner: "circular",
             cssClass: "lp-sp-spinner",
             animated: true,
