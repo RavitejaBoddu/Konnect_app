@@ -16,6 +16,7 @@ const Friends = () => {
   const [isContactPage] = useState(true);
   const { userList, setUserList, user, showTabs } = UserAuth();
   const [searchText, setSearchText] = useState("");
+  const isFriendPage = true;
 
   const currentId = user.uid;
 
@@ -41,7 +42,7 @@ const Friends = () => {
 
   return (
     <IonPage>
-      <Header heading="Friends" />
+      <Header heading="Friends" isFriendPage= {isFriendPage} />
       <IonContent fullscreen className="friends-page">
         <div className="searchbar-container">
           <IonSearchbar

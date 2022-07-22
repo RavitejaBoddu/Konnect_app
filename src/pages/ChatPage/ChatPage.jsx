@@ -16,8 +16,10 @@ import {
   IonPage,
   IonRow,
   IonToolbar,
+  IonPopover ,
   useIonRouter,
   useIonViewWillEnter,
+  IonList,
 } from "@ionic/react";
 import {
   arrowBackOutline,
@@ -25,6 +27,7 @@ import {
   ellipse,
   sendSharp,
   call,
+  videocam,
 } from "ionicons/icons";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
@@ -59,22 +62,26 @@ const ChatPage = () => {
     // messages => id => chat => addDoc
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
 
-    await addDoc(collection(db, "messages", id, "chat"), {
-      text,
-      from: user1,
-      to: user2,
-      createdAt: Timestamp.fromDate(new Date()),
-    });
+    if(text == null || text === ""){
 
-    await setDoc(doc(db, "lastMsg", id), {
-      text,
-      from: user1,
-      to: user2,
-      createdAt: Timestamp.fromDate(new Date()),
-      unread: true,
-    });
-
-    setText("");
+    }else{
+      await addDoc(collection(db, "messages", id, "chat"), {
+        text,
+        from: user1,
+        to: user2,
+        createdAt: Timestamp.fromDate(new Date()),
+      });
+  
+      await setDoc(doc(db, "lastMsg", id), {
+        text,
+        from: user1,
+        to: user2,
+        createdAt: Timestamp.fromDate(new Date()),
+        unread: true,
+      });
+  
+      setText("");
+    }
   };
 
   useEffect(() => {
@@ -118,6 +125,10 @@ const ChatPage = () => {
     router.push(`/audio/${id}`);
   }
 
+  const handleVideoCall =(id) => {
+    router.push(`/video/${id}`);
+  }
+
   return (
     <IonPage className="chat-page">
       <IonHeader>
@@ -151,26 +162,38 @@ const ChatPage = () => {
                         icon={ellipse}
                         color="success"
                         className="online-toggle-icon"
-                      />{" "}
+                      />
                       Online
                     </IonLabel>
                   ) : (
                     <IonLabel color="medium" className="online-toggle">
-                      <IonIcon icon={ellipse} color="medium" /> Offline
+                      <IonIcon icon={ellipse} color="medium" className="online-toggle-icon"/> Offline
                     </IonLabel>
                   )}
                 </IonCol>
               </IonItem>
               <IonCol className="chat-profile-detail"></IonCol>
             </IonRow>
-            <IonButton fill="clear" onClick={(e)=>{handleAudioCall(user2)}}>
-              <IonIcon size="large" color="success" icon={call}/> 
+            <IonButton fill="clear" onClick={(e)=>{handleAudioCall(user2)}} className="chatspage-header-btn">
+              <IonIcon color="success" icon={call} className="chatspage-header-icon"/> 
             </IonButton>
+            <IonButton fill="clear" onClick={(e)=>{handleVideoCall(user2)}} className="chatspage-header-btn">
+              <IonIcon color="success" icon={videocam} className="chatspage-header-icon"/> 
+            </IonButton>
+            <IonButton fill="clear" id="chatpage-popover-btn" className="chatspage-header-btn">
             <IonIcon
               icon={ellipsisVertical}
-              size="large"
-              className="chat-toolbar-icon"
+              className="chatspage-header-icon"
             />
+            </IonButton>
+            <IonPopover className="chatpage-popover" trigger="chatpage-popover-btn" dismiss-on-select="true" size="auto" mode="md" alignment="start" animated="true">
+            <IonContent>
+              <IonList>
+                <IonItem button="true" className="chatpage-popover-item" detail="false">View Contact</IonItem>
+                <IonItem button="true" className="chatpage-popover-item" detail="false">Delete</IonItem>
+              </IonList>
+            </IonContent>
+            </IonPopover>
           </IonCard>
         </IonToolbar>
       </IonHeader>

@@ -37,6 +37,9 @@ import { Browser } from "@capacitor/browser";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
+import ChatPage from "./pages/ChatPage/ChatPage";
+import AudioCall from "./pages/AudioCall/AudioCall";
+import VideoCall from "./pages/VideoCall/VideoCall";
 
 setupIonicReact();
 
@@ -130,6 +133,21 @@ const App = () => {
                   <Home />
                 </ProtectedRoute>
               </Route>
+          <Route path="/chat/:id">
+            <ProtectedRoute>
+              <ChatPage />
+            </ProtectedRoute>
+          </Route>
+          <Route path="/audio/:id">
+            <ProtectedRoute>
+              <AudioCall />
+            </ProtectedRoute>
+          </Route>
+          <Route path="/video/:id">
+            <ProtectedRoute>
+              <VideoCall/>
+            </ProtectedRoute>
+          </Route>
               <Route exact path="/">
                 <Redirect to="/login" />
               </Route>

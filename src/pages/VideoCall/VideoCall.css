@@ -1,0 +1,48 @@
+.video-call-page{
+    --background:rgb(77, 77, 77);
+}
+
+.video-call-back-btn{
+    --background:transparent;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    margin-top:1rem;
+}
+
+  .video-remote{
+    position: absolute;
+    border: 1px solid rgb(255, 255, 255);
+    height: 100%;
+    width: 95vw;
+    z-index: -500;
+  }
+  .video-self{
+    position: absolute;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 5%;
+    height: 230px;
+    width: 150px;
+    z-index: -1;
+    bottom: 5%;
+    right: 5%;
+  }
+
+  .video-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 82vh;
+    position: relative;
+    z-index: -999;
+    --background:transparent;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    --background:rgb(255, 255, 255);
+  }
+
+  .video-call-btns{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 5px;
+  }

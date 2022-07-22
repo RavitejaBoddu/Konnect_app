@@ -23,7 +23,9 @@
   box-shadow: none;
   -webkit-box-shadow: none;
   position: relative;
+  margin: 0;
   margin-left: -8px;
+  margin-top: 10px;
 }
 
 .chat-toolbar-icon {
@@ -31,6 +33,14 @@
   justify-content: center;
   align-items: center;
   flex: 1;
+}
+.chatspage-header-icon{
+  height: 24px;
+  width: 24px;
+}
+.chatspage-header-btn{
+  height: 60px;
+  width: 60px;
 }
 
 .back-button {
@@ -109,7 +119,7 @@
 .profile-name {
   font-family: "Quicksand";
   font-weight: 500;
-  font-size: 18px;
+  font-size: 15px;
   color: #000000;
 }
 
@@ -117,4 +127,9 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+.chatpage-popover-item{
+  font-family: "Quicksand";
+  font-size: 16px;
+  font-weight: 500;
 }

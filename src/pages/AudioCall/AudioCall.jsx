@@ -13,7 +13,6 @@ import {
   useIonRouter,
 } from "@ionic/react";
 import { arrowBackOutline, call, mic } from "ionicons/icons";
-import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { UserAuth } from "../../context/AuthContext";
 import "./AudioCall.css";
@@ -75,7 +74,7 @@ const AudioCall = () => {
               <IonLabel className="audio-call-name">Username</IonLabel>
             )}
             <IonAvatar className="audio-call-avatar">
-              {userData ? (
+              {userData.photoURL ? (
                 <IonImg src={userData.photoURL} />
               ) : (
                 <IonImg src="assets/images/default-user.jpg" />

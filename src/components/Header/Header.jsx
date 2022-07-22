@@ -1,10 +1,15 @@
 import {
   IonAvatar,
+  IonButton,
   IonCard,
+  IonContent,
   IonHeader,
   IonIcon,
   IonImg,
+  IonItem,
   IonLabel,
+  IonList,
+  IonPopover,
   IonToolbar,
   useIonRouter,
 } from "@ionic/react";
@@ -12,7 +17,7 @@ import { ellipsisVertical } from "ionicons/icons";
 import { UserAuth } from "../../context/AuthContext";
 
 const Header = (props) => {
-  const { heading } = props;
+  const { heading, isFriendPage } = props;
 
   const { user } = UserAuth();
   let router = useIonRouter();
@@ -20,6 +25,9 @@ const Header = (props) => {
   const goToProfile = () => {
     router.push("/home/profile");
   };
+  const handleNewChat = () =>{
+    router.push("/home/friends");
+  }
   return (
     <IonHeader>
       <IonToolbar className="chats-toolbar" color="white">
@@ -44,12 +52,27 @@ const Header = (props) => {
               />
             )}
           </IonAvatar>
-          <IonIcon
-            icon={ellipsisVertical}
-            className="chats-vertical-dots"
-            size="large"
-            color="blue"
-          />
+          {
+            isFriendPage ? <></> : 
+            <>
+            <IonButton className="header-popover-btn" id="header-popover-btn" fill="clear">
+            <IonIcon
+              icon={ellipsisVertical}
+              className="chats-vertical-dots"
+              size="large"
+              color="blue"
+            />
+            </IonButton>
+            <IonPopover className="header-popover" trigger="header-popover-btn" dismiss-on-select="true" size="auto" mode="md" alignment="start" animated="true">
+            <IonContent>
+              <IonList>
+                <IonItem button="true" className="chatpage-popover-item" detail="false" onClick={(e)=>{handleNewChat()}}>New chat</IonItem>
+                <IonItem button="true" className="chatpage-popover-item" detail="false">Delete</IonItem>
+              </IonList>
+            </IonContent>
+            </IonPopover>
+            </>
+          }
         </IonCard>
       </IonToolbar>
     </IonHeader>
