@@ -11,7 +11,7 @@ import {
   useIonRouter,
   useIonViewWillEnter,
 } from "@ionic/react";
-import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
 import { arrowBackOutline } from "ionicons/icons";
 import { useRef, useState } from "react";
 import { useParams } from "react-router";
@@ -19,23 +19,23 @@ import { db } from "../../firebase";
 import './VideoCall.css'
 
 
-const VideoCall = () => {
-
       // Initialize WebRTC
-  const servers = {
-    iceServers: [
-        {
-            urls: [
-                "stun:stun1.l.google.com:19302",
-                "stun:stun2.l.google.com:19302",
-            ],
-        },
-    ],
-    iceCandidatePoolSize: 10,
-};
-
+      const servers = {
+        iceServers: [
+            {
+                urls: [
+                  "stun:stun1.l.google.com:19302",
+                  "stun:stun2.l.google.com:19302",
+                  "stun:stun.services.mozilla.com",
+                ],
+            },
+        ],
+        iceCandidatePoolSize: 10,
+    };
+    
 const pc = new RTCPeerConnection(servers);
 
+const VideoCall = () => {
   let router = useIonRouter();
   const { id } = useParams();
   const [callInput, setCallInput] = useState()
@@ -46,8 +46,8 @@ const pc = new RTCPeerConnection(servers);
   let localStream = null;
   let remoteStream = null;
 
-  const localVideo = document.getElementById('local-video');
-  const remoteVideo = document.getElementById('remote-video');
+  // const localVideo = document.getElementById('local-video');
+  // const remoteVideo = document.getElementById('remote-video');
 
   useIonViewWillEnter(()=> {
     getLocalStream();
@@ -58,7 +58,8 @@ const pc = new RTCPeerConnection(servers);
 
     const localVideo = document.getElementById('local-video');
     const remoteVideo = document.getElementById('remote-video');
-    localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+
+    localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
     remoteStream = new MediaStream();
 
     // Push tracks from local stream to peer connection
@@ -79,57 +80,48 @@ const pc = new RTCPeerConnection(servers);
 
 //creating an offer
 const createCall = async () => {
-
 //   const callDoc = db.collection('calls').doc();
-const callDoc =collection(db, "calls")
+const callsDoc = await addDoc(collection(db, "calls"),{})
 
-//   setCallInput(callDoc.id);
+setCallInput(callsDoc.id);
+console.log(callsDoc.id);
 
-  // Get candidates for caller, save to db
-  pc.onicecandidate = (event) => {
-    event.candidate && offerCandidates.add(event.candidate.toJSON());
-  };
+const callDocRef = doc(db, "cities", callsDoc.id)
+const offerCandidates = collection(db,"calls", callsDoc.id, "offerCandidates");
+const answerCandidates = collection(db,"calls", callsDoc.id, "answerCandidates");
 
-   // Create offer
-  const offerDescription = await pc.createOffer();
-  await pc.setLocalDescription(offerDescription);
+// Get candidates for caller, save to db
+pc.onicecandidate = async (event) => {
+  let candidate = event.candidate.toJSON()
+  if (event.candidate) {
+    await addDoc(offerCandidates, candidate);
+  }
+};
 
-  const offer = {
-    sdp: offerDescription.sdp,
-    type: offerDescription.type,
-  };
+ // Create offer
+ const offerDescription = await pc.createOffer();
+ 
+ const offer = {
+   sdp: offerDescription.sdp,
+   type: offerDescription.type,
+ };
 
-  const docRef = await addDoc(collection(db, "calls"), 
-    { offer }
-  );
+ await setDoc(doc(db,"calls", callsDoc.id), { offer });
 
-  setCallInput(docRef.id);
-
-  const callDocRef = doc(db, "cities", docRef.id)
-
-  const offerCandidates =collection(callDocRef, "offerCandidates");
-  const answerCandidates = collection(callDocRef, "answerCandidates");
-
-  // Get candidates for caller, save to db
-  pc.onicecandidate = (event) => {
-    let candidate = event.candidate.toJSON()
-    candidate && addDoc(collection(db, "calls", docRef.id, "offerCandidates"), 
-    { offer }
-  );
-  };
+ await pc.setLocalDescription(offerDescription);
 
 
 //   Listen for remote answer
- onSnapshot(callDocRef, (snapshot) => {
+  onSnapshot(callDocRef, (snapshot) => {
     const data = snapshot.data();
-    if (!pc.currentRemoteDescription && data?.answer) {
+    if (data?.answer) {
       const answerDescription = new RTCSessionDescription(data.answer);
       pc.setRemoteDescription(answerDescription);
     }
   });
 
   // When answered, add candidate to peer connection
-    answerCandidates.onSnapshot((snapshot) => {
+    onSnapshot(answerCandidates, (snapshot) => {
     snapshot.docChanges().forEach((change) => {
       if (change.type === 'added') {
         const candidate = new RTCIceCandidate(change.doc.data());
@@ -138,18 +130,25 @@ const callDoc =collection(db, "calls")
     });
   });
 }
-console.log(callInput);
 
 const answerCall = async() => {
-    const callDoc = db.collection('calls').doc(callInput);
-  const answerCandidates = callDoc.collection('answerCandidates');
-  const offerCandidates = callDoc.collection('offerCandidates');
 
-  pc.onicecandidate = (event) => {
-    event.candidate && answerCandidates.add(event.candidate.toJSON());
+  const callsDocRef =doc(db, "calls", callId);
+    const offerCandidates = collection(db,"calls", callId, "offerCandidates");
+    const answerCandidates = collection(db,"calls", callId, "answerCandidates");
+   
+   
+   // Get candidates for caller, save to db
+   pc.onicecandidate = async (event) => {
+    let candidate = event.candidate.toJSON()
+    candidate && await addDoc(answerCandidates, candidate);
   };
 
-  const callData = (await callDoc.get()).data();
+ let callData;
+  const callsDocSnap = await getDoc(callsDocRef);
+  if(callsDocSnap.exists()){
+    callData = callsDocSnap.data()
+  }
 
   const offerDescription = callData.offer;
   await pc.setRemoteDescription(new RTCSessionDescription(offerDescription));
@@ -162,9 +161,9 @@ const answerCall = async() => {
     sdp: answerDescription.sdp,
   };
 
-  await callDoc.update({ answer });
+  await updateDoc(callsDocRef,{ answer });
 
-  offerCandidates.onSnapshot((snapshot) => {
+  onSnapshot(offerCandidates,(snapshot) => {
     snapshot.docChanges().forEach((change) => {
       console.log(change);
       if (change.type === 'added') {
@@ -208,7 +207,7 @@ const answerCall = async() => {
               className="input"
               type="text"
               placeholder="Enter Call Id"
-              value={callInput}
+              value={callId}
               onIonChange={(e) => setCallId(e.detail.value)}
               required
             />

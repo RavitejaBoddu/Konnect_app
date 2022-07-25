@@ -16,10 +16,12 @@ import {
   IonPage,
   IonRow,
   IonToolbar,
-  IonPopover ,
+  IonPopover,
   useIonRouter,
   useIonViewWillEnter,
   IonList,
+  useIonLoading,
+  useIonAlert,
 } from "@ionic/react";
 import {
   arrowBackOutline,
@@ -28,6 +30,8 @@ import {
   sendSharp,
   call,
   videocam,
+  mic,
+  stopCircleOutline,
 } from "ionicons/icons";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
@@ -45,33 +49,47 @@ import {
 } from "firebase/firestore";
 import "./ChatPage.css";
 import Message from "../../components/Message/Message";
+import { SpeechRecognition } from "@capacitor-community/speech-recognition";
 
 const ChatPage = () => {
   const { userList, hideTabs } = UserAuth();
-
+  const [presentAlert] = useIonAlert();
   const { id } = useParams();
   let router = useIonRouter();
 
   const [text, setText] = useState("");
   const [msgs, setMsgs] = useState([]);
+  const [isRecording, setIsRecording] = useState(false);
 
   const user1 = auth.currentUser.uid;
   const user2 = id;
+
+  const handleAlert = (msg) => {
+    presentAlert({
+      header: "Alert",
+      message: msg,
+      buttons: ["OK"],
+      backdropDismiss: true,
+      translucent: true,
+      animated: true,
+      cssClass: "lp-sp-alert",
+      color: "white",
+    });
+  };
 
   const handleMessage = async () => {
     // messages => id => chat => addDoc
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
 
-    if(text == null || text === ""){
-
-    }else{
+    if (text == null || text === "") {
+    } else {
       await addDoc(collection(db, "messages", id, "chat"), {
         text,
         from: user1,
         to: user2,
         createdAt: Timestamp.fromDate(new Date()),
       });
-  
+
       await setDoc(doc(db, "lastMsg", id), {
         text,
         from: user1,
@@ -79,7 +97,7 @@ const ChatPage = () => {
         createdAt: Timestamp.fromDate(new Date()),
         unread: true,
       });
-  
+
       setText("");
     }
   };
@@ -121,12 +139,45 @@ const ChatPage = () => {
     router.push("/home", "back", "pop");
   };
 
-  const handleAudioCall =(id) => {
+  const handleAudioCall = (id) => {
     router.push(`/audio/${id}`);
-  }
+  };
 
-  const handleVideoCall =(id) => {
+  const handleVideoCall = (id) => {
     router.push(`/video/${id}`);
+  };
+
+  const handleSpeech = async() => {
+    try{
+      setIsRecording(true);
+      SpeechRecognition.requestPermission();
+
+      const {available} = await SpeechRecognition.available();
+      console.log("Available: ",available);
+      if(available){
+      SpeechRecognition.start({
+        language: "en-US",
+        // maxResults: 2,
+        partialResults: true,
+        popup: false,
+      });
+
+      SpeechRecognition.addListener("partialResults", (data) => {
+        console.log("partialResults was fired", data.value);
+        if(data.value && data.value.length > 0){
+          console.log(data.value[0]);
+          setText(data.value[0]);
+        }
+      });
+    }
+  }catch(e){
+    handleAlert(e.message)
+  }
+  };
+
+  const stopRecording = async() => {
+    setIsRecording(false);
+    await SpeechRecognition.stop();
   }
 
   return (
@@ -167,32 +218,81 @@ const ChatPage = () => {
                     </IonLabel>
                   ) : (
                     <IonLabel color="medium" className="online-toggle">
-                      <IonIcon icon={ellipse} color="medium" className="online-toggle-icon"/> Offline
+                      <IonIcon
+                        icon={ellipse}
+                        color="medium"
+                        className="online-toggle-icon"
+                      />{" "}
+                      Offline
                     </IonLabel>
                   )}
                 </IonCol>
               </IonItem>
               <IonCol className="chat-profile-detail"></IonCol>
             </IonRow>
-            <IonButton fill="clear" onClick={(e)=>{handleAudioCall(user2)}} className="chatspage-header-btn">
-              <IonIcon color="success" icon={call} className="chatspage-header-icon"/> 
+            <IonButton
+              fill="clear"
+              onClick={(e) => {
+                handleAudioCall(user2);
+              }}
+              className="chatspage-header-btn"
+            >
+              <IonIcon
+                color="success"
+                icon={call}
+                className="chatspage-header-icon"
+              />
             </IonButton>
-            <IonButton fill="clear" onClick={(e)=>{handleVideoCall(user2)}} className="chatspage-header-btn">
-              <IonIcon color="success" icon={videocam} className="chatspage-header-icon"/> 
+            <IonButton
+              fill="clear"
+              onClick={(e) => {
+                handleVideoCall(user2);
+              }}
+              className="chatspage-header-btn"
+            >
+              <IonIcon
+                color="success"
+                icon={videocam}
+                className="chatspage-header-icon"
+              />
             </IonButton>
-            <IonButton fill="clear" id="chatpage-popover-btn" className="chatspage-header-btn">
-            <IonIcon
-              icon={ellipsisVertical}
-              className="chatspage-header-icon"
-            />
+            <IonButton
+              fill="clear"
+              id="chatpage-popover-btn"
+              className="chatspage-header-btn"
+            >
+              <IonIcon
+                icon={ellipsisVertical}
+                className="chatspage-header-icon"
+              />
             </IonButton>
-            <IonPopover className="chatpage-popover" trigger="chatpage-popover-btn" dismiss-on-select="true" size="auto" mode="md" alignment="start" animated="true">
-            <IonContent>
-              <IonList>
-                <IonItem button="true" className="chatpage-popover-item" detail="false">View Contact</IonItem>
-                <IonItem button="true" className="chatpage-popover-item" detail="false">Delete</IonItem>
-              </IonList>
-            </IonContent>
+            <IonPopover
+              className="chatpage-popover"
+              trigger="chatpage-popover-btn"
+              dismiss-on-select="true"
+              size="auto"
+              mode="md"
+              alignment="start"
+              animated="true"
+            >
+              <IonContent>
+                <IonList>
+                  <IonItem
+                    button="true"
+                    className="chatpage-popover-item"
+                    detail="false"
+                  >
+                    View Contact
+                  </IonItem>
+                  <IonItem
+                    button="true"
+                    className="chatpage-popover-item"
+                    detail="false"
+                  >
+                    Delete
+                  </IonItem>
+                </IonList>
+              </IonContent>
             </IonPopover>
           </IonCard>
         </IonToolbar>
@@ -205,8 +305,10 @@ const ChatPage = () => {
         </IonGrid>
       </IonContent>
       <IonFooter>
-        <IonToolbar className="message-send" color="white">
-          <IonInput
+        <IonToolbar className="message-send-toolbar" color="white">
+          <IonRow className="message-send-container">
+            <IonCol className="message-send-input-container"> 
+            <IonInput
             className="send-input"
             type="text"
             placeholder="Enter Your message here"
@@ -214,13 +316,40 @@ const ChatPage = () => {
             onIonChange={(e) => setText(e.detail.value)}
             required
           />
-          <IonIcon
-            icon={sendSharp}
-            color="primary"
-            size="large"
-            onClick={(e) => handleMessage()}
-            slot="end"
-          />
+          </IonCol>
+          
+          <IonCol className="msg-send-btns">
+          { isRecording ?
+          <IonButton fill="clear" className="msg-send-btn" onClick={(e) => stopRecording()}>
+            <IonIcon
+              icon={stopCircleOutline}
+              color="danger"
+              size="large"
+              slot="end"
+              className="msg-send-icon"
+            />
+            </IonButton>  :
+            <IonButton fill="clear" className="msg-send-btn" onClick={(e) => handleSpeech()}>
+            <IonIcon
+              icon={mic}
+              color="medium"
+              size="large"
+              slot="end"
+              className="msg-send-icon"
+            /> 
+            </IonButton>
+}
+            <IonButton fill="clear" className="msg-send-btn" onClick={(e) => handleMessage()}>
+            <IonIcon
+              icon={sendSharp}
+              color="primary"
+              size="large"
+              className="msg-send-icon"
+              slot="end"
+            />
+            </IonButton>
+            </IonCol>
+          </IonRow>
         </IonToolbar>
       </IonFooter>
     </IonPage>
