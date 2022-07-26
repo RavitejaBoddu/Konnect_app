@@ -48,7 +48,6 @@ import {
 
 const Profile = () => {
   const { user, hideTabs } = UserAuth();
-  const user_id = user.uid;
   const [uname, setUname] = useState(user.displayName);
   const [isUpdate, setIsUpdate] = useState(false);
   const [show, dismiss] = useIonLoading();
@@ -62,7 +61,7 @@ const Profile = () => {
   const [present] = useIonToast();
 
   useEffect(() => {
-    getDoc(doc(db, "users", user.uid)).then((docSnap) => {
+    getDoc(doc(db, "users", auth.currentUser.uid)).then((docSnap) => {
       if (docSnap.exists) {
         setUserProfile(docSnap.data());
       }
@@ -87,7 +86,7 @@ const Profile = () => {
           }
           const snap = await uploadBytesResumable(imgRef, img);
           const url = await getDownloadURL(ref(storage, snap.ref.fullPath));
-          await updateDoc(doc(db, "users", user.uid), {
+          await updateDoc(doc(db, "users", auth.currentUser.uid), {
             photoURL: url,
             avatarPath: snap.ref.fullPath,
           });
@@ -108,7 +107,7 @@ const Profile = () => {
       deleteImage();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [img, deleteImg]);
+  }, [img, deleteImg ]);
 
   const deleteImage = async () => {
     try {
@@ -122,7 +121,7 @@ const Profile = () => {
       });
       await deleteObject(ref(storage, userProfile.avatarPath));
 
-      await updateDoc(doc(db, "users", user.uid), {
+      await updateDoc(doc(db, "users", auth.currentUser.uid), {
         photoURL: "",
         avatarPath: "",
       });
@@ -183,7 +182,7 @@ const Profile = () => {
   };
 
   const handleUpdate = async () => {
-    const userRef = doc(db, "users", user_id);
+    const userRef = doc(db, "users", auth.currentUser.uid);
 
     try {
       show({

@@ -97,7 +97,7 @@ const ChatPage = () => {
         createdAt: Timestamp.fromDate(new Date()),
         unread: true,
       });
-
+      setIsRecording(false);
       setText("");
     }
   };
@@ -156,16 +156,17 @@ const ChatPage = () => {
       console.log("Available: ",available);
       if(available){
       SpeechRecognition.start({
-        language: "en-US",
+        language: "en-IN",
         // maxResults: 2,
         partialResults: true,
         popup: false,
+        prompt: "Say something..."
       });
 
       SpeechRecognition.addListener("partialResults", (data) => {
         console.log("partialResults was fired", data.value);
         if(data.value && data.value.length > 0){
-          console.log(data.value[0]);
+          console.log(data.value);
           setText(data.value[0]);
         }
       });
