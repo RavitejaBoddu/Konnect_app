@@ -1,6 +1,5 @@
 .message-wrapper {
     display: flex;
-    /* padding: 5px 5px; */
     align-items: center;
     justify-content: flex-start;
 }
@@ -9,7 +8,6 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    /* padding: 5px 5px; */
 }
 
 .msg-col {
@@ -53,4 +51,46 @@
     border-radius: 20px 20px 20px 5px;
     --background: #3c4368;
     color: rgb(255, 255, 255);
+}
+.msg-image{
+    height: auto;
+    width: 280px;
+}
+.msg-image-time{
+    font-family: 'Quicksand';
+    font-weight: 700;
+    display: flex;
+    font-size: 10px !important;
+    color: rgb(0, 0, 0);
+    width: 80px;
+    
+}
+.msg-img-me{
+    display: flex;
+    flex-wrap: wrap;
+    width: 280px;
+    justify-content: flex-end;
+    --background: transparent;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    
+}
+
+.msg-img-friend{
+    display: flex;
+    flex-wrap: wrap;
+    width: 280px;
+    justify-content: flex-end;
+    --background: transparent;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.msg-img-card-header{
+    padding: 0;
+    border-radius: 20px 20px 5px 20px;
+}   
+
+.msg-img-card-content{
+    padding: 0;
 }

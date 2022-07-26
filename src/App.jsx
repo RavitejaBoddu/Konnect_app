@@ -38,8 +38,7 @@ import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
 import ChatPage from "./pages/ChatPage/ChatPage";
-import AudioCall from "./pages/AudioCall/AudioCall";
-import VideoCall from "./pages/VideoCall/VideoCall";
+import UserProfile from "./pages/UserProfile/UserProfile";
 
 setupIonicReact();
 
@@ -138,14 +137,9 @@ const App = () => {
               <ChatPage />
             </ProtectedRoute>
           </Route>
-          <Route path="/audio/:id">
+          <Route path="/userprofile/:id">
             <ProtectedRoute>
-              <AudioCall />
-            </ProtectedRoute>
-          </Route>
-          <Route path="/video/:id">
-            <ProtectedRoute>
-              <VideoCall/>
+              <UserProfile />
             </ProtectedRoute>
           </Route>
               <Route exact path="/">

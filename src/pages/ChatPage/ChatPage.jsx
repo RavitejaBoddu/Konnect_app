@@ -20,8 +20,10 @@ import {
   useIonRouter,
   useIonViewWillEnter,
   IonList,
-  useIonLoading,
   useIonAlert,
+  isPlatform,
+  useIonActionSheet,
+  useIonLoading,
 } from "@ionic/react";
 import {
   arrowBackOutline,
@@ -32,11 +34,14 @@ import {
   videocam,
   mic,
   stopCircleOutline,
+  attachOutline,
+  imageOutline,
+  closeCircleOutline,
 } from "ionicons/icons";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { UserAuth } from "../../context/AuthContext";
-import { auth, db } from "../../firebase";
+import { auth, db, storage } from "../../firebase";
 import {
   collection,
   addDoc,
@@ -50,12 +55,16 @@ import {
 import "./ChatPage.css";
 import Message from "../../components/Message/Message";
 import { SpeechRecognition } from "@capacitor-community/speech-recognition";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 const ChatPage = () => {
   const { userList, hideTabs } = UserAuth();
   const [presentAlert] = useIonAlert();
   const { id } = useParams();
   let router = useIonRouter();
+  const [present, dismiss] = useIonActionSheet();
+  const [img, setImg] = useState("");
+  const [showLoading, dismissLoading] = useIonLoading();
 
   const [text, setText] = useState("");
   const [msgs, setMsgs] = useState([]);
@@ -63,6 +72,29 @@ const ChatPage = () => {
 
   const user1 = auth.currentUser.uid;
   const user2 = id;
+
+  const handleActionSheet = () => {
+    present({
+      buttons: [
+        {
+          text: "Upload image",
+          icon: imageOutline,
+          handler: () => {
+            handleUploadImage();
+          },
+        },
+        {
+          text: "Cancel",
+          icon: closeCircleOutline,
+          handler: () => {
+            dismiss();
+          },
+        },
+      ],
+      header: "Attachments",
+      cssClass: "chatpage-actionsheet"
+    });
+  };
 
   const handleAlert = (msg) => {
     presentAlert({
@@ -118,8 +150,56 @@ const ChatPage = () => {
         setMsgs(msgs);
       });
     };
+    if (img) {
+      const uploadImg = async () => {
+        const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
+        const imgRef = ref(
+          storage,
+          `avatar/${new Date().getTime()} - ${img.name}`
+        );
+        try {
+          showLoading({
+            message: "Updating Profile Photo...",
+            spinner: "circular",
+            cssClass: "lp-sp-spinner",
+            animated: true,
+            keyboardClose: true,
+            mode: "ios",
+          });
+          const snap = await uploadBytesResumable(imgRef, img);
+          const url = await getDownloadURL(ref(storage, snap.ref.fullPath));
+          await addDoc(collection(db, "messages", id, "images"), {
+            image: url,
+            imagePath: snap.ref.fullPath,
+          });
+          await addDoc(collection(db, "messages", id, "chat"), {
+            image:url,
+            from: user1,
+            to: user2,
+            createdAt: Timestamp.fromDate(new Date()),
+          });
+          await setDoc(doc(db, "lastMsg", id), {
+            text: "image",
+            from: user1,
+            to: user2,
+            createdAt: Timestamp.fromDate(new Date()),
+            unread: true,
+          });
+          setImg("");
+          dismissLoading();
+        } catch (err) {
+          handleAlert(err.message);
+        }
+      };
+      uploadImg();
+    }
     getMsgs();
-  }, [user2, user1]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user2, user1, img]);
+
+  const handleUploadImage = () => {
+    document.getElementById("upload-img").click();
+  };
 
   const getUserData = () => {
     let data = {};
@@ -139,47 +219,42 @@ const ChatPage = () => {
     router.push("/home", "back", "pop");
   };
 
-  const handleAudioCall = (id) => {
-    router.push(`/audio/${id}`);
-  };
+  const gotoUserProfile = (id) => {
+    router.push(`/userprofile/${id}`, "forward", "push");
+  }
 
-  const handleVideoCall = (id) => {
-    router.push(`/video/${id}`);
-  };
-
-  const handleSpeech = async() => {
-    try{
+  const handleSpeech = async () => {
+    try {
       setIsRecording(true);
       SpeechRecognition.requestPermission();
 
-      const {available} = await SpeechRecognition.available();
-      console.log("Available: ",available);
-      if(available){
-      SpeechRecognition.start({
-        language: "en-IN",
-        // maxResults: 2,
-        partialResults: true,
-        popup: false,
-        prompt: "Say something..."
-      });
+      const { available } = await SpeechRecognition.available();
+      console.log("Available: ", available);
+      if (available) {
+        SpeechRecognition.start({
+          language: "en-IN",
+          partialResults: true,
+          popup: false,
+          prompt: "Say something...",
+        });
 
-      SpeechRecognition.addListener("partialResults", (data) => {
-        console.log("partialResults was fired", data.value);
-        if(data.value && data.value.length > 0){
-          console.log(data.value);
-          setText(data.value[0]);
-        }
-      });
+        SpeechRecognition.addListener("partialResults", (data) => {
+          console.log("partialResults was fired", data.value);
+          if (data.value && data.value.length > 0) {
+            console.log(data.value);
+            setText(data.value[0]);
+          }
+        });
+      }
+    } catch (e) {
+      handleAlert(e.message);
     }
-  }catch(e){
-    handleAlert(e.message)
-  }
   };
 
-  const stopRecording = async() => {
+  const stopRecording = async () => {
     setIsRecording(false);
     await SpeechRecognition.stop();
-  }
+  };
 
   return (
     <IonPage className="chat-page">
@@ -231,26 +306,14 @@ const ChatPage = () => {
               </IonItem>
               <IonCol className="chat-profile-detail"></IonCol>
             </IonRow>
-            <IonButton
-              fill="clear"
-              onClick={(e) => {
-                handleAudioCall(user2);
-              }}
-              className="chatspage-header-btn"
-            >
+            <IonButton fill="clear" className="chatspage-header-btn">
               <IonIcon
                 color="success"
                 icon={call}
                 className="chatspage-header-icon"
               />
             </IonButton>
-            <IonButton
-              fill="clear"
-              onClick={(e) => {
-                handleVideoCall(user2);
-              }}
-              className="chatspage-header-btn"
-            >
+            <IonButton fill="clear" className="chatspage-header-btn">
               <IonIcon
                 color="success"
                 icon={videocam}
@@ -282,6 +345,7 @@ const ChatPage = () => {
                     button="true"
                     className="chatpage-popover-item"
                     detail="false"
+                    onClick={(e)=>{gotoUserProfile(id)}}
                   >
                     View Contact
                   </IonItem>
@@ -308,48 +372,90 @@ const ChatPage = () => {
       <IonFooter>
         <IonToolbar className="message-send-toolbar" color="white">
           <IonRow className="message-send-container">
-            <IonCol className="message-send-input-container"> 
-            <IonInput
-            className="send-input"
-            type="text"
-            placeholder="Enter Your message here"
-            value={text}
-            onIonChange={(e) => setText(e.detail.value)}
-            required
-          />
-          </IonCol>
-          
-          <IonCol className="msg-send-btns">
-          { isRecording ?
-          <IonButton fill="clear" className="msg-send-btn" onClick={(e) => stopRecording()}>
-            <IonIcon
-              icon={stopCircleOutline}
-              color="danger"
-              size="large"
-              slot="end"
-              className="msg-send-icon"
+            <IonCol className="attach-btn">
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              id="upload-img"
+              onChange={(e) => setImg(e.target.files[0])}
             />
-            </IonButton>  :
-            <IonButton fill="clear" className="msg-send-btn" onClick={(e) => handleSpeech()}>
-            <IonIcon
-              icon={mic}
-              color="medium"
-              size="large"
-              slot="end"
-              className="msg-send-icon"
-            /> 
-            </IonButton>
-}
-            <IonButton fill="clear" className="msg-send-btn" onClick={(e) => handleMessage()}>
-            <IonIcon
-              icon={sendSharp}
-              color="primary"
-              size="large"
-              className="msg-send-icon"
-              slot="end"
-            />
-            </IonButton>
+              <IonButton fill="clear" onClick={(e)=>{handleActionSheet()}}>
+              <IonIcon icon={attachOutline} size="large" color="danger" />
+              </IonButton>
             </IonCol>
+            <IonCol className="message-send-input-container">
+              <IonInput
+                className="send-input"
+                type="text"
+                placeholder="Enter Your message here"
+                value={text}
+                onIonChange={(e) => setText(e.detail.value)}
+                required
+              />
+            </IonCol>
+            {isPlatform("capacitor") ? (
+              <IonCol className="msg-send-btns">
+                {isRecording ? (
+                  <IonButton
+                    fill="clear"
+                    className="msg-send-btn"
+                    onClick={(e) => stopRecording()}
+                  >
+                    <IonIcon
+                      icon={stopCircleOutline}
+                      color="danger"
+                      size="large"
+                      slot="end"
+                      className="msg-send-icon"
+                    />
+                  </IonButton>
+                ) : (
+                  <IonButton
+                    fill="clear"
+                    className="msg-send-btn"
+                    onClick={(e) => handleSpeech()}
+                  >
+                    <IonIcon
+                      icon={mic}
+                      color="medium"
+                      size="large"
+                      slot="end"
+                      className="msg-send-icon"
+                    />
+                  </IonButton>
+                )}
+                <IonButton
+                  fill="clear"
+                  className="msg-send-btn"
+                  onClick={(e) => handleMessage()}
+                >
+                  <IonIcon
+                    icon={sendSharp}
+                    color="primary"
+                    size="large"
+                    className="msg-send-icon"
+                    slot="end"
+                  />
+                </IonButton>
+              </IonCol>
+            ) : (
+              <IonCol className="msg-send-btns">
+                <IonButton
+                  fill="clear"
+                  className="msg-send-btn"
+                  onClick={(e) => handleMessage()}
+                >
+                  <IonIcon
+                    icon={sendSharp}
+                    color="primary"
+                    size="large"
+                    className="msg-send-icon"
+                    slot="end"
+                  />
+                </IonButton>
+              </IonCol>
+            )}
           </IonRow>
         </IonToolbar>
       </IonFooter>
