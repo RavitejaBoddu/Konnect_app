@@ -20,7 +20,6 @@ import {
   useIonRouter,
   useIonViewWillEnter,
   IonList,
-  useIonLoading,
   useIonAlert,
 } from "@ionic/react";
 import {

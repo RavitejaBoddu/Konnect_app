@@ -1,0 +1,72 @@
+.audio-call-page{
+    --background:black;
+}
+.audio-call-back-btn{
+    --background:transparent;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    margin-top:1rem;
+}
+
+.audio-call-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    --background:transparent;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    height: 80vh;
+}
+
+.audio-call-user-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    --background:transparent;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    color: white;
+}
+.audio-call-avatar{
+    height: 180px;
+    width: 180px;
+    margin-top: 2rem;
+}
+.audio-call-name{
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: "Quicksand";
+    color: white;
+}
+.audio-call-status{
+    font-size: 20px;
+    font-weight: 700;
+    font-family: "Quicksand";
+    color: rgba(255, 255, 255, 0.609);
+    margin-top: 2rem;
+}
+.audio-call-buttons{
+    display: flex;
+    justify-content: space-around;
+    width: 60%;
+}
+
+.audio-call-btn-call{
+    height: 70px;
+    width: 70px;
+    --border-radius: 50%;
+}
+
+.audio-call-btn-mic{
+    height: 70px;
+    width: 70px;
+    --border-radius: 50%;
+}
+.audio-call-btn-icon{
+    height: 40px;
+    width: 40px;
+}
+
+
