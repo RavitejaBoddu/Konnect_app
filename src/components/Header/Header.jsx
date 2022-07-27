@@ -25,9 +25,9 @@ const Header = (props) => {
   const goToProfile = () => {
     router.push("/home/profile");
   };
-  const handleNewChat = () =>{
+  const handleNewChat = () => {
     router.push("/home/friends");
-  }
+  };
   return (
     <IonHeader>
       <IonToolbar className="chats-toolbar" color="white">
@@ -52,27 +52,57 @@ const Header = (props) => {
               />
             )}
           </IonAvatar>
-          {
-            isFriendPage ? <></> : 
+          {isFriendPage ? (
+            <></>
+          ) : (
             <>
-            <IonButton className="header-popover-btn" id="header-popover-btn" fill="clear">
-            <IonIcon
-              icon={ellipsisVertical}
-              className="chats-vertical-dots"
-              size="large"
-              color="blue"
-            />
-            </IonButton>
-            <IonPopover className="header-popover" trigger="header-popover-btn" dismiss-on-select="true" size="auto" mode="md" alignment="start" animated="true">
-            <IonContent>
-              <IonList>
-                <IonItem button="true" className="chatpage-popover-item" detail="false" onClick={(e)=>{handleNewChat()}}>New chat</IonItem>
-                <IonItem button="true" className="chatpage-popover-item" detail="false">Delete</IonItem>
-              </IonList>
-            </IonContent>
-            </IonPopover>
+              <IonButton
+                className="header-popover-btn"
+                id="header-popover-btn"
+                fill="clear"
+              >
+                <IonIcon
+                  icon={ellipsisVertical}
+                  className="chats-vertical-dots"
+                  size="large"
+                  color="blue"
+                />
+              </IonButton>
+              <IonPopover
+                className="header-popover"
+                trigger="header-popover-btn"
+                dismiss-on-select="true"
+                size="auto"
+                mode="md"
+                alignment="start"
+                animated="true"
+              >
+                <IonContent>
+                  <IonList className="chatpage-popover-list">
+                    <IonItem
+                      lines="none"
+                      button="true"
+                      className="chatpage-popover-item"
+                      detail="false"
+                      onClick={(e) => {
+                        handleNewChat();
+                      }}
+                    >
+                      New chat
+                    </IonItem>
+                    <IonItem
+                      lines="none"
+                      button="true"
+                      className="chatpage-popover-item"
+                      detail="false"
+                    >
+                      Delete
+                    </IonItem>
+                  </IonList>
+                </IonContent>
+              </IonPopover>
             </>
-          }
+          )}
         </IonCard>
       </IonToolbar>
     </IonHeader>

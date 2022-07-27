@@ -1,12 +1,42 @@
-.userprofile-toolbar{
-    background: #3c4368;
+.userprofile-toolbar {
+  display: flex;
+  align-items: center;
+  --background: #3c4368;
+  padding:15px 10px;
+  padding-top: 15px;
+
 }
-.user-profile-back-button{
-    margin-right: 5px;
-    margin-top: 15px;
+.user-profile-heading{
+  flex: 10;
+  font-family: "Quicksand";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 43px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  height: auto;
 }
-.user-avatar-container{
-    --background: transparent;
+.userprofile-grid {
+  padding: 10% 12%;
+  background: #ffffff;
+  border-radius: 23px;
+  margin: 2%;
+}
+
+.user-profile-back-button {
+  margin-right: 5px;
+  margin-top: 15px;
+  height: 50px;
+  width: 50px;
+}
+.user-profile-back-btn-icon{
+  margin: 5%;
+}
+
+.user-avatar-container {
+  --background: transparent;
   box-shadow: none;
   -webkit-box-shadow: none;
   display: flex;
@@ -15,44 +45,65 @@
   align-items: center;
   margin-bottom: 8%;
 }
-.user-pro-pic-container{
-    margin: 1rem;
+
+.user-pro-pic-container {
+  margin: 1rem;
   width: 200px;
   height: 200px;
   --border-radius: 20%;
 }
-.user-profile-name{
-    font-family: "Quicksand";
+
+.user-profile-name {
   font-weight: 700;
   font-size: 30px;
   color: #ffffff;
   width: auto;
 }
-.user-profile-email{
-    font-family: "Quicksand";
+
+.user-profile-email {
+  font-family: "Quicksand";
   font-weight: 500;
-  font-size: 18px;
+  font-size: 22px;
   color: #ffffff;
   width: auto;
 }
-.media-label{
-    font-size: 18px;
-    color: rgb(0, 0, 0);
-    margin-bottom: 8px;
+
+.media-label {
+  font-size: 18px;
+  color: rgb(255, 255, 255);
+  margin-bottom: 8px;
 }
-.media-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    --background: transparent;
-    box-shadow: none;
-    -webkit-box-shadow: none;
+
+.media-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  --background: transparent;
+  box-shadow: none;
+  -webkit-box-shadow: none;
 }
-.image-container{
-    display: flex;
+
+.image-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  min-width: max-content;
 }
-.media{
-    --border-radius: 10%;
-    margin: 0 10px;
+
+.media {
+  --border-radius: 10%;
+  margin: 0 10px;
+}
+
+.emptyrow {
+  margin-bottom: 10%;
+}
+
+.swiper {
+  width: 100%;
+}
+
+.myswiper {
+  width: 100%;
 }

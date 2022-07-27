@@ -1,4 +1,13 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCol, IonImg, IonItem, IonLabel, IonRow } from "@ionic/react";
+import {
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCol,
+  IonImg,
+  IonItem,
+  IonLabel,
+  IonRow,
+} from "@ionic/react";
 import "./Message.css";
 import Moment from "react-moment";
 import { useEffect, useRef } from "react";
@@ -22,25 +31,29 @@ const Message = (props) => {
       className={msg.from === user1 ? "message_wrapper-own" : "message_wrapper"}
       ref={scrollRef}
     >
-      {
-        msg.image ?
-        <IonCard className={msg.from === user1 ? "msg-img-me" : "msg-img-friend"} >
+      {msg.image ? (
+        <IonCard
+          className={msg.from === user1 ? "msg-img-me" : "msg-img-friend"}
+        >
           <IonCardHeader class="msg-img-card-header">
-          <IonImg src={msg.image} className="msg-image"/>
+            <IonImg src={msg.image} className="msg-image" />
           </IonCardHeader>
           <IonCardContent class="msg-img-card-content">
-          <IonRow className="msg-image-time" slot="end">
-        <Moment className="msg-image-time-text" fromNow>{msg.createdAt.toDate()}</Moment>
-      </IonRow>
+            <IonRow className="msg-image-time" slot="end">
+              <Moment className="msg-image-time-text" fromNow>
+                {msg.createdAt.toDate()}
+              </Moment>
+            </IonRow>
           </IonCardContent>
-        </IonCard>:
+        </IonCard>
+      ) : (
         <IonItem lines="none" className={msg.from === user1 ? "me" : "friend"}>
-        <IonCol className="msg-text">{msg.text}</IonCol>
-      <IonLabel className="msg-time" slot="end">
-        <Moment fromNow>{msg.createdAt.toDate()}</Moment>
-      </IonLabel>
-    </IonItem>        
-      }
+          <IonCol className="msg-text">{msg.text}</IonCol>
+          <IonLabel className="msg-time" slot="end">
+            <Moment fromNow>{msg.createdAt.toDate()}</Moment>
+          </IonLabel>
+        </IonItem>
+      )}
     </IonRow>
   );
 };

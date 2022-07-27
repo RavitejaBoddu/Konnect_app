@@ -92,7 +92,7 @@ const ChatPage = () => {
         },
       ],
       header: "Attachments",
-      cssClass: "chatpage-actionsheet"
+      cssClass: "chatpage-actionsheet",
     });
   };
 
@@ -155,11 +155,11 @@ const ChatPage = () => {
         const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
         const imgRef = ref(
           storage,
-          `avatar/${new Date().getTime()} - ${img.name}`
+          `chat-images/${new Date().getTime()} - ${img.name}`
         );
         try {
           showLoading({
-            message: "Updating Profile Photo...",
+            message: "Sending image...",
             spinner: "circular",
             cssClass: "lp-sp-spinner",
             animated: true,
@@ -171,9 +171,10 @@ const ChatPage = () => {
           await addDoc(collection(db, "messages", id, "images"), {
             image: url,
             imagePath: snap.ref.fullPath,
+            createdAt: Timestamp.fromDate(new Date()),
           });
           await addDoc(collection(db, "messages", id, "chat"), {
-            image:url,
+            image: url,
             from: user1,
             to: user2,
             createdAt: Timestamp.fromDate(new Date()),
@@ -194,7 +195,7 @@ const ChatPage = () => {
       uploadImg();
     }
     getMsgs();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user2, user1, img]);
 
   const handleUploadImage = () => {
@@ -221,7 +222,27 @@ const ChatPage = () => {
 
   const gotoUserProfile = (id) => {
     router.push(`/userprofile/${id}`, "forward", "push");
-  }
+  };
+
+  const deleteChat = async () => {
+    // const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
+    // const lastmsgRef = doc(db, "lastMsg", id);
+    try {
+      // showLoading({
+      //   message: "Deleting Chat...",
+      //   spinner: "circular",
+      //   cssClass: "lp-sp-spinner",
+      //   animated: true,
+      //   keyboardClose: true,
+      //   mode: "ios",
+      // });
+      // await deleteDoc(doc(db, "messages", id));
+      // router.push("/home");
+      // dismissLoading();
+    } catch (error) {
+      handleAlert(error.message);
+    }
+  };
 
   const handleSpeech = async () => {
     try {
@@ -327,7 +348,7 @@ const ChatPage = () => {
             >
               <IonIcon
                 icon={ellipsisVertical}
-                className="chatspage-header-icon"
+                className="chatspage-header-icon header-dots"
               />
             </IonButton>
             <IonPopover
@@ -340,19 +361,26 @@ const ChatPage = () => {
               animated="true"
             >
               <IonContent>
-                <IonList>
+                <IonList className="chatpage-popover-list">
                   <IonItem
+                    lines="none"
                     button="true"
                     className="chatpage-popover-item"
                     detail="false"
-                    onClick={(e)=>{gotoUserProfile(id)}}
+                    onClick={(e) => {
+                      gotoUserProfile(id);
+                    }}
                   >
                     View Contact
                   </IonItem>
                   <IonItem
+                    lines="none"
                     button="true"
                     className="chatpage-popover-item"
                     detail="false"
+                    onClick={(e) => {
+                      deleteChat();
+                    }}
                   >
                     Delete
                   </IonItem>
@@ -373,15 +401,20 @@ const ChatPage = () => {
         <IonToolbar className="message-send-toolbar" color="white">
           <IonRow className="message-send-container">
             <IonCol className="attach-btn">
-            <input
-              type="file"
-              accept="image/*"
-              style={{ display: "none" }}
-              id="upload-img"
-              onChange={(e) => setImg(e.target.files[0])}
-            />
-              <IonButton fill="clear" onClick={(e)=>{handleActionSheet()}}>
-              <IonIcon icon={attachOutline} size="large" color="danger" />
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                id="upload-img"
+                onChange={(e) => setImg(e.target.files[0])}
+              />
+              <IonButton
+                fill="clear"
+                onClick={(e) => {
+                  handleActionSheet();
+                }}
+              >
+                <IonIcon icon={attachOutline} size="large" color="danger" />
               </IonButton>
             </IonCol>
             <IonCol className="message-send-input-container">

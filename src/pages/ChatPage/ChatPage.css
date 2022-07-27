@@ -8,10 +8,8 @@
   height: calc(100vh - 86px);
   flex-direction: column;
   justify-content: space-between;
-  --background: linear-gradient(
-      rgba(201, 217, 219, 0.46),
-      rgba(201, 217, 219, 0.46)
-    ),
+  --background: linear-gradient(rgba(201, 217, 219, 0.46),
+      rgba(201, 217, 219, 0.46)),
     url("../../../public/assets/images/bg-2.jpg") no-repeat center/cover fixed;
 }
 
@@ -34,13 +32,22 @@
   align-items: center;
   flex: 1;
 }
-.chatspage-header-icon{
+
+.chatspage-header-icon {
   height: 24px;
   width: 24px;
 }
-.chatspage-header-btn{
+
+.chatspage-header-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 60px;
   width: 60px;
+}
+
+.header-dots {
+  margin-left: -10px;
 }
 
 .back-button {
@@ -106,8 +113,8 @@
   font-size: 16px;
 }
 
-.send-input .native-input{
-  padding:0;
+.send-input .native-input {
+  padding: 0;
 }
 
 .profile-pic-container {
@@ -132,13 +139,20 @@
   flex-direction: column;
   align-items: flex-start;
 }
-.chatpage-popover-item{
+
+.chatpage-popover-list {
+  background: #ffffff;
+}
+
+.chatpage-popover-item {
   font-family: "Quicksand";
   font-size: 16px;
   font-weight: 500;
+  --background: #ffffff;
+  color: #000000;
 }
 
-.msg-send-btns{
+.msg-send-btns {
   margin: 0;
   padding: 0;
   display: flex;
@@ -146,32 +160,39 @@
   align-items: center;
   flex: 3;
 }
-.message-send-toolbar{
+
+.message-send-toolbar {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0;
 }
-.message-send-input-container{
+
+.message-send-input-container {
   display: flex;
   justify-content: center;
   align-items: center;
   flex: 10;
   padding: 0;
 }
-.msg-send-icon{
+
+.msg-send-icon {
   height: 30px;
   width: 30px;
 }
-/* .action-sheet-group.sc-ion-action-sheet-md:last-child{
+
+.action-sheet-group.sc-ion-action-sheet-md:last-child {
   border-radius: 25px 25px 0 0;
-} */
-.chatpage-actionsheet{
-  --border-radius: 30px 30px 0 0;
-  --button-color:rgb(0, 0, 0);
-  --color:rgb(54, 54, 128);
 }
-.attach-btn{
+
+.chatpage-actionsheet {
+  --button-color: rgb(0, 0, 0);
+  --color: rgb(0, 0, 0);
+  --background: #ffffff;
+
+}
+
+.attach-btn {
   display: flex;
   justify-content: center;
   align-items: center;

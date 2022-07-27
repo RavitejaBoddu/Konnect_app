@@ -52,20 +52,23 @@
     --background: #3c4368;
     color: rgb(255, 255, 255);
 }
-.msg-image{
+
+.msg-image {
     height: auto;
     width: 280px;
 }
-.msg-image-time{
+
+.msg-image-time {
     font-family: 'Quicksand';
     font-weight: 700;
     display: flex;
     font-size: 10px !important;
     color: rgb(0, 0, 0);
     width: 80px;
-    
+
 }
-.msg-img-me{
+
+.msg-img-me {
     display: flex;
     flex-wrap: wrap;
     width: 280px;
@@ -73,10 +76,10 @@
     --background: transparent;
     box-shadow: none;
     -webkit-box-shadow: none;
-    
+
 }
 
-.msg-img-friend{
+.msg-img-friend {
     display: flex;
     flex-wrap: wrap;
     width: 280px;
@@ -86,11 +89,11 @@
     -webkit-box-shadow: none;
 }
 
-.msg-img-card-header{
+.msg-img-card-header {
     padding: 0;
     border-radius: 20px 20px 5px 20px;
-}   
+}
 
-.msg-img-card-content{
+.msg-img-card-content {
     padding: 0;
 }

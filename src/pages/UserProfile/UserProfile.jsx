@@ -1,18 +1,21 @@
 import {
   IonAvatar,
   IonButton,
+  IonButtons,
   IonCard,
   IonContent,
   IonGrid,
+  IonHeader,
   IonIcon,
   IonImg,
   IonItem,
   IonLabel,
   IonPage,
   IonRow,
+  IonToolbar,
   useIonRouter,
 } from "@ionic/react";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import {
   arrowBackOutline,
   atOutline,
@@ -22,6 +25,10 @@ import {
   lockClosedOutline,
 } from "ionicons/icons";
 import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { FreeMode, Mousewheel, Scrollbar } from "swiper";
 import { useParams } from "react-router";
 import { UserAuth } from "../../context/AuthContext";
 import { auth, db } from "../../firebase";
@@ -40,8 +47,10 @@ const UserProfile = () => {
     const getMediaData = async () => {
       const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
 
-      const msgRef = collection(db, "messages", id, "images");
-      onSnapshot(msgRef, (querySnapshot) => {
+      const mediaRef = collection(db, "messages", id, "images");
+
+      const q = query(mediaRef, orderBy("createdAt", "desc"));
+      onSnapshot(q, (querySnapshot) => {
         let media = [];
         querySnapshot.forEach((doc) => {
           media.push({ ...doc.data(), id: doc.id });
@@ -51,9 +60,6 @@ const UserProfile = () => {
     };
     getMediaData();
   }, [id, user1, user2]);
-
-
-  console.log(chatMedia);
 
   const getUserData = () => {
     let data = {};
@@ -73,21 +79,20 @@ const UserProfile = () => {
 
   return (
     <IonPage>
-      <IonItem
-        lines="none"
-        className="userprofile-toolbar"
-        color="konnect-blue"
-      >
-        <IonButton
-          onClick={(e) => {
-            goBack();
-          }}
-          className="user-profile-back-button"
-          fill="clear"
-        >
-          <IonIcon icon={arrowBackOutline} size="large" color="white" />
-        </IonButton>
-      </IonItem>
+      <IonToolbar className="userprofile-toolbar">
+        <IonButtons slot="start">
+          <IonButton
+            color="white"
+            onClick={(e) => {
+              goBack();
+            }}
+            className="profile-back-button"
+          >
+            <IonIcon icon={arrowBackOutline} size="large" />
+          </IonButton>
+        </IonButtons>
+        <IonLabel className="user-profile-heading">{usersData.name}</IonLabel>
+      </IonToolbar>
 
       <IonContent fullscreen className="profile-page">
         <IonCard className="user-avatar-container">
@@ -102,28 +107,36 @@ const UserProfile = () => {
             )}
           </IonAvatar>
           <IonRow className="name-row">
-            <IonLabel className="user-profile-name">{usersData.name}</IonLabel>
-          </IonRow>
-          <IonRow className="name-row">
-          <IonLabel className="user-profile-email">
+            <IonLabel className="user-profile-email">
               {usersData.email}
             </IonLabel>
           </IonRow>
         </IonCard>
-        
-        <IonGrid className="grid">
         <IonCard className="media-container">
-          <IonRow className="media-label">Media</IonRow>
-          <IonRow className="image-container">
-            {chatMedia.map((image) => {
-              return (
-                <IonAvatar className="media" key={image.id}>
-                  <IonImg src={image.image}></IonImg>
-                </IonAvatar>
-              );
-            })}
-          </IonRow>
-        </IonCard>          
+          <>
+            <IonRow className="media-label">Media</IonRow>
+            <Swiper
+              slidesPerView={5}
+              freeMode={true}
+              scrollbar={true}
+              centeredSlides={true}
+              mousewheel={true}
+              modules={[FreeMode, Scrollbar, Mousewheel]}
+              className="mySwiper"
+            >
+              {chatMedia.map((image) => {
+                return (
+                  <SwiperSlide key={image.id}>
+                    <IonAvatar className="media">
+                      <IonImg src={image.image}></IonImg>
+                    </IonAvatar>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </>
+        </IonCard>
+        <IonGrid className="userprofile-grid">
           <IonRow className="email-row">
             <IonLabel className="flex-row-label">Email</IonLabel>
             <IonLabel className="flex-row-value">

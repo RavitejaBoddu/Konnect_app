@@ -56,7 +56,7 @@ const Profile = () => {
   const [deleteImg, setDeleteImg] = useState(false);
 
   let router = useIonRouter();
-  const [presentAlert] = useIonAlert();
+  const [presentAlert, dismissAlert] = useIonAlert();
 
   const [present] = useIonToast();
 
@@ -106,8 +106,8 @@ const Profile = () => {
     if (deleteImg) {
       deleteImage();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [img, deleteImg ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [img, deleteImg]);
 
   const deleteImage = async () => {
     try {
@@ -164,8 +164,15 @@ const Profile = () => {
 
   const handleDelete = async () => {
     presentAlert({
-      header: "Delete Profile Picture?",
+      header: "Delete Profile picture?",
       buttons: [
+        {
+          text: "Cancel",
+          role: "Cancel",
+          handler: async () => {
+            dismissAlert();
+          },
+        },
         {
           text: "Delete",
           role: "Delete",
@@ -324,7 +331,9 @@ const Profile = () => {
             </IonRow>
           ) : (
             <IonRow className="name-row">
-              <IonLabel className="Profile-name">{auth.currentUser.displayName}</IonLabel>
+              <IonLabel className="Profile-name">
+                {auth.currentUser.displayName}
+              </IonLabel>
               <IonImg
                 src="assets/icon/Edit.svg"
                 className="edit-icon"

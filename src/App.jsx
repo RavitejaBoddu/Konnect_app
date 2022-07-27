@@ -52,7 +52,6 @@ const App = () => {
 
   const [presentAlert] = useIonAlert();
 
-
   const handleAlert = (msg, title, btn, appVersion) => {
     presentAlert({
       header: title,
@@ -102,7 +101,12 @@ const App = () => {
       if (isPlatform("android")) {
         const currentAppInfo = await app.getInfo();
         if (appVersion > currentAppInfo.version) {
-          handleAlert(updateDetails.msg, updateDetails.title, updateDetails.btn, appVersion);
+          handleAlert(
+            updateDetails.msg,
+            updateDetails.title,
+            updateDetails.btn,
+            appVersion
+          );
         }
       }
     } catch (error) {}
@@ -111,9 +115,8 @@ const App = () => {
   useEffect(() => {
     getConfigData();
     checkUpdate();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   return (
     <>
@@ -132,16 +135,16 @@ const App = () => {
                   <Home />
                 </ProtectedRoute>
               </Route>
-          <Route path="/chat/:id">
-            <ProtectedRoute>
-              <ChatPage />
-            </ProtectedRoute>
-          </Route>
-          <Route path="/userprofile/:id">
-            <ProtectedRoute>
-              <UserProfile />
-            </ProtectedRoute>
-          </Route>
+              <Route path="/chat/:id">
+                <ProtectedRoute>
+                  <ChatPage />
+                </ProtectedRoute>
+              </Route>
+              <Route path="/userprofile/:id">
+                <ProtectedRoute>
+                  <UserProfile />
+                </ProtectedRoute>
+              </Route>
               <Route exact path="/">
                 <Redirect to="/login" />
               </Route>

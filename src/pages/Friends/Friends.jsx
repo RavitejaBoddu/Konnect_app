@@ -42,7 +42,7 @@ const Friends = () => {
 
   return (
     <IonPage>
-      <Header heading="Friends" isFriendPage= {isFriendPage} />
+      <Header heading="Friends" isFriendPage={isFriendPage} />
       <IonContent fullscreen className="friends-page">
         <div className="searchbar-container">
           <IonSearchbar

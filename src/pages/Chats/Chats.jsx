@@ -22,7 +22,7 @@ import { personCircle } from "ionicons/icons";
 const Chats = () => {
   const { userList, setUserList, user, showTabs } = UserAuth();
   const [searchText, setSearchText] = useState("");
-  
+
   const modal = useRef(null);
 
   const currentId = user.uid;
@@ -90,7 +90,7 @@ const Chats = () => {
         <IonModal id="example-modal" ref={modal} trigger="open-custom-dialog">
           <div className="wrapper">
             <h1>Dialog header</h1>
-        
+
             <IonList lines="none">
               <IonItem button={true} detail={false} onClick={dismiss}>
                 <IonIcon icon={personCircle}></IonIcon>
@@ -101,8 +101,8 @@ const Chats = () => {
                 <IonLabel>Item 2</IonLabel>
               </IonItem>
             </IonList>
-            </div>
-           </IonModal>
+          </div>
+        </IonModal>
       </IonContent>
     </IonPage>
   );
