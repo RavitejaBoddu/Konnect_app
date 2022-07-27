@@ -37,6 +37,8 @@ import { Browser } from "@capacitor/browser";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
+import ChatPage from "./pages/ChatPage/ChatPage";
+import UserProfile from "./pages/UserProfile/UserProfile";
 
 setupIonicReact();
 
@@ -49,7 +51,6 @@ const App = () => {
   const updateRef = doc(db, "Konnect_app_config", "NF0sNetgoLAHF6d473kQ");
 
   const [presentAlert] = useIonAlert();
-
 
   const handleAlert = (msg, title, btn, appVersion) => {
     presentAlert({
@@ -84,11 +85,6 @@ const App = () => {
     });
   };
 
-  const getAppInfo = async () => {
-    let info = await app.getInfo();
-    return info;
-  };
-
   const getConfigData = async () => {
     const docSnap = await getDoc(updateRef);
     if (docSnap.exists()) {
@@ -103,12 +99,14 @@ const App = () => {
   const checkUpdate = async () => {
     try {
       if (isPlatform("android")) {
-        const currentAppInfo = await getAppInfo();
+        const currentAppInfo = await app.getInfo();
         if (appVersion > currentAppInfo.version) {
-          const msg = updateDetails.msg;
-          const title = updateDetails.title;
-          const btn = updateDetails.btn;
-          handleAlert(msg, title, btn, appVersion);
+          handleAlert(
+            updateDetails.msg,
+            updateDetails.title,
+            updateDetails.btn,
+            appVersion
+          );
         }
       }
     } catch (error) {}
@@ -117,9 +115,8 @@ const App = () => {
   useEffect(() => {
     getConfigData();
     checkUpdate();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   return (
     <>
@@ -136,6 +133,16 @@ const App = () => {
               <Route path="/home">
                 <ProtectedRoute>
                   <Home />
+                </ProtectedRoute>
+              </Route>
+              <Route path="/chat/:id">
+                <ProtectedRoute>
+                  <ChatPage />
+                </ProtectedRoute>
+              </Route>
+              <Route path="/userprofile/:id">
+                <ProtectedRoute>
+                  <UserProfile />
                 </ProtectedRoute>
               </Route>
               <Route exact path="/">

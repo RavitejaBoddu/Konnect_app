@@ -16,19 +16,32 @@ import {
   IonPage,
   IonRow,
   IonToolbar,
+  IonPopover,
   useIonRouter,
   useIonViewWillEnter,
+  IonList,
+  useIonAlert,
+  isPlatform,
+  useIonActionSheet,
+  useIonLoading,
 } from "@ionic/react";
 import {
   arrowBackOutline,
   ellipsisVertical,
   ellipse,
   sendSharp,
+  call,
+  videocam,
+  mic,
+  stopCircleOutline,
+  attachOutline,
+  imageOutline,
+  closeCircleOutline,
 } from "ionicons/icons";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { UserAuth } from "../../context/AuthContext";
-import { auth, db } from "../../firebase";
+import { auth, db, storage } from "../../firebase";
 import {
   collection,
   addDoc,
@@ -41,39 +54,84 @@ import {
 } from "firebase/firestore";
 import "./ChatPage.css";
 import Message from "../../components/Message/Message";
+import { SpeechRecognition } from "@capacitor-community/speech-recognition";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 const ChatPage = () => {
   const { userList, hideTabs } = UserAuth();
-
+  const [presentAlert] = useIonAlert();
   const { id } = useParams();
   let router = useIonRouter();
+  const [present, dismiss] = useIonActionSheet();
+  const [img, setImg] = useState("");
+  const [showLoading, dismissLoading] = useIonLoading();
 
   const [text, setText] = useState("");
   const [msgs, setMsgs] = useState([]);
+  const [isRecording, setIsRecording] = useState(false);
 
   const user1 = auth.currentUser.uid;
   const user2 = id;
+
+  const handleActionSheet = () => {
+    present({
+      buttons: [
+        {
+          text: "Upload image",
+          icon: imageOutline,
+          handler: () => {
+            handleUploadImage();
+          },
+        },
+        {
+          text: "Cancel",
+          icon: closeCircleOutline,
+          handler: () => {
+            dismiss();
+          },
+        },
+      ],
+      header: "Attachments",
+      cssClass: "chatpage-actionsheet",
+    });
+  };
+
+  const handleAlert = (msg) => {
+    presentAlert({
+      header: "Alert",
+      message: msg,
+      buttons: ["OK"],
+      backdropDismiss: true,
+      translucent: true,
+      animated: true,
+      cssClass: "lp-sp-alert",
+      color: "white",
+    });
+  };
 
   const handleMessage = async () => {
     // messages => id => chat => addDoc
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
 
-    await addDoc(collection(db, "messages", id, "chat"), {
-      text,
-      from: user1,
-      to: user2,
-      createdAt: Timestamp.fromDate(new Date()),
-    });
+    if (text == null || text === "") {
+    } else {
+      await addDoc(collection(db, "messages", id, "chat"), {
+        text,
+        from: user1,
+        to: user2,
+        createdAt: Timestamp.fromDate(new Date()),
+      });
 
-    await setDoc(doc(db, "lastMsg", id), {
-      text,
-      from: user1,
-      to: user2,
-      createdAt: Timestamp.fromDate(new Date()),
-      unread: true,
-    });
-
-    setText("");
+      await setDoc(doc(db, "lastMsg", id), {
+        text,
+        from: user1,
+        to: user2,
+        createdAt: Timestamp.fromDate(new Date()),
+        unread: true,
+      });
+      setIsRecording(false);
+      setText("");
+    }
   };
 
   useEffect(() => {
@@ -92,8 +150,57 @@ const ChatPage = () => {
         setMsgs(msgs);
       });
     };
+    if (img) {
+      const uploadImg = async () => {
+        const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
+        const imgRef = ref(
+          storage,
+          `chat-images/${new Date().getTime()} - ${img.name}`
+        );
+        try {
+          showLoading({
+            message: "Sending image...",
+            spinner: "circular",
+            cssClass: "lp-sp-spinner",
+            animated: true,
+            keyboardClose: true,
+            mode: "ios",
+          });
+          const snap = await uploadBytesResumable(imgRef, img);
+          const url = await getDownloadURL(ref(storage, snap.ref.fullPath));
+          await addDoc(collection(db, "messages", id, "images"), {
+            image: url,
+            imagePath: snap.ref.fullPath,
+            createdAt: Timestamp.fromDate(new Date()),
+          });
+          await addDoc(collection(db, "messages", id, "chat"), {
+            image: url,
+            from: user1,
+            to: user2,
+            createdAt: Timestamp.fromDate(new Date()),
+          });
+          await setDoc(doc(db, "lastMsg", id), {
+            text: "image",
+            from: user1,
+            to: user2,
+            createdAt: Timestamp.fromDate(new Date()),
+            unread: true,
+          });
+          setImg("");
+          dismissLoading();
+        } catch (err) {
+          handleAlert(err.message);
+        }
+      };
+      uploadImg();
+    }
     getMsgs();
-  }, [user2, user1]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user2, user1, img]);
+
+  const handleUploadImage = () => {
+    document.getElementById("upload-img").click();
+  };
 
   const getUserData = () => {
     let data = {};
@@ -111,6 +218,63 @@ const ChatPage = () => {
 
   const goBack = () => {
     router.push("/home", "back", "pop");
+  };
+
+  const gotoUserProfile = (id) => {
+    router.push(`/userprofile/${id}`, "forward", "push");
+  };
+
+  const deleteChat = async () => {
+    // const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
+    // const lastmsgRef = doc(db, "lastMsg", id);
+    try {
+      // showLoading({
+      //   message: "Deleting Chat...",
+      //   spinner: "circular",
+      //   cssClass: "lp-sp-spinner",
+      //   animated: true,
+      //   keyboardClose: true,
+      //   mode: "ios",
+      // });
+      // await deleteDoc(doc(db, "messages", id));
+      // router.push("/home");
+      // dismissLoading();
+    } catch (error) {
+      handleAlert(error.message);
+    }
+  };
+
+  const handleSpeech = async () => {
+    try {
+      setIsRecording(true);
+      SpeechRecognition.requestPermission();
+
+      const { available } = await SpeechRecognition.available();
+      console.log("Available: ", available);
+      if (available) {
+        SpeechRecognition.start({
+          language: "en-IN",
+          partialResults: true,
+          popup: false,
+          prompt: "Say something...",
+        });
+
+        SpeechRecognition.addListener("partialResults", (data) => {
+          console.log("partialResults was fired", data.value);
+          if (data.value && data.value.length > 0) {
+            console.log(data.value);
+            setText(data.value[0]);
+          }
+        });
+      }
+    } catch (e) {
+      handleAlert(e.message);
+    }
+  };
+
+  const stopRecording = async () => {
+    setIsRecording(false);
+    await SpeechRecognition.stop();
   };
 
   return (
@@ -146,23 +310,83 @@ const ChatPage = () => {
                         icon={ellipse}
                         color="success"
                         className="online-toggle-icon"
-                      />{" "}
+                      />
                       Online
                     </IonLabel>
                   ) : (
                     <IonLabel color="medium" className="online-toggle">
-                      <IonIcon icon={ellipse} color="medium" /> Offline
+                      <IonIcon
+                        icon={ellipse}
+                        color="medium"
+                        className="online-toggle-icon"
+                      />{" "}
+                      Offline
                     </IonLabel>
                   )}
                 </IonCol>
               </IonItem>
               <IonCol className="chat-profile-detail"></IonCol>
             </IonRow>
-            <IonIcon
-              icon={ellipsisVertical}
-              size="large"
-              className="chat-toolbar-icon"
-            />
+            <IonButton fill="clear" className="chatspage-header-btn">
+              <IonIcon
+                color="success"
+                icon={call}
+                className="chatspage-header-icon"
+              />
+            </IonButton>
+            <IonButton fill="clear" className="chatspage-header-btn">
+              <IonIcon
+                color="success"
+                icon={videocam}
+                className="chatspage-header-icon"
+              />
+            </IonButton>
+            <IonButton
+              fill="clear"
+              id="chatpage-popover-btn"
+              className="chatspage-header-btn"
+            >
+              <IonIcon
+                icon={ellipsisVertical}
+                className="chatspage-header-icon header-dots"
+              />
+            </IonButton>
+            <IonPopover
+              className="chatpage-popover"
+              trigger="chatpage-popover-btn"
+              dismiss-on-select="true"
+              size="auto"
+              mode="md"
+              alignment="start"
+              animated="true"
+            >
+              <IonContent>
+                <IonList className="chatpage-popover-list">
+                  <IonItem
+                    lines="none"
+                    button="true"
+                    className="chatpage-popover-item"
+                    detail="false"
+                    onClick={(e) => {
+                      gotoUserProfile(id);
+                    }}
+                  >
+                    View Contact
+                  </IonItem>
+                  <IonItem
+                    lines="none"
+                    button="true"
+                    className="chatpage-popover-item"
+                    detail="false"
+                    onClick={(e) => {
+                      deleteChat();
+                    }}
+                  >
+                    Delete
+                  </IonItem>
+                </IonList>
+              </IonContent>
+            </IonPopover>
           </IonCard>
         </IonToolbar>
       </IonHeader>
@@ -174,22 +398,98 @@ const ChatPage = () => {
         </IonGrid>
       </IonContent>
       <IonFooter>
-        <IonToolbar className="message-send" color="white">
-          <IonInput
-            className="send-input"
-            type="text"
-            placeholder="Enter Your message here"
-            value={text}
-            onIonChange={(e) => setText(e.detail.value)}
-            required
-          />
-          <IonIcon
-            icon={sendSharp}
-            color="primary"
-            size="large"
-            onClick={(e) => handleMessage()}
-            slot="end"
-          />
+        <IonToolbar className="message-send-toolbar" color="white">
+          <IonRow className="message-send-container">
+            <IonCol className="attach-btn">
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                id="upload-img"
+                onChange={(e) => setImg(e.target.files[0])}
+              />
+              <IonButton
+                fill="clear"
+                onClick={(e) => {
+                  handleActionSheet();
+                }}
+              >
+                <IonIcon icon={attachOutline} size="large" color="danger" />
+              </IonButton>
+            </IonCol>
+            <IonCol className="message-send-input-container">
+              <IonInput
+                className="send-input"
+                type="text"
+                placeholder="Enter Your message here"
+                value={text}
+                onIonChange={(e) => setText(e.detail.value)}
+                required
+              />
+            </IonCol>
+            {isPlatform("capacitor") ? (
+              <IonCol className="msg-send-btns">
+                {isRecording ? (
+                  <IonButton
+                    fill="clear"
+                    className="msg-send-btn"
+                    onClick={(e) => stopRecording()}
+                  >
+                    <IonIcon
+                      icon={stopCircleOutline}
+                      color="danger"
+                      size="large"
+                      slot="end"
+                      className="msg-send-icon"
+                    />
+                  </IonButton>
+                ) : (
+                  <IonButton
+                    fill="clear"
+                    className="msg-send-btn"
+                    onClick={(e) => handleSpeech()}
+                  >
+                    <IonIcon
+                      icon={mic}
+                      color="medium"
+                      size="large"
+                      slot="end"
+                      className="msg-send-icon"
+                    />
+                  </IonButton>
+                )}
+                <IonButton
+                  fill="clear"
+                  className="msg-send-btn"
+                  onClick={(e) => handleMessage()}
+                >
+                  <IonIcon
+                    icon={sendSharp}
+                    color="primary"
+                    size="large"
+                    className="msg-send-icon"
+                    slot="end"
+                  />
+                </IonButton>
+              </IonCol>
+            ) : (
+              <IonCol className="msg-send-btns">
+                <IonButton
+                  fill="clear"
+                  className="msg-send-btn"
+                  onClick={(e) => handleMessage()}
+                >
+                  <IonIcon
+                    icon={sendSharp}
+                    color="primary"
+                    size="large"
+                    className="msg-send-icon"
+                    slot="end"
+                  />
+                </IonButton>
+              </IonCol>
+            )}
+          </IonRow>
         </IonToolbar>
       </IonFooter>
     </IonPage>

@@ -1,6 +1,5 @@
 .lp-sp-page {
-  --background: url("../../public/assets/images/login.png") no-repeat
-    center/cover fixed;
+  --background: url("../../public/assets/images/login.png") no-repeat center/cover fixed;
   height: 100%;
   padding: 5%;
 }
@@ -140,8 +139,17 @@ ion-input {
   gap: 2rem;
 }
 
-.lp-sp-alert {
-  --backdrop-opacity: 0.5;
+.lp-sp-alert .alert-wrapper {
+  --backdrop-opacity: 0.6;
+  --background: #fff;
+}
+
+.alert-title.sc-ion-alert-md {
+  color: #000000;
+}
+
+.alert-message.sc-ion-alert-md {
+  color: #4e4e4e;
 }
 
 @media screen and (min-width: 550px) {

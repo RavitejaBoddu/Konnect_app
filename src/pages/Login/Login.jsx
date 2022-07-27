@@ -27,8 +27,7 @@ const Login = () => {
   const [presentAlert] = useIonAlert();
   const [show, dismiss] = useIonLoading();
 
-  const { login, logout, updateStatus } =
-    UserAuth();
+  const { login, logout, updateStatus } = UserAuth();
 
   let router = useIonRouter();
   const handleAlert = (msg) => {
@@ -80,7 +79,6 @@ const Login = () => {
         try {
           show({
             message: "Logging in please wait...",
-            duration: 5000,
             spinner: "circular",
             cssClass: "lp-sp-spinner",
             animated: true,

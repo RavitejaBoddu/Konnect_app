@@ -55,42 +55,51 @@ const UserChat = (props) => {
   };
 
   return (
-    <IonRow
-      className="chat-row"
-      onClick={(e) => {
-        openChat(e, user2);
-      }}
-    >
-      <IonCol className="chat-img-container">
-        <IonAvatar className="chat-pic-container">
-          {photoURL ? (
-            <IonImg src={photoURL} className="chat-img" />
-          ) : (
-            <IonImg src="assets/images/user.png" className="chat-img" />
-          )}
-        </IonAvatar>
-      </IonCol>
-      <IonCol className="chat-text">
-        <IonLabel className="chat-text-name">{name}</IonLabel>
-        {data && <IonLabel className="chat-text-msg">{data.text}</IonLabel>}
-      </IonCol>
-      <IonCol className="chat-info">
-        {data?.from !== user1 && data?.unread && (
-          <IonLabel color="white" className="unread">
-            New
-          </IonLabel>
-        )}
-        {data ? (
-          <IonLabel className="user-last-msg-time">{time}</IonLabel>
-        ) : (
-          <IonIcon
-            className="double-tick-img"
-            color="dark3"
-            icon={checkmarkDoneOutline}
-          />
-        )}
-      </IonCol>
-    </IonRow>
+    <>
+      {data.text && (
+        <IonRow className="chat-row">
+          <IonCol className="chat-img-container">
+            <IonAvatar className="chat-pic-container">
+              {photoURL ? (
+                <IonImg src={photoURL} className="chat-img" />
+              ) : (
+                <IonImg src="assets/images/user.png" className="chat-img" />
+              )}
+            </IonAvatar>
+          </IonCol>
+          <IonCol
+            className="chat-text"
+            onClick={(e) => {
+              openChat(e, user2);
+            }}
+          >
+            <IonLabel className="chat-text-name">{name}</IonLabel>
+            <IonLabel className="chat-text-msg">{data.text}</IonLabel>
+          </IonCol>
+          <IonCol
+            className="chat-info"
+            onClick={(e) => {
+              openChat(e, user2);
+            }}
+          >
+            {data?.from !== user1 && data?.unread && (
+              <IonLabel color="white" className="unread">
+                New
+              </IonLabel>
+            )}
+            {data ? (
+              <IonLabel className="user-last-msg-time">{time}</IonLabel>
+            ) : (
+              <IonIcon
+                className="double-tick-img"
+                color="dark3"
+                icon={checkmarkDoneOutline}
+              />
+            )}
+          </IonCol>
+        </IonRow>
+      )}
+    </>
   );
 };
 

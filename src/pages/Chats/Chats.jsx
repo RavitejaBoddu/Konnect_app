@@ -1,21 +1,29 @@
 import {
   IonContent,
   IonGrid,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonModal,
   IonPage,
   IonSearchbar,
   useIonViewWillEnter,
 } from "@ionic/react";
 import "./Chats.css";
 import { UserAuth } from "../../context/AuthContext";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import UserChat from "../../components/UserChat/UserChat";
 import Header from "../../components/Header/Header";
+import { personCircle } from "ionicons/icons";
 
 const Chats = () => {
   const { userList, setUserList, user, showTabs } = UserAuth();
   const [searchText, setSearchText] = useState("");
+
+  const modal = useRef(null);
 
   const currentId = user.uid;
 
@@ -35,6 +43,10 @@ const Chats = () => {
     };
     getUsers();
   }, [setUserList, currentId]);
+
+  function dismiss() {
+    modal.current?.dismiss();
+  }
 
   useIonViewWillEnter(() => showTabs());
 
@@ -75,6 +87,22 @@ const Chats = () => {
               );
             })}
         </IonGrid>
+        <IonModal id="example-modal" ref={modal} trigger="open-custom-dialog">
+          <div className="wrapper">
+            <h1>Dialog header</h1>
+
+            <IonList lines="none">
+              <IonItem button={true} detail={false} onClick={dismiss}>
+                <IonIcon icon={personCircle}></IonIcon>
+                <IonLabel>Item 1</IonLabel>
+              </IonItem>
+              <IonItem button={true} detail={false} onClick={dismiss}>
+                <IonIcon icon={personCircle}></IonIcon>
+                <IonLabel>Item 2</IonLabel>
+              </IonItem>
+            </IonList>
+          </div>
+        </IonModal>
       </IonContent>
     </IonPage>
   );
