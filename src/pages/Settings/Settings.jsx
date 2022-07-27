@@ -9,6 +9,7 @@ import {
   IonLabel,
   IonPage,
   IonRow,
+  IonToggle,
   IonToolbar,
   useIonLoading,
   useIonRouter,
@@ -19,12 +20,14 @@ import { UserAuth } from "../../context/AuthContext";
 import "./Settings.css";
 import { caretForward, toggle } from "ionicons/icons";
 import { auth } from "../../firebase";
+import { useState } from "react";
 
 const Settings = () => {
   const { logout, updateStatus, user, showTabs } = UserAuth();
   let router = useIonRouter();
   const [present] = useIonToast();
   const [show, dismiss] = useIonLoading();
+  const [isNightMode, setIsNightMode] = useState();
 
   const handleToast = (msg) => {
     present({
@@ -64,6 +67,9 @@ const Settings = () => {
   const goToProfile = () => {
     router.push("/home/profile");
   };
+  const toggleNightMode = () => {
+
+  }
 
   useIonViewWillEnter(() => showTabs());
 
@@ -101,11 +107,11 @@ const Settings = () => {
             </IonCol>
             <IonCol className="two-items">
               <IonLabel>Night Mode</IonLabel>
-              <IonIcon icon={toggle} size="large" color="primary" />
+              <IonToggle color="blue" />
             </IonCol>
             <IonCol className="two-items">
               <IonLabel>Auto Night Mode</IonLabel>
-              <IonIcon icon={toggle} size="large" color="primary" />
+              <IonToggle color="blue" />
             </IonCol>
           </IonRow>
           <IonRow className="settings-row">
