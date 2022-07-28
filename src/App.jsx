@@ -39,6 +39,9 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import UserProfile from "./pages/UserProfile/UserProfile";
+import { Capacitor } from "@capacitor/core";
+import OneSignal from 'onesignal-cordova-plugin';
+
 
 setupIonicReact();
 
@@ -85,6 +88,7 @@ const App = () => {
     });
   };
 
+
   const getConfigData = async () => {
     const docSnap = await getDoc(updateRef);
     if (docSnap.exists()) {
@@ -112,7 +116,24 @@ const App = () => {
     } catch (error) {}
   };
 
+  const OneSignalInit = () => {
+    // NOTE: Update the setAppId value below with your OneSignal AppId.
+    OneSignal.setAppId("8260b067-a332-4b87-8443-885fbe439ddb");
+    OneSignal.setNotificationOpenedHandler(function(jsonData) {
+        console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+    });
+  }
+  
+  
+
   useEffect(() => {
+    try{
+      if(isPlatform!== "web"){
+        OneSignalInit();
+      }
+    }catch(error){
+      console.log(error.message)
+    }
     getConfigData();
     checkUpdate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
