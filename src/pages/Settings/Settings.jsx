@@ -18,16 +18,18 @@ import {
 } from "@ionic/react";
 import { UserAuth } from "../../context/AuthContext";
 import "./Settings.css";
-import { caretForward, toggle } from "ionicons/icons";
+import { caretForward,
+  //  toggle 
+  } from "ionicons/icons";
 import { auth } from "../../firebase";
-import { useState } from "react";
+// import { useState } from "react";
 
 const Settings = () => {
   const { logout, updateStatus, user, showTabs } = UserAuth();
   let router = useIonRouter();
   const [present] = useIonToast();
   const [show, dismiss] = useIonLoading();
-  const [isNightMode, setIsNightMode] = useState();
+  // const [isNightMode, setIsNightMode] = useState();
 
   const handleToast = (msg) => {
     present({
@@ -67,9 +69,9 @@ const Settings = () => {
   const goToProfile = () => {
     router.push("/home/profile");
   };
-  const toggleNightMode = () => {
+  // const toggleNightMode = () => {
 
-  }
+  // }
 
   useIonViewWillEnter(() => showTabs());
 

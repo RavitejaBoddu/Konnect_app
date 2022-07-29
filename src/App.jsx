@@ -39,7 +39,6 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import UserProfile from "./pages/UserProfile/UserProfile";
-import { Capacitor } from "@capacitor/core";
 import OneSignal from 'onesignal-cordova-plugin';
 
 

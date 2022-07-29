@@ -3,13 +3,18 @@ import {
   IonButton,
   IonButtons,
   IonCard,
+  IonCardContent,
+  IonCardHeader,
   IonContent,
   IonGrid,
+  IonHeader,
   IonIcon,
   IonImg,
   IonLabel,
+  IonModal,
   IonPage,
   IonRow,
+  IonTitle,
   IonToolbar,
   useIonRouter,
 } from "@ionic/react";
@@ -93,6 +98,36 @@ const UserProfile = () => {
       </IonToolbar>
 
       <IonContent fullscreen className="profile-page">
+      {/* <IonModal isOpen={isOpen}>
+        <IonHeader>
+          <IonToolbar>
+            <IonTitle>Modal</IonTitle>
+            <IonButtons slot="end">
+              <IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
+            </IonButtons>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent className="ion-padding">
+          {msg.image && (
+            <>
+            <IonCard
+              className="display-image-container"
+            >
+              <IonCardHeader class="msg-img-card-header">
+                <IonImg src={msg.image} className="display-image" />
+              </IonCardHeader>
+              <IonCardContent class="msg-img-card-content">
+                
+              </IonCardContent>
+            </IonCard>
+            <a href={msg.image} download target="blank">
+                <IonButton fill="clear">Download</IonButton>
+                </a> */}
+            {/* <IonButton onClick={(e)=>{downloadImage()}} fill="clear">Download</IonButton> */}
+            {/* </>
+          )}
+        </IonContent>
+      </IonModal> */}
         <IonCard className="user-avatar-container">
           <IonAvatar className="user-pro-pic-container">
             {usersData.photoURL ? (
